@@ -1,23 +1,16 @@
+import 'dart:convert';
+
 import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
+import 'package:quranapp/app/data/models/surah.dart';
 
 class HomeController extends GetxController {
-  //TODO: Implement HomeController
+  Future<List<Surah>> getResource() async {
+    var res = await http
+        .get(Uri.parse("https://api.quran.com/api/v4/chapters?language=id"));
+    List data = json.decode(res.body)["chapters"];
 
-  final count = 0.obs;
-  @override
-  void onInit() {
-    super.onInit();
+    List<Surah> allSurah = data.map((e) => Surah.fromJson(e)).toList();
+    return allSurah;
   }
-
-  @override
-  void onReady() {
-    super.onReady();
-  }
-
-  @override
-  void onClose() {
-    super.onClose();
-  }
-
-  void increment() => count.value++;
 }
