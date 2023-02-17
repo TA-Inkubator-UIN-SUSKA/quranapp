@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+
+import '../controllers/detail_surah_wbw_controller.dart';
 import 'package:quranapp/app/constant/theme.dart';
 import 'package:quranapp/app/data/models/word_chapter.dart';
 
-import '../controllers/detail_surah_controller.dart';
+class DetailSurahWbwView extends GetView<DetailSurahWbwController> {
+  int idSurah = 1;
 
-class DetailSurahView extends GetView<DetailSurahController> {
-  int idSurah = Get.arguments;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
