@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:quranapp/app/constant/theme.dart';
 import 'package:quranapp/app/data/models/surah.dart';
+import 'package:quranapp/app/routes/app_pages.dart';
 
 import '../controllers/home_controller.dart';
 
@@ -197,21 +198,24 @@ class HomeView extends GetView<HomeController> {
                             itemBuilder: (context, index) {
                               Surah surah = snapshot.data![index];
                               return ListTile(
-                                leading: Container(
-                                  height: 40,
-                                  width: 40,
-                                  decoration: BoxDecoration(
-                                      color: appGreenLight,
-                                      borderRadius: BorderRadius.circular(10)),
-                                  child: Center(child: Text("${index + 1}")),
-                                ),
-                                title: Text("${surah.nameComplex}"),
-                                subtitle: Text(
-                                  "${surah.revelationPlace} - ${surah.translatedName?.name} - ${surah.versesCount} Ayat",
-                                  style: TextStyle(fontSize: 12),
-                                ),
-                                trailing: Text("${surah.nameArabic}")
-                              );
+                                  onTap: () {
+                                    Get.toNamed(Routes.DETAIL_SURAH, arguments: index+1);
+                                  },
+                                  leading: Container(
+                                    height: 40,
+                                    width: 40,
+                                    decoration: BoxDecoration(
+                                        color: appGreenLight,
+                                        borderRadius:
+                                            BorderRadius.circular(10)),
+                                    child: Center(child: Text("${index + 1}")),
+                                  ),
+                                  title: Text("${surah.nameComplex}"),
+                                  subtitle: Text(
+                                    "${surah.revelationPlace} - ${surah.translatedName?.name} - ${surah.versesCount} Ayat",
+                                    style: TextStyle(fontSize: 12),
+                                  ),
+                                  trailing: Text("${surah.nameArabic}"));
                             },
                           ),
                           ListView.builder(
@@ -220,7 +224,7 @@ class HomeView extends GetView<HomeController> {
                               Surah surah = snapshot.data![index];
                               return ListTile(
                                 onTap: () {
-                                  
+                                  Get.toNamed(Routes.DETAIL_JUZ);
                                 },
                                 isThreeLine: true,
                                 leading: Container(
