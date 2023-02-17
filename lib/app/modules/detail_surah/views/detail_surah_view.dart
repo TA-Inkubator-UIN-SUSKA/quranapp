@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -45,25 +46,29 @@ class DetailSurahView extends GetView<DetailSurahController> {
                   children: [
                     Text("${verse?.verseNumber}. ${verse?.textUthmani}"),
                     if (snapshot.hasData)
-                      GridView.builder(
-                        shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 3),
-                        itemBuilder: (_, int indexGrid) {
-                          Words? word = verse?.words?[indexGrid];
+                      Directionality(
+                        textDirection: TextDirection.rtl,
+                        child: GridView.builder(
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 3),
+                          itemBuilder: (_, int indexGrid) {
+                            Words? word = verse?.words?[indexGrid];
 
-                          return Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Text("${word?.position}"),
-                              Text("${word?.text}"),
-                              Text("${word?.transliteration?.text}"),
-                              Text("${word?.translation?.text}"),
-                            ],
-                          );
-                        },
-                        itemCount: lengthGrid!-1,
+                            return Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text("${word?.position}"),
+                                Text("${word?.text}"),
+                                Text("${word?.transliteration?.text}"),
+                                Text("${word?.translation?.text}"),
+                              ],
+                            );
+                          },
+                          itemCount: lengthGrid! - 1,
+                        ),
                       ),
                   ],
                 );
