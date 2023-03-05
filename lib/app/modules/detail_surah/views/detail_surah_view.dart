@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:quranapp/app/constant/theme.dart';
-import 'package:quranapp/app/data/models/word_chapter.dart';
-
-import '../controllers/detail_surah_controller.dart';
+import 'package:quranapp/app/data/models/verse.dart';
+import 'package:quranapp/app/modules/detail_surah/controllers/detail_surah_controller.dart';
 
 class DetailSurahView extends GetView<DetailSurahController> {
   int idSurah = Get.arguments;
@@ -32,45 +31,71 @@ class DetailSurahView extends GetView<DetailSurahController> {
             )
           ],
         ),
-        body: FutureBuilder<List<WordChapter>>(
-          future: controller.getWordVerses(idSurah),
+        body: FutureBuilder<List<List<Verse>>>(
+          future: Future.wait([
+            controller.getTextVerse(idSurah),
+            controller.getTranslationVerse(idSurah),
+          ]),
           builder: (context, snapshot) {
-            return ListView.builder(
-              itemCount: snapshot.data?.length,
-              itemBuilder: (context, index) {
-                WordChapter? verse = snapshot.data?[index];
-                int? lengthGrid = verse?.words?.length;
-                return Column(
-                  children: [
-                    Text("${verse?.verseNumber}. ${verse?.textUthmani}"),
-                    if (snapshot.hasData)
-                      Directionality(
-                        textDirection: TextDirection.rtl,
-                        child: GridView.builder(
-                          shrinkWrap: true,
-                          physics: NeverScrollableScrollPhysics(),
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 3),
-                          itemBuilder: (_, int indexGrid) {
-                            Words? word = verse?.words?[indexGrid];
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            }
 
-                            return Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Text("${word?.position}"),
-                                Text("${word?.text}"),
-                                Text("${word?.transliteration?.text}"),
-                                Text("${word?.translation?.text}"),
-                              ],
-                            );
-                          },
-                          itemCount: lengthGrid! - 1,
-                        ),
+            return ListView(
+              children: [
+                ListView.builder(
+                  shrinkWrap: true,
+                  physics: ClampingScrollPhysics(),
+                  itemCount: snapshot.data?[0].length,
+                  itemBuilder: (BuildContext context, int index) {
+                    Verse? verse = snapshot.data?[0][index];
+                    Verse? transVerse = snapshot.data?[1][index];
+                    return Padding(
+                      padding: const EdgeInsets.fromLTRB(20, 10, 20, 20),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            width: Get.width,
+                            padding: EdgeInsets.all(30),
+                            decoration: BoxDecoration(
+                              color: appGreenLight,
+                              borderRadius: BorderRadius.circular(20),
+                              border: Border.all(color: appGreenDark, width: 2),
+                            ),
+                            child: Text(
+                              "${verse?.textUthmani}",
+                              textAlign: TextAlign.right,
+                              style: TextStyle(
+                                fontSize: 24,
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            "Latin : ${index + 1}. lorem lorem lorem",
+                            textAlign: TextAlign.left,
+                            style: TextStyle(
+                                fontWeight: FontWeight.w500,
+                                fontStyle: FontStyle.italic),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            "${index + 1}. ${transVerse?.text}",
+                            style: TextStyle(),
+                          ),
+                        ],
                       ),
-                  ],
-                );
-              },
+                    );
+                  },
+                ),
+              ],
             );
           },
         ));
