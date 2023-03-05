@@ -199,7 +199,8 @@ class HomeView extends GetView<HomeController> {
                               Surah surah = snapshot.data![index];
                               return ListTile(
                                   onTap: () {
-                                    Get.toNamed(Routes.DETAIL_SURAH, arguments: index+1);
+                                    Get.toNamed(Routes.DETAIL_SURAH,
+                                        arguments: surah);
                                   },
                                   leading: Container(
                                     height: 40,
@@ -210,12 +211,12 @@ class HomeView extends GetView<HomeController> {
                                             BorderRadius.circular(10)),
                                     child: Center(child: Text("${index + 1}")),
                                   ),
-                                  title: Text("${surah.nameComplex}"),
+                                  title: Text("${surah.name}"),
                                   subtitle: Text(
-                                    "${surah.revelationPlace} - ${surah.translatedName?.name} - ${surah.versesCount} Ayat",
+                                    "${surah.revelationPlace} - ${surah.translatedName?.translation} - ${surah.verseCount} Ayat",
                                     style: TextStyle(fontSize: 12),
                                   ),
-                                  trailing: Text("${surah.nameArabic}"));
+                                  trailing: Text("${surah.arabicName}"));
                             },
                           ),
                           ListView.builder(
@@ -224,7 +225,7 @@ class HomeView extends GetView<HomeController> {
                               Surah surah = snapshot.data![index];
                               return ListTile(
                                 onTap: () {
-                                  Get.toNamed(Routes.DETAIL_JUZ);
+                                  Get.toNamed(Routes.DETAIL_JUZ, arguments: surah);
                                 },
                                 isThreeLine: true,
                                 leading: Container(

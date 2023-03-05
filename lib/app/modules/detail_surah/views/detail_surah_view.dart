@@ -2,18 +2,19 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:quranapp/app/constant/theme.dart';
+import 'package:quranapp/app/data/models/surah.dart';
 import 'package:quranapp/app/data/models/verse.dart' as verse;
 import 'package:quranapp/app/modules/detail_surah/controllers/detail_surah_controller.dart';
 
 class DetailSurahView extends GetView<DetailSurahController> {
-  int idSurah = Get.arguments;
+  Surah surahArgument = Get.arguments;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
           iconTheme: IconThemeData(color: appGreenDark),
           title: Text(
-            '${idSurah}. Al -Fatihah',
+            '${surahArgument.id}. ${surahArgument.name}',
             style: TextStyle(
               color: appGreenDark,
             ),
@@ -32,7 +33,7 @@ class DetailSurahView extends GetView<DetailSurahController> {
           ],
         ),
         body: FutureBuilder<List<verse.Verse>>(
-          future: controller.getVerse(idSurah),
+          future: controller.getVerse(surahArgument.id!),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return Center(
@@ -40,7 +41,52 @@ class DetailSurahView extends GetView<DetailSurahController> {
               );
             }
             return ListView(
+              padding: const EdgeInsets.fromLTRB(20, 10, 20, 20),
               children: [
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    gradient: LinearGradient(
+                      colors: [
+                        appGreen.withOpacity(0.8),
+                        appGreenDark,
+                      ],
+                    ),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Column(
+                      children: [
+                        Text(
+                          '${surahArgument.name}',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: appWhite,
+                          ),
+                        ),
+                        Text(
+                          '( ${surahArgument.translatedName?.translation} )',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: appWhite,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Text(
+                          '${surahArgument.verseCount ?? ''} Ayat | ${surahArgument.revelationPlace ?? ''}',
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: appWhite,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
                 ListView.builder(
                   shrinkWrap: true,
                   physics: ClampingScrollPhysics(),
@@ -48,46 +94,46 @@ class DetailSurahView extends GetView<DetailSurahController> {
                   itemBuilder: (BuildContext context, int index) {
                     verse.Verse? dataVerse = snapshot.data?[index];
 
-                    return Padding(
-                      padding: const EdgeInsets.fromLTRB(20, 10, 20, 20),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            width: Get.width,
-                            padding: EdgeInsets.all(30),
-                            decoration: BoxDecoration(
-                              color: appGreenLight,
-                              borderRadius: BorderRadius.circular(20),
-                              border: Border.all(color: appGreenDark, width: 2),
-                            ),
-                            child: Text(
-                              "${dataVerse?.text?.textUthmani}",
-                              textAlign: TextAlign.right,
-                              style: TextStyle(
-                                fontSize: 24,
-                              ),
-                            ),
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Container(
+                          width: Get.width,
+                          padding: EdgeInsets.all(30),
+                          decoration: BoxDecoration(
+                            color: appGreenLight,
+                            borderRadius: BorderRadius.circular(20),
+                            border: Border.all(color: appGreenDark, width: 2),
                           ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Text(
-                            "Latin : ${dataVerse?.transliteration}",
-                            textAlign: TextAlign.left,
+                          child: Text(
+                            "${dataVerse?.text?.textUthmani}",
+                            textAlign: TextAlign.right,
                             style: TextStyle(
-                                fontWeight: FontWeight.w500,
-                                fontStyle: FontStyle.italic),
+                              fontSize: 24,
+                            ),
                           ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Text(
-                            "${index + 1}. ${dataVerse?.translation?.text}",
-                            style: TextStyle(),
-                          ),
-                        ],
-                      ),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Text(
+                          "Latin : ${dataVerse?.transliteration}",
+                          textAlign: TextAlign.left,
+                          style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              fontStyle: FontStyle.italic),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Text(
+                          "${index + 1}. ${dataVerse?.translation?.text}",
+                          style: TextStyle(),
+                        ),
+                      ],
                     );
                   },
                 ),

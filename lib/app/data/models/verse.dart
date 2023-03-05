@@ -1,5 +1,4 @@
-// https://api.quran.com/api/v4/quran/verses/uthmani?chapter_number=1
-// https://api.quran.com/api/v4/quran/translations/33?chapter_number=1
+// https://api.mfikridev.xyz/verses/by_chapter/2?translation=17&tafsir=2
 class Verse {
   int? numberInQuran;
   int? idJuz;

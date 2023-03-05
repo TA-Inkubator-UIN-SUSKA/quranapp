@@ -1,57 +1,49 @@
-// https://api.quran.com/api/v4/chapters?language=id
+// https://api.mfikridev.xyz/chapters?language=id
 
 class Surah {
   int? id;
-  String? revelationPlace;
+  String? name;
+  int? numberChapter;
+  String? arabicName;
   int? revelationOrder;
-  bool? bismillahPre;
-  String? nameSimple;
-  String? nameComplex;
-  String? nameArabic;
-  int? versesCount;
-  List<int>? pages;
+  String? revelationPlace;
+  int? verseCount;
   TranslatedName? translatedName;
 
   Surah(
       {this.id,
-      this.revelationPlace,
+      this.name,
+      this.numberChapter,
+      this.arabicName,
       this.revelationOrder,
-      this.bismillahPre,
-      this.nameSimple,
-      this.nameComplex,
-      this.nameArabic,
-      this.versesCount,
-      this.pages,
+      this.revelationPlace,
+      this.verseCount,
       this.translatedName});
 
   Surah.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    revelationPlace = json['revelation_place'];
+    name = json['name'];
+    numberChapter = json['number_chapter'];
+    arabicName = json['arabic_name'];
     revelationOrder = json['revelation_order'];
-    bismillahPre = json['bismillah_pre'];
-    nameSimple = json['name_simple'];
-    nameComplex = json['name_complex'];
-    nameArabic = json['name_arabic'];
-    versesCount = json['verses_count'];
-    pages = json['pages'].cast<int>();
+    revelationPlace = json['revelation_place'];
+    verseCount = json['verse_count'];
     translatedName = json['translated_name'] != null
-        ? TranslatedName.fromJson(json['translated_name'])
+        ? new TranslatedName.fromJson(json['translated_name'])
         : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
-    data['revelation_place'] = revelationPlace;
-    data['revelation_order'] = revelationOrder;
-    data['bismillah_pre'] = bismillahPre;
-    data['name_simple'] = nameSimple;
-    data['name_complex'] = nameComplex;
-    data['name_arabic'] = nameArabic;
-    data['verses_count'] = versesCount;
-    data['pages'] = pages;
-    if (translatedName != null) {
-      data['translated_name'] = translatedName!.toJson();
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['name'] = this.name;
+    data['number_chapter'] = this.numberChapter;
+    data['arabic_name'] = this.arabicName;
+    data['revelation_order'] = this.revelationOrder;
+    data['revelation_place'] = this.revelationPlace;
+    data['verse_count'] = this.verseCount;
+    if (this.translatedName != null) {
+      data['translated_name'] = this.translatedName!.toJson();
     }
     return data;
   }
@@ -59,19 +51,19 @@ class Surah {
 
 class TranslatedName {
   String? languageName;
-  String? name;
+  String? translation;
 
-  TranslatedName({this.languageName, this.name});
+  TranslatedName({this.languageName, this.translation});
 
   TranslatedName.fromJson(Map<String, dynamic> json) {
     languageName = json['language_name'];
-    name = json['name'];
+    translation = json['translation'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['language_name'] = languageName;
-    data['name'] = name;
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['language_name'] = this.languageName;
+    data['translation'] = this.translation;
     return data;
   }
 }
