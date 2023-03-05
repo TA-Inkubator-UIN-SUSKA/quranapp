@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:quranapp/app/constant/theme.dart';
-import 'package:quranapp/app/data/models/verse.dart';
+import 'package:quranapp/app/data/models/verse.dart' as verse;
 import 'package:quranapp/app/modules/detail_surah/controllers/detail_surah_controller.dart';
 
 class DetailSurahView extends GetView<DetailSurahController> {
@@ -31,27 +31,23 @@ class DetailSurahView extends GetView<DetailSurahController> {
             )
           ],
         ),
-        body: FutureBuilder<List<List<Verse>>>(
-          future: Future.wait([
-            controller.getTextVerse(idSurah),
-            controller.getTranslationVerse(idSurah),
-          ]),
+        body: FutureBuilder<List<verse.Verse>>(
+          future: controller.getVerse(idSurah),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return Center(
                 child: CircularProgressIndicator(),
               );
             }
-
             return ListView(
               children: [
                 ListView.builder(
                   shrinkWrap: true,
                   physics: ClampingScrollPhysics(),
-                  itemCount: snapshot.data?[0].length,
+                  itemCount: snapshot.data?.length,
                   itemBuilder: (BuildContext context, int index) {
-                    Verse? verse = snapshot.data?[0][index];
-                    Verse? transVerse = snapshot.data?[1][index];
+                    verse.Verse? dataVerse = snapshot.data?[index];
+
                     return Padding(
                       padding: const EdgeInsets.fromLTRB(20, 10, 20, 20),
                       child: Column(
@@ -66,7 +62,7 @@ class DetailSurahView extends GetView<DetailSurahController> {
                               border: Border.all(color: appGreenDark, width: 2),
                             ),
                             child: Text(
-                              "${verse?.textUthmani}",
+                              "${dataVerse?.text?.textUthmani}",
                               textAlign: TextAlign.right,
                               style: TextStyle(
                                 fontSize: 24,
@@ -77,7 +73,7 @@ class DetailSurahView extends GetView<DetailSurahController> {
                             height: 10,
                           ),
                           Text(
-                            "Latin : ${index + 1}. lorem lorem lorem",
+                            "Latin : ${dataVerse?.transliteration}",
                             textAlign: TextAlign.left,
                             style: TextStyle(
                                 fontWeight: FontWeight.w500,
@@ -87,7 +83,7 @@ class DetailSurahView extends GetView<DetailSurahController> {
                             height: 10,
                           ),
                           Text(
-                            "${index + 1}. ${transVerse?.text}",
+                            "${index + 1}. ${dataVerse?.translation?.text}",
                             style: TextStyle(),
                           ),
                         ],
