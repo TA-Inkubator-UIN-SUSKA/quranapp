@@ -8,6 +8,8 @@ import '../modules/detail_surah_wbw/bindings/detail_surah_wbw_binding.dart';
 import '../modules/detail_surah_wbw/views/detail_surah_wbw_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
+import '../modules/settings/bindings/settings_binding.dart';
+import '../modules/settings/views/settings_view.dart';
 import '../modules/splash_screen/bindings/splash_screen_binding.dart';
 import '../modules/splash_screen/views/splash_screen_view.dart';
 
@@ -41,8 +43,13 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.DETAIL_SURAH_WBW,
-      page: () =>  DetailSurahWbwView(),
+      page: () => DetailSurahWbwView(),
       binding: DetailSurahWbwBinding(),
+    ),
+    GetPage(
+      name: _Paths.SETTINGS,
+      page: () => const SettingsView(),
+      binding: SettingsBinding(),
     ),
   ];
 }

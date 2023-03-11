@@ -8,6 +8,7 @@ abstract class Routes {
   static const DETAIL_SURAH = _Paths.DETAIL_SURAH;
   static const DETAIL_JUZ = _Paths.DETAIL_JUZ;
   static const DETAIL_SURAH_WBW = _Paths.DETAIL_SURAH_WBW;
+  static const SETTINGS = _Paths.SETTINGS;
 }
 
 abstract class _Paths {
@@ -17,4 +18,5 @@ abstract class _Paths {
   static const DETAIL_SURAH = '/detail-surah';
   static const DETAIL_JUZ = '/detail-juz';
   static const DETAIL_SURAH_WBW = '/detail-surah-wbw';
+  static const SETTINGS = '/settings';
 }

@@ -8,6 +8,7 @@ class Verse {
   Text? text;
   Translation? translation;
   Tafsir? tafsir;
+  String? kondisiAudio;
 
   Verse(
       {this.numberInQuran,
@@ -17,7 +18,8 @@ class Verse {
       this.transliteration,
       this.text,
       this.translation,
-      this.tafsir});
+      this.tafsir, 
+      this.kondisiAudio = "stop",});
 
   Verse.fromJson(Map<String, dynamic> json) {
     numberInQuran = json['number_in_quran'];
@@ -25,30 +27,31 @@ class Verse {
     idChapter = json['id_chapter'];
     numberInChapter = json['number_in_chapter'];
     transliteration = json['transliteration'];
-    text = json['text'] != null ? new Text.fromJson(json['text']) : null;
+    text = json['text'] != null ? Text.fromJson(json['text']) : null;
     translation = json['translation'] != null
-        ? new Translation.fromJson(json['translation'])
+        ? Translation.fromJson(json['translation'])
         : null;
     tafsir =
-        json['tafsir'] != null ? new Tafsir.fromJson(json['tafsir']) : null;
+        json['tafsir'] != null ? Tafsir.fromJson(json['tafsir']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['number_in_quran'] = this.numberInQuran;
-    data['id_juz'] = this.idJuz;
-    data['id_chapter'] = this.idChapter;
-    data['number_in_chapter'] = this.numberInChapter;
-    data['transliteration'] = this.transliteration;
-    if (this.text != null) {
-      data['text'] = this.text!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['number_in_quran'] = numberInQuran;
+    data['id_juz'] = idJuz;
+    data['id_chapter'] = idChapter;
+    data['number_in_chapter'] = numberInChapter;
+    data['transliteration'] = transliteration;
+    if (text != null) {
+      data['text'] = text!.toJson();
     }
-    if (this.translation != null) {
-      data['translation'] = this.translation!.toJson();
+    if (translation != null) {
+      data['translation'] = translation!.toJson();
     }
-    if (this.tafsir != null) {
-      data['tafsir'] = this.tafsir!.toJson();
+    if (tafsir != null) {
+      data['tafsir'] = tafsir!.toJson();
     }
+    data["kondisiAudio"] = kondisiAudio;
     return data;
   }
 }
@@ -76,12 +79,12 @@ class Text {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['text_uthmani'] = this.textUthmani;
-    data['text_uthmani_simple'] = this.textUthmaniSimple;
-    data['text_imlaei'] = this.textImlaei;
-    data['text_imlaei_simple'] = this.textImlaeiSimple;
-    data['text_indopak'] = this.textIndopak;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['text_uthmani'] = textUthmani;
+    data['text_uthmani_simple'] = textUthmaniSimple;
+    data['text_imlaei'] = textImlaei;
+    data['text_imlaei_simple'] = textImlaeiSimple;
+    data['text_indopak'] = textIndopak;
     return data;
   }
 }
@@ -100,10 +103,10 @@ class Translation {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['text'] = this.text;
-    data['id_translator'] = this.idTranslator;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['text'] = text;
+    data['id_translator'] = idTranslator;
     return data;
   }
 }
@@ -120,9 +123,9 @@ class Tafsir {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['text'] = this.text;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['text'] = text;
     return data;
   }
 }
