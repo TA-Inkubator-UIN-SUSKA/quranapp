@@ -225,7 +225,8 @@ class HomeView extends GetView<HomeController> {
                               Surah surah = snapshot.data![index];
                               return ListTile(
                                 onTap: () {
-                                  Get.toNamed(Routes.DETAIL_JUZ, arguments: surah);
+                                  Get.toNamed(Routes.DETAIL_JUZ,
+                                      arguments: surah);
                                 },
                                 isThreeLine: true,
                                 leading: Container(

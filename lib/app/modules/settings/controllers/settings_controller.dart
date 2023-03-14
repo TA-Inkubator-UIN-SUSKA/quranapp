@@ -1,23 +1,22 @@
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 class SettingsController extends GetxController {
-  //TODO: Implement SettingsController
+  final switchWBWController = GetStorage();
+  var isWBW = false;
 
-  final count = 0.obs;
-  @override
-  void onInit() {
-    super.onInit();
+  SettingsController() {
+    if (switchWBWController.read("switchWBW") != null) {
+      isWBW = switchWBWController.read("switchWBW");
+      update();
+      print("isWBW : ${isWBW}");
+    }
   }
 
-  @override
-  void onReady() {
-    super.onReady();
+  changeSwitchWBW(bool value) {
+    isWBW = value;
+    switchWBWController.write("switchWBW", isWBW);
+    update();
+    print("isWBW : ${isWBW}");
   }
-
-  @override
-  void onClose() {
-    super.onClose();
-  }
-
-  void increment() => count.value++;
 }
