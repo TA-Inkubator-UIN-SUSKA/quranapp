@@ -109,7 +109,7 @@ class DetailSurahView extends GetView<DetailSurahController> {
               physics: ClampingScrollPhysics(),
               itemCount: 7,
               itemBuilder: (context, index) {
-                verse.Verse? dataVerse = snapshot.data?[index];
+                verse.Verse? ayat = snapshot.data?[index];
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
@@ -146,38 +146,15 @@ class DetailSurahView extends GetView<DetailSurahController> {
                                 children: [
                                   IconButton(
                                     onPressed: () {},
-                                    icon: Icon(Icons.menu_book_rounded),
-                                  ),
-                                  IconButton(
-                                    onPressed: () {
-                                      Get.defaultDialog(
-                                        title: "Bookmark",
-                                        middleText: "Pilih jenis Bookmark",
-                                        actions: [
-                                          ElevatedButton(
-                                            onPressed: () async {},
-                                            child: Text("Last Read"),
-                                            style: ElevatedButton.styleFrom(
-                                              backgroundColor: appGreen,
-                                            ),
-                                          ),
-                                          ElevatedButton(
-                                            onPressed: () {},
-                                            child: Text("Bookmark"),
-                                            style: ElevatedButton.styleFrom(
-                                              backgroundColor: appGreen,
-                                            ),
-                                          ),
-                                        ],
-                                      );
-                                    },
                                     icon: Icon(
                                       Icons.bookmark_add_outlined,
                                     ),
                                   ),
-                                  (dataVerse?.kondisiAudio == "stop")
+                                  (ayat?.kondisiAudio == "stop")
                                       ? IconButton(
-                                          onPressed: () {},
+                                          onPressed: () {
+                                            c.playAudio(ayat);
+                                          },
                                           icon: Icon(
                                             Icons.play_arrow,
                                           ),
@@ -185,22 +162,27 @@ class DetailSurahView extends GetView<DetailSurahController> {
                                       : Row(
                                           mainAxisSize: MainAxisSize.min,
                                           children: [
-                                            (dataVerse?.kondisiAudio ==
-                                                    "playing")
+                                            (ayat?.kondisiAudio == "playing")
                                                 ? IconButton(
-                                                    onPressed: () {},
+                                                    onPressed: () {
+                                                      c.pauseAudio(ayat!);
+                                                    },
                                                     icon: Icon(
                                                       Icons.pause,
                                                     ),
                                                   )
                                                 : IconButton(
-                                                    onPressed: () {},
+                                                    onPressed: () {
+                                                      c.resumeAudio(ayat!);
+                                                    },
                                                     icon: Icon(
                                                       Icons.play_arrow,
                                                     ),
                                                   ),
                                             IconButton(
-                                              onPressed: () {},
+                                              onPressed: () {
+                                                c.stopAudio(ayat!);
+                                              },
                                               icon: Icon(Icons.stop),
                                             ),
                                           ],
@@ -215,7 +197,7 @@ class DetailSurahView extends GetView<DetailSurahController> {
                     Container(
                       padding: EdgeInsets.only(left: 20),
                       child: Text(
-                        "${dataVerse?.text?.textUthmani ?? "null"}",
+                        "${ayat?.text?.textUthmani ?? "null"}",
                         style: TextStyle(
                           fontSize: 30,
                         ),
@@ -226,7 +208,7 @@ class DetailSurahView extends GetView<DetailSurahController> {
                       height: 10,
                     ),
                     Text(
-                      "${dataVerse?.transliteration ?? "null"}",
+                      "${ayat?.transliteration ?? "null"}",
                       style: TextStyle(
                         fontSize: 14,
                         fontStyle: FontStyle.italic,
@@ -237,7 +219,7 @@ class DetailSurahView extends GetView<DetailSurahController> {
                       height: 20,
                     ),
                     Text(
-                      "${dataVerse?.translation?.text ?? "null"}",
+                      "${ayat?.translation?.text ?? "null"}",
                       style: TextStyle(
                         fontSize: 14,
                       ),
