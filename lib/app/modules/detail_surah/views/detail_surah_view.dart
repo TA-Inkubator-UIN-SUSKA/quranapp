@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 
 import 'package:get/get.dart';
 import 'package:quranapp/app/constant/theme.dart';
@@ -6,10 +7,12 @@ import 'package:quranapp/app/data/models/surah.dart';
 import 'package:quranapp/app/data/models/verse.dart' as verse;
 import 'package:quranapp/app/data/models/word_chapter.dart';
 import 'package:quranapp/app/modules/detail_surah/controllers/detail_surah_controller.dart';
+import 'package:quranapp/app/modules/settings/controllers/settings_controller.dart';
 import 'package:quranapp/app/routes/app_pages.dart';
 
 class DetailSurahView extends GetView<DetailSurahController> {
   Surah surahArgument = Get.arguments;
+  final settingC = Get.put(SettingsController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,7 +52,8 @@ class DetailSurahView extends GetView<DetailSurahController> {
 
   FutureBuilder<List<verse.Verse>> futureSurah() {
     return FutureBuilder<List<verse.Verse>>(
-      future: controller.getVerse(surahArgument.id!),
+      future: controller.getVerse(
+          idSurah: surahArgument.id!, idReciter: settingC.idSelectedReciter),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Center(
@@ -107,7 +111,7 @@ class DetailSurahView extends GetView<DetailSurahController> {
               padding: EdgeInsets.only(top: 20),
               shrinkWrap: true,
               physics: ClampingScrollPhysics(),
-              itemCount: 7,
+              itemCount: snapshot.data?.length,
               itemBuilder: (context, index) {
                 verse.Verse? ayat = snapshot.data?[index];
                 return Column(
@@ -144,6 +148,41 @@ class DetailSurahView extends GetView<DetailSurahController> {
                             GetBuilder<DetailSurahController>(
                               builder: (c) => Row(
                                 children: [
+                                  IconButton(
+                                    onPressed: () {
+                                      Get.dialog(Dialog(
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                        ),
+                                        child: Container(
+                                          padding: EdgeInsets.all(20),
+                                          child: ListView(
+                                            children: [
+                                              Text(
+                                                "Tafsir Ayat ${index + 1}",
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 20,
+                                                ),
+                                                textAlign: TextAlign.center,
+                                              ),
+                                              SizedBox(height: 20),
+                                              Text(
+                                                "${ayat?.tafsir?.text ?? 'Tidak ada tafsir'}",
+                                                style: TextStyle(
+                                                  color: Get.isDarkMode
+                                                      ? appWhite
+                                                      : Colors.black,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ));
+                                    },
+                                    icon: Icon(Icons.info_outline),
+                                  ),
                                   IconButton(
                                     onPressed: () {},
                                     icon: Icon(
@@ -218,13 +257,14 @@ class DetailSurahView extends GetView<DetailSurahController> {
                     SizedBox(
                       height: 20,
                     ),
-                    Text(
-                      "${ayat?.translation?.text ?? "null"}",
-                      style: TextStyle(
-                        fontSize: 14,
-                      ),
-                      textAlign: TextAlign.right,
-                    ),
+                    Html(data: ayat?.translation?.text),
+                    // Text(
+                    //   "${ayat?.translation?.text ?? "null"}",
+                    //   style: TextStyle(
+                    //     fontSize: 14,
+                    //   ),
+                    //   textAlign: TextAlign.right,
+                    // ),
                     SizedBox(
                       height: 20,
                     ),

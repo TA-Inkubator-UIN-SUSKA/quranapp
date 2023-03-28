@@ -22,9 +22,9 @@ class DetailSurahController extends GetxController {
     }
   }
 
-  Future<List<Verse>> getVerse(int idSurah) async {
+  Future<List<Verse>> getVerse({required int idSurah, int idReciter = 6}) async {
     var res = await http.get(Uri.parse(
-        "${APIENDPOINT}verses/by_chapter/$idSurah?translation=33&tafsir=1&recitation=7"));
+        "${APIENDPOINT}verses/by_chapter/$idSurah?translation=33&tafsir=1&recitation=$idReciter"));
     List data = json.decode(res.body)["verses"];
     List<Verse> allVerse = data.map((e) => Verse.fromJson(e)).toList();
     return allVerse;
