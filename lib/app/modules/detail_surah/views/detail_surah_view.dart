@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 
-import 'package:get/get.dart';
+import 'package:get/get.dart'; 
 import 'package:quranapp/app/constant/theme.dart';
 import 'package:quranapp/app/data/models/surah.dart';
 import 'package:quranapp/app/data/models/verse.dart' as verse;
@@ -53,7 +53,9 @@ class DetailSurahView extends GetView<DetailSurahController> {
   FutureBuilder<List<verse.Verse>> futureSurah() {
     return FutureBuilder<List<verse.Verse>>(
       future: controller.getVerse(
-          idSurah: surahArgument.id!, idReciter: settingC.idSelectedReciter),
+          idSurah: surahArgument.id!,
+          idReciter: settingC.idSelectedReciter,
+          idTafsir: settingC.idSelectedTafsir),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Center(
@@ -168,14 +170,9 @@ class DetailSurahView extends GetView<DetailSurahController> {
                                                 textAlign: TextAlign.center,
                                               ),
                                               SizedBox(height: 20),
-                                              Text(
-                                                "${ayat?.tafsir?.text ?? 'Tidak ada tafsir'}",
-                                                style: TextStyle(
-                                                  color: Get.isDarkMode
-                                                      ? appWhite
-                                                      : Colors.black,
-                                                ),
-                                              ),
+                                              Html(
+                                                  data: ayat?.tafsir?.text ??
+                                                      'Tidak ada tafsir'),
                                             ],
                                           ),
                                         ),
@@ -282,6 +279,11 @@ class DetailSurahView extends GetView<DetailSurahController> {
     return FutureBuilder<List<WordChapter>>(
       future: controller.getWordVerses(surahArgument.id!),
       builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        }
         return ListView.builder(
           padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
           itemCount: snapshot.data?.length,
@@ -292,7 +294,7 @@ class DetailSurahView extends GetView<DetailSurahController> {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text(
-                  "${verse?.textUthmani}",
+                  "text",
                   style: TextStyle(
                     color: appGreenDark,
                     fontWeight: FontWeight.w500,
@@ -313,25 +315,31 @@ class DetailSurahView extends GetView<DetailSurahController> {
                       itemBuilder: (_, int indexGrid) {
                         Words? word = verse?.words?[indexGrid];
 
-                        return Container(
-                          decoration: BoxDecoration(
-                              color: appGreenLight,
-                              borderRadius: BorderRadius.circular(20)),
-                          child: Center(
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Text(
-                                  "${indexGrid + 1}",
-                                  style: TextStyle(fontSize: 10),
-                                ),
-                                Text("${word?.text}"),
-                                Text("${word?.transliteration?.text}"),
-                                Text(
-                                  "${word?.translation?.text}",
-                                  style: TextStyle(fontSize: 10),
-                                ),
-                              ],
+                        return GestureDetector(
+                          onTap: () {
+                            controller.playAudioWBW(word!.audioUrl!);
+                            print(word.audioUrl);
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                                color: appGreenLight,
+                                borderRadius: BorderRadius.circular(20)),
+                            child: Center(
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                    "${indexGrid + 1}",
+                                    style: TextStyle(fontSize: 10),
+                                  ),
+                                  Text("${word?.text}"),
+                                  Text("${word?.transliteration?.text}"),
+                                  Text(
+                                    "${word?.translation?.text}",
+                                    style: TextStyle(fontSize: 10),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         );

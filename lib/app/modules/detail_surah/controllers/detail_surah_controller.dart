@@ -9,22 +9,23 @@ import 'package:quranapp/app/data/models/word_chapter.dart';
 import 'package:just_audio/just_audio.dart';
 
 class DetailSurahController extends GetxController {
-  final switchWBWController = GetStorage();
+  final getStorageController = GetStorage();
   final player = AudioPlayer();
   var isWBW = false;
   Verse? lastVerse;
 
   DetailSurahController() {
-    if (switchWBWController.read("switchWBW") != null) {
-      isWBW = switchWBWController.read("switchWBW");
+    if (getStorageController.read("switchWBW") != null) {
+      isWBW = getStorageController.read("switchWBW");
       update();
       print("isWBW : ${isWBW}");
     }
   }
 
-  Future<List<Verse>> getVerse({required int idSurah, int idReciter = 6}) async {
+  Future<List<Verse>> getVerse(
+      {required int idSurah, int idReciter = 6, int idTafsir = 1}) async {
     var res = await http.get(Uri.parse(
-        "${APIENDPOINT}verses/by_chapter/$idSurah?translation=33&tafsir=1&recitation=$idReciter"));
+        "${APIENDPOINT}verses/by_chapter/$idSurah?translation=33&tafsir=$idTafsir&recitation=$idReciter"));
     List data = json.decode(res.body)["verses"];
     List<Verse> allVerse = data.map((e) => Verse.fromJson(e)).toList();
     return allVerse;
@@ -43,6 +44,19 @@ class DetailSurahController extends GetxController {
     return listVerse;
   }
 
+  // Future<List<WordChapter>> getWordVerses(int id) async {
+  //   var url =
+  //       "$APIENDPOINT/words/by_chapter/1?language=13";
+  //   var res = await http.get(Uri.parse(url));
+  //   List rawlistVerse = json.decode(res.body)["words"];
+  //   List<WordChapter> listVerse =
+  //       rawlistVerse.map((e) => WordChapter.fromJson(e)).toList();
+
+  //   // print(listVerse[0]["words"]);
+  //   print(listVerse);
+  //   return listVerse;
+  // }
+
   void playAudio(Verse? ayat) async {
     if (ayat?.audio?.url != null) {
       try {
@@ -54,9 +68,12 @@ class DetailSurahController extends GetxController {
         lastVerse = ayat;
         lastVerse!.kondisiAudio = "stop";
         update();
-
+        String url = ayat!.audio!.url!;
+        if (ayat.audio!.url!.contains("https") == false) {
+          url = "https:${ayat.audio!.url!}";
+        }
         await player.stop();
-        await player.setUrl(ayat!.audio!.url!);
+        await player.setUrl(url);
         ayat.kondisiAudio = "playing";
         update();
         await player.play();
@@ -154,6 +171,39 @@ class DetailSurahController extends GetxController {
       Get.defaultDialog(
         title: "Terjadi Kesalahan!",
         middleText: "An error occured: $e",
+      );
+    }
+  }
+
+  void playAudioWBW(String url) async {
+    if (url != null) {
+      try {
+        await player.stop();
+        await player.setUrl("https://verses.quran.com/$url");
+
+        await player.play();
+
+        await player.stop();
+      } on PlayerException catch (e) {
+        Get.defaultDialog(
+          title: "Terjadi Kesalahan!",
+          middleText: "Error code: ${e.code} - Error message: ${e.message}",
+        );
+      } on PlayerInterruptedException catch (e) {
+        Get.defaultDialog(
+          title: "Terjadi Kesalahan!",
+          middleText: "Connection aborted: ${e.message}",
+        );
+      } catch (e) {
+        Get.defaultDialog(
+          title: "Terjadi Kesalahan!",
+          middleText: "An error occured: $e",
+        );
+      }
+    } else {
+      Get.defaultDialog(
+        title: "Terjadi Kesalahan!",
+        middleText: "URL Audio tidak valid!",
       );
     }
   }

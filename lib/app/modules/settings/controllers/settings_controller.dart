@@ -5,13 +5,18 @@ import 'package:get_storage/get_storage.dart';
 import 'package:quranapp/app/constant/api.dart';
 import 'package:quranapp/app/data/models/reciter.dart';
 import 'package:http/http.dart' as http;
+import 'package:quranapp/app/data/models/tafsir.dart' as tafsir;
+import 'package:quranapp/app/data/models/verse.dart';
 
 class SettingsController extends GetxController {
   final switchWBWController = GetStorage();
-  final selectedIDReciterController = GetStorage();
+  final selectedIDController = GetStorage();
   var isWBW = false;
   var idSelectedReciter = 6;
   List<Reciter> allReciters = [];
+  var idSelectedTafsir = 1;
+  var indexSelectedTafsir = 0;
+  List<tafsir.Tafsir> allTafsirs = [];
 
   SettingsController() {
     if (switchWBWController.read("switchWBW") != null) {
@@ -19,10 +24,18 @@ class SettingsController extends GetxController {
       update();
       print("isWBW : ${isWBW}");
     }
-    if (selectedIDReciterController.read("idReciter") != null) {
-      idSelectedReciter = selectedIDReciterController.read("idReciter");
+    if (selectedIDController.read("idReciter") != null) {
+      idSelectedReciter = selectedIDController.read("idReciter");
       update();
       print("idSelectedReciter : ${idSelectedReciter}");
+    }
+    if (selectedIDController.read("idTafsir") != null &&
+        selectedIDController.read("indexTafsir") != null) {
+      idSelectedTafsir = selectedIDController.read("idTafsir");
+      indexSelectedTafsir = selectedIDController.read("indexTafsir");
+      update();
+      print(
+          "idSelectedReciter : ${idSelectedTafsir} - index : $indexSelectedTafsir");
     }
   }
 
@@ -35,7 +48,7 @@ class SettingsController extends GetxController {
 
   selectIDReciter(int id) {
     idSelectedReciter = id;
-    selectedIDReciterController.write("idReciter", id);
+    selectedIDController.write("idReciter", id);
     update();
     print(id);
   }
@@ -49,12 +62,20 @@ class SettingsController extends GetxController {
     return listReciter;
   }
 
-  Future getTafsirs() async {
+  selectIDTafsir(int id) {
+    idSelectedTafsir = id;
+    selectedIDController.write("idTafsir", id);
+    update();
+    print(id);
+  }
+
+  Future<List<tafsir.Tafsir>> getTafsirs() async {
     var res = await http.get(Uri.parse("${APIENDPOINT}tafsirs"));
     List data = json.decode(res.body);
-    print(data);
-    
 
-
+    List<tafsir.Tafsir> listTafsir =
+        data.map((e) => tafsir.Tafsir.fromJson(e)).toList();
+    allTafsirs = listTafsir;
+    return listTafsir;
   }
 }

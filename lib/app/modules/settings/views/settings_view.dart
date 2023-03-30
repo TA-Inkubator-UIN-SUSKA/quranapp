@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:quranapp/app/constant/theme.dart';
+import 'package:quranapp/app/data/models/tafsir.dart';
 import 'package:quranapp/app/modules/detail_surah/controllers/detail_surah_controller.dart';
 
 import '../controllers/settings_controller.dart';
 
 class SettingsView extends GetView<SettingsController> {
   final detailSurahC = Get.find<DetailSurahController>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,7 +26,10 @@ class SettingsView extends GetView<SettingsController> {
         centerTitle: true,
       ),
       body: FutureBuilder(
-        future: controller.getReciter(),
+        future: Future.wait([
+          controller.getReciter(),
+          controller.getTafsirs(),
+        ]),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(
@@ -66,7 +71,7 @@ class SettingsView extends GetView<SettingsController> {
                 builder: (c) {
                   return DropdownButtonFormField(
                     value: c.idSelectedReciter,
-                    hint: Text(c.allReciters[c.idSelectedReciter].reciterName ??
+                    hint: Text(c.allReciters[c.idSelectedReciter-1].reciterName ??
                         "null"),
                     items: [
                       for (int i = 0; i <= c.allReciters.length - 1; i++)
@@ -93,19 +98,29 @@ class SettingsView extends GetView<SettingsController> {
               GetBuilder<SettingsController>(
                 builder: (c) {
                   return DropdownButtonFormField(
-                    value: c.idSelectedReciter,
-                    hint: Text(c.allReciters[c.idSelectedReciter].reciterName ??
-                        "null"),
+                    isExpanded: true,
+                    value: c.idSelectedTafsir,
+                    hint: Text(
+                      c.allTafsirs[c.indexSelectedTafsir].name ?? "null",
+                      overflow: TextOverflow.ellipsis,
+                    ),
                     items: [
-                      for (int i = 0; i <= c.allReciters.length - 1; i++)
+                      for (int i = 0; i <= c.allTafsirs.length - 1; i++)
                         DropdownMenuItem(
                           child: Text(
-                              "${c.allReciters[i].reciterName ?? "null"} - ${c.allReciters[i].style == "" ? "Murattal" : c.allReciters[i].style}"),
-                          value: i + 1,
+                            "${c.allTafsirs[i].name ?? "null"} - ${c.allTafsirs[i].authorName ?? "null"} - ${c.allTafsirs[i].languageName}",
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          value: c.allTafsirs[i].id,
+                          onTap: () {
+                            c.indexSelectedTafsir = i;
+                            c.selectedIDController.write("indexTafsir", i);
+                            print(i); 
+                          },
                         ),
                     ],
                     onChanged: (value) {
-                      c.selectIDReciter(value ?? 6);
+                      c.selectIDTafsir(value ?? 1);
                       detailSurahC.update();
                     },
                   );
