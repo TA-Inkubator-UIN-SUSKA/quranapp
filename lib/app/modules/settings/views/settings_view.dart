@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:quranapp/app/constant/theme.dart';
 import 'package:quranapp/app/data/models/tafsir.dart';
+import 'package:quranapp/app/modules/detail_juz/controllers/detail_juz_controller.dart';
 import 'package:quranapp/app/modules/detail_surah/controllers/detail_surah_controller.dart';
 
 import '../controllers/settings_controller.dart';
 
 class SettingsView extends GetView<SettingsController> {
-  final detailSurahC = Get.find<DetailSurahController>();
+  final detailSurahC = Get.put(DetailSurahController());
+  final detailJuzc = Get.put(DetailJuzController());
 
   @override
   Widget build(BuildContext context) {
@@ -53,6 +55,8 @@ class SettingsView extends GetView<SettingsController> {
                         onChanged: (value) {
                           detailSurahC.isWBW = value;
                           detailSurahC.update();
+                          detailJuzc.isWBW = value;
+                          detailJuzc.update();
                           controller.changeSwitchWBW(value);
                         },
                       );
@@ -71,8 +75,9 @@ class SettingsView extends GetView<SettingsController> {
                 builder: (c) {
                   return DropdownButtonFormField(
                     value: c.idSelectedReciter,
-                    hint: Text(c.allReciters[c.idSelectedReciter-1].reciterName ??
-                        "null"),
+                    hint: Text(
+                        c.allReciters[c.idSelectedReciter - 1].reciterName ??
+                            "null"),
                     items: [
                       for (int i = 0; i <= c.allReciters.length - 1; i++)
                         DropdownMenuItem(
@@ -84,6 +89,7 @@ class SettingsView extends GetView<SettingsController> {
                     onChanged: (value) {
                       c.selectIDReciter(value ?? 6);
                       detailSurahC.update();
+                      detailJuzc.update();
                     },
                   );
                 },
@@ -115,13 +121,14 @@ class SettingsView extends GetView<SettingsController> {
                           onTap: () {
                             c.indexSelectedTafsir = i;
                             c.selectedIDController.write("indexTafsir", i);
-                            print(i); 
+                            print(i);
                           },
                         ),
                     ],
                     onChanged: (value) {
                       c.selectIDTafsir(value ?? 1);
                       detailSurahC.update();
+                      detailJuzc.update();
                     },
                   );
                 },
