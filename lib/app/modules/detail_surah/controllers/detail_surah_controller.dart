@@ -1,19 +1,24 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:quranapp/app/constant/api.dart';
+import 'package:quranapp/app/data/db/bookmark.dart';
+import 'package:quranapp/app/data/models/surah.dart';
 import 'package:quranapp/app/data/models/verse.dart';
 import 'package:quranapp/app/data/models/word_chapter.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:quranapp/app/data/models/word_verse.dart';
+import 'package:sqflite/sqflite.dart';
 
 class DetailSurahController extends GetxController {
   final getStorageController = GetStorage();
   final player = AudioPlayer();
   var isWBW = false;
   Verse? lastVerse;
+  DatabaseManager database = DatabaseManager.instance;
 
   DetailSurahController() {
     if (getStorageController.read("switchWBW") != null) {
@@ -21,6 +26,52 @@ class DetailSurahController extends GetxController {
       update();
       print("isWBW : ${isWBW}");
     }
+  }
+
+  Future addBookmark(
+    Surah surah,
+    Verse ayat,
+    int indexAyat,
+  ) async {
+    Database db = await database.db;
+
+    bool flagExist = false;
+
+    await db.delete("bookmark");
+
+    List checkData = await db.query("bookmark",
+        where:
+            "surah = '${surah.name!.replaceAll("'", "+")}' and number_surah = ${surah.numberChapter!} and ayat = ${ayat.numberInChapter} and juz = ${ayat.idJuz} and via = 'surah' and index_ayat = $indexAyat");
+    if (checkData.length != 0) {
+      flagExist = true;
+    }
+
+    if (flagExist == false) {
+      await db.insert("bookmark", {
+        "surah": surah.name!.replaceAll("'", "+"),
+        "number_surah": surah.numberChapter!,
+        "ayat": ayat.numberInChapter!,
+        "juz": ayat.idJuz,
+        "via": "surah",
+        "index_ayat": indexAyat,
+      });
+
+      Get.back();
+      Get.snackbar(
+        "Berhasil",
+        "Berhasil menambahkan Bookmark!",
+        colorText: Colors.white,
+      );
+    } else {
+      Get.back();
+      Get.snackbar(
+        "Terjadi Kesalahan",
+        "Bookmark telah tersedia",
+        colorText: Colors.white,
+      );
+    }
+
+    var data = await db.query("bookmark");
   }
 
   Future<List<Verse>> getVerse(

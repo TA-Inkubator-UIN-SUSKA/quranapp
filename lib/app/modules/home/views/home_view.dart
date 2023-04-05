@@ -74,75 +74,184 @@ class HomeView extends GetView<HomeController> {
                   ),
                 ),
                 SizedBox(height: 20),
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    gradient: LinearGradient(
-                      colors: [
-                        appGreen.withOpacity(0.8),
-                        appGreenDark,
-                      ],
-                    ),
-                  ),
-                  width: Get.width,
-                  child: Stack(
-                    children: [
-                      Positioned(
-                        bottom: -20,
-                        right: 10,
-                        child: Opacity(
-                          opacity: 0.8,
-                          child: Container(
-                            height: 160,
-                            width: 160,
-                            child: Image.asset(
-                              'assets/images/Quran.png',
-                              fit: BoxFit.cover,
+                GetBuilder<HomeController>(
+                  builder: (c) {
+                    return FutureBuilder<Map<String, dynamic>?>(
+                      future: controller.getLastRead(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              gradient: LinearGradient(
+                                colors: [
+                                  appGreen.withOpacity(0.8),
+                                  appGreenDark,
+                                ],
+                              ),
                             ),
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(20.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
+                            width: Get.width,
+                            child: Stack(
                               children: [
-                                Icon(
-                                  Icons.menu_book_rounded,
-                                  color: appWhite,
+                                Positioned(
+                                  bottom: -50,
+                                  right: 0,
+                                  child: Opacity(
+                                    opacity: 0.8,
+                                    child: Container(
+                                      height: 160,
+                                      width: 160,
+                                      child: Image.asset(
+                                        'assets/images/Quran.png',
+                                        fit: BoxFit.contain,
+                                      ),
+                                    ),
+                                  ),
                                 ),
-                                Text(
-                                  "  Last Read",
-                                  style: TextStyle(
-                                    color: appWhite,
+                                Padding(
+                                  padding: const EdgeInsets.all(20.0),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          Icon(
+                                            Icons.menu_book_rounded,
+                                            color: appWhite,
+                                          ),
+                                          Text(
+                                            "  Last Read",
+                                            style: TextStyle(
+                                              color: appWhite,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      SizedBox(
+                                        height: 30,
+                                      ),
+                                      Text(
+                                        "Loading...",
+                                        style: TextStyle(
+                                          color: appWhite,
+                                          fontSize: 20,
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ],
                             ),
-                            SizedBox(
-                              height: 30,
-                            ),
-                            Text(
-                              "Al-Baqarah",
-                              style: TextStyle(
-                                color: appWhite,
-                                fontSize: 20,
+                          );
+                        }
+                        Map<String, dynamic>? lastRead = snapshot.data;
+                        return Material(
+                          borderRadius: BorderRadius.circular(20),
+                          color: Colors.transparent,
+                          child: InkWell(
+                            borderRadius: BorderRadius.circular(20),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20),
+                                gradient: LinearGradient(
+                                  colors: [
+                                    appGreen.withOpacity(0.8),
+                                    appGreenDark,
+                                  ],
+                                ),
+                              ),
+                              width: Get.width,
+                              child: Stack(
+                                children: [
+                                  Positioned(
+                                    bottom: -20,
+                                    right: 10,
+                                    child: Opacity(
+                                      opacity: 0.8,
+                                      child: Container(
+                                        height: 160,
+                                        width: 160,
+                                        child: Image.asset(
+                                          'assets/images/Quran.png',
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(20.0),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Icon(
+                                              Icons.menu_book_rounded,
+                                              color: appWhite,
+                                            ),
+                                            Text(
+                                              "  Last Read",
+                                              style: TextStyle(
+                                                color: appWhite,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        SizedBox(
+                                          height: 30,
+                                        ),
+                                        Text(
+                                          lastRead?["surah"]
+                                                  .toString()
+                                                  .replaceAll("+", "'") ??
+                                              "null",
+                                          style: TextStyle(
+                                            color: appWhite,
+                                            fontSize: 20,
+                                          ),
+                                        ),
+                                        Text(
+                                          "Ayat ${lastRead?["ayat"] ?? "null"}",
+                                          style: TextStyle(
+                                            color: appWhite,
+                                            fontSize: 16,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
-                            Text(
-                              "Ayat 1",
-                              style: TextStyle(
-                                color: appWhite,
-                                fontSize: 16,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
+                            onTap: () {
+                              switch (lastRead!["via"]) {
+                                // case "juz":
+                                //   Map<String, dynamic> dataMapPerJuz =
+                                //       controller.allJuz[lastRead["juz"] - 1];
+                                //   Get.toNamed(Routes.DETAIL_JUZ, arguments: {
+                                //     "juz": dataMapPerJuz,
+                                //     "bookmark": lastRead,
+                                //   });
+
+                                //   break;
+                                default:
+                                  Get.toNamed(Routes.DETAIL_SURAH, arguments: {
+                                    "name": lastRead["surah"]
+                                        .toString()
+                                        .replaceAll("+", "'"),
+                                    "number": lastRead["number_surah"],
+                                    "bookmark": lastRead,
+                                  });
+                              }
+                            },
+                          ),
+                        );
+                      },
+                    );
+                  },
                 ),
                 SizedBox(
                   height: 20,
@@ -204,7 +313,7 @@ class HomeView extends GetView<HomeController> {
                               return ListTile(
                                   onTap: () {
                                     Get.toNamed(Routes.DETAIL_SURAH,
-                                        arguments: surah);
+                                        arguments: {"surah": surah});
                                   },
                                   leading: Container(
                                     height: 40,

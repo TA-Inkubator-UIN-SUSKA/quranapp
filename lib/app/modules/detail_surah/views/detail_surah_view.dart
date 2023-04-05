@@ -9,12 +9,15 @@ import 'package:quranapp/app/data/models/word.dart';
 import 'package:quranapp/app/data/models/word_chapter.dart';
 import 'package:quranapp/app/data/models/word_verse.dart' as wordverse;
 import 'package:quranapp/app/modules/detail_surah/controllers/detail_surah_controller.dart';
+import 'package:quranapp/app/modules/home/controllers/home_controller.dart';
 import 'package:quranapp/app/modules/settings/controllers/settings_controller.dart';
 import 'package:quranapp/app/routes/app_pages.dart';
 
 class DetailSurahView extends GetView<DetailSurahController> {
-  Surah surahArgument = Get.arguments;
+  Surah surahArgument = Get.arguments["surah"];
   final settingC = Get.put(SettingsController());
+  final homeC = Get.find<HomeController>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -183,7 +186,29 @@ class DetailSurahView extends GetView<DetailSurahController> {
                                     icon: Icon(Icons.info_outline),
                                   ),
                                   IconButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      Get.defaultDialog(
+                                        title: "Bookmark",
+                                        middleText:
+                                            "Apakah anda yakin ingin menambahkan penanda?",
+                                        actions: [
+                                          ElevatedButton(
+                                            onPressed: () async {
+                                              await c.addBookmark(
+                                                surahArgument,
+                                                ayat!,
+                                                index,
+                                              );
+                                              homeC.update();
+                                            },
+                                            child: Text("Last Read"),
+                                            style: ElevatedButton.styleFrom(
+                                              backgroundColor: appGreen,
+                                            ),
+                                          ),
+                                        ],
+                                      );
+                                    },
                                     icon: Icon(
                                       Icons.bookmark_add_outlined,
                                     ),
