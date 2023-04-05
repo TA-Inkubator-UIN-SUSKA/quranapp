@@ -67,7 +67,7 @@ class HomeView extends GetView<HomeController> {
                   height: 5,
                 ),
                 Text(
-                  "Lutfi Aldri Permana",
+                  "Muslimin/Muslimat",
                   style: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.w600,

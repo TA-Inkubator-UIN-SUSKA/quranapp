@@ -16,7 +16,7 @@ class DetailJuzController extends GetxController {
   var isWBW = false;
   List<Surah> allSurah = [];
 
-  DetailSurahController() async {
+  DetailJuzController() {
     if (getStorageController.read("switchWBW") != null) {
       isWBW = getStorageController.read("switchWBW");
       update();
@@ -42,16 +42,14 @@ class DetailJuzController extends GetxController {
     return allSurah;
   }
 
-  Future<List<WordChapter>> getWordVerses(int id) async {
+  Future<List<WordVerse>> getWordVerses(int id) async {
     var url =
-        "https://api.qurancdn.com/api/qdc/verses/by_chapter/$id?words=true&per_page=all&fields=text_uthmani&word_translation_language=id";
+        "${APIENDPOINT}verses/by_juz/$id?translation=33&tafsir=1&recitation=7&words=true";
     var res = await http.get(Uri.parse(url));
     List rawlistVerse = json.decode(res.body)["verses"];
-    List<WordChapter> listVerse =
-        rawlistVerse.map((e) => WordChapter.fromJson(e)).toList();
+    List<WordVerse> listVerse =
+        rawlistVerse.map((e) => WordVerse.fromJson(e)).toList();
 
-    // print(listVerse[0]["words"]);
-    print(listVerse);
     return listVerse;
   }
 

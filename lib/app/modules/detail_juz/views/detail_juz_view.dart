@@ -6,6 +6,8 @@ import 'package:quranapp/app/constant/theme.dart';
 import 'package:quranapp/app/data/models/surah.dart';
 import 'package:quranapp/app/data/models/verse.dart' as verse;
 import 'package:quranapp/app/data/models/word_chapter.dart';
+import 'package:quranapp/app/data/models/word_verse.dart' as wordverse;
+
 import 'package:quranapp/app/modules/settings/controllers/settings_controller.dart';
 import 'package:quranapp/app/routes/app_pages.dart';
 
@@ -286,8 +288,9 @@ class DetailJuzView extends GetView<DetailJuzController> {
     );
   }
 
-  FutureBuilder<List<WordChapter>> futureWBW() {
-    return FutureBuilder<List<WordChapter>>(
+//
+  FutureBuilder<List<wordverse.WordVerse>> futureWBW() {
+    return FutureBuilder<List<wordverse.WordVerse>>(
       future: controller.getWordVerses(idJuz),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
@@ -296,21 +299,112 @@ class DetailJuzView extends GetView<DetailJuzController> {
           );
         }
         return ListView.builder(
-          padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+          padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+          shrinkWrap: true,
+          physics: ClampingScrollPhysics(),
           itemCount: snapshot.data?.length,
           itemBuilder: (context, index) {
-            WordChapter? verse = snapshot.data?[index];
+            wordverse.WordVerse? verse = snapshot.data?[index];
             int? lengthGrid = verse?.words?.length;
             return Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                Text(
-                  "text",
-                  style: TextStyle(
-                    color: appGreenDark,
-                    fontWeight: FontWeight.w500,
-                    fontSize: 24,
+                if (verse?.numberInChapter == 1)
+                  Container(
+                    width: Get.width,
+                    margin: EdgeInsets.only(
+                      bottom: 20,
+                      top: 20,
+                    ),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      gradient: LinearGradient(
+                        colors: [
+                          appGreen.withOpacity(0.8),
+                          appGreenDark,
+                        ],
+                      ),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: Column(
+                        children: [
+                          Text(
+                            '${listSurah[verse!.idChapter! - 1].name}',
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: appWhite,
+                            ),
+                          ),
+                          Text(
+                            '( ${listSurah[verse.idChapter! - 1].translatedName?.translation} )',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: appWhite,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            '${listSurah[verse.idChapter! - 1].verseCount ?? ''} Ayat | ${listSurah[verse.idChapter! + 1].revelationPlace ?? ''}',
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: appWhite,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
+                SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      height: 40,
+                      width: 40,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          fit: BoxFit.contain,
+                          image: AssetImage("assets/images/hexagonal.png"),
+                        ),
+                      ),
+                      child: Center(
+                        child: Text(
+                          "${verse?.numberInChapter}",
+                          style: TextStyle(
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: Text(
+                        "${verse?.text?.textUthmani}",
+                        textAlign: TextAlign.end,
+                        softWrap: true,
+                        style: TextStyle(
+                          color: appGreenDark,
+                          fontWeight: FontWeight.w500,
+                          fontSize: 28,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Text(
+                  "${verse?.transliteration}",
+                  textAlign: TextAlign.end,
+                  style: TextStyle(fontWeight: FontWeight.w500),
+                ),
+                Html(data: verse?.translation?.text),
+                SizedBox(
+                  height: 10,
                 ),
                 if (snapshot.hasData)
                   Directionality(
@@ -324,12 +418,12 @@ class DetailJuzView extends GetView<DetailJuzController> {
                         crossAxisCount: 3,
                       ),
                       itemBuilder: (_, int indexGrid) {
-                        Words? word = verse?.words?[indexGrid];
+                        var word = (verse!.words!)[indexGrid];
 
                         return GestureDetector(
                           onTap: () {
-                            controller.playAudioWBW(word!.audioUrl!);
-                            print(word.audioUrl);
+                            controller.playAudioWBW(word.audio!);
+                            print(word.audio!);
                           },
                           child: Container(
                             decoration: BoxDecoration(
@@ -343,10 +437,10 @@ class DetailJuzView extends GetView<DetailJuzController> {
                                     "${indexGrid + 1}",
                                     style: TextStyle(fontSize: 10),
                                   ),
-                                  Text("${word?.text}"),
-                                  Text("${word?.transliteration?.text}"),
+                                  Text("${word.textUthmani}"),
+                                  Text("${word.transliteration}"),
                                   Text(
-                                    "${word?.translation?.text}",
+                                    word.wordTranslations!.text!,
                                     style: TextStyle(fontSize: 10),
                                   ),
                                 ],
@@ -355,7 +449,7 @@ class DetailJuzView extends GetView<DetailJuzController> {
                           ),
                         );
                       },
-                      itemCount: lengthGrid! - 1,
+                      itemCount: lengthGrid!,
                     ),
                   ),
               ],

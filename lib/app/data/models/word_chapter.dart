@@ -1,3 +1,5 @@
+// http://localhost:5000/verses/by_chapter/1?translation=17&tafsir=1&recitation=7&words=true
+
 class WordChapter {
   int? id;
   int? verseNumber;

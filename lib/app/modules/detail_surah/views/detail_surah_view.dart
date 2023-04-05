@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 
-import 'package:get/get.dart'; 
+import 'package:get/get.dart';
 import 'package:quranapp/app/constant/theme.dart';
 import 'package:quranapp/app/data/models/surah.dart';
 import 'package:quranapp/app/data/models/verse.dart' as verse;
+import 'package:quranapp/app/data/models/word.dart';
 import 'package:quranapp/app/data/models/word_chapter.dart';
+import 'package:quranapp/app/data/models/word_verse.dart' as wordverse;
 import 'package:quranapp/app/modules/detail_surah/controllers/detail_surah_controller.dart';
 import 'package:quranapp/app/modules/settings/controllers/settings_controller.dart';
 import 'package:quranapp/app/routes/app_pages.dart';
@@ -275,8 +277,8 @@ class DetailSurahView extends GetView<DetailSurahController> {
     );
   }
 
-  FutureBuilder<List<WordChapter>> futureWBW() {
-    return FutureBuilder<List<WordChapter>>(
+  FutureBuilder<List<wordverse.WordVerse>> futureWBW() {
+    return FutureBuilder<List<wordverse.WordVerse>>(
       future: controller.getWordVerses(surahArgument.id!),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
@@ -284,72 +286,163 @@ class DetailSurahView extends GetView<DetailSurahController> {
             child: CircularProgressIndicator(),
           );
         }
-        return ListView.builder(
-          padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
-          itemCount: snapshot.data?.length,
-          itemBuilder: (context, index) {
-            WordChapter? verse = snapshot.data?[index];
-            int? lengthGrid = verse?.words?.length;
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Text(
-                  "text",
-                  style: TextStyle(
-                    color: appGreenDark,
-                    fontWeight: FontWeight.w500,
-                    fontSize: 24,
-                  ),
+        return ListView(
+          padding: EdgeInsets.fromLTRB(20, 0, 20, 20),
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                gradient: LinearGradient(
+                  colors: [
+                    appGreen.withOpacity(0.8),
+                    appGreenDark,
+                  ],
                 ),
-                if (snapshot.hasData)
-                  Directionality(
-                    textDirection: TextDirection.rtl,
-                    child: GridView.builder(
-                      shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisSpacing: 20,
-                        mainAxisSpacing: 10,
-                        crossAxisCount: 3,
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Column(
+                  children: [
+                    Text(
+                      '${surahArgument.name}',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: appWhite,
                       ),
-                      itemBuilder: (_, int indexGrid) {
-                        Words? word = verse?.words?[indexGrid];
-
-                        return GestureDetector(
-                          onTap: () {
-                            controller.playAudioWBW(word!.audioUrl!);
-                            print(word.audioUrl);
-                          },
-                          child: Container(
-                            decoration: BoxDecoration(
-                                color: appGreenLight,
-                                borderRadius: BorderRadius.circular(20)),
-                            child: Center(
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Text(
-                                    "${indexGrid + 1}",
-                                    style: TextStyle(fontSize: 10),
-                                  ),
-                                  Text("${word?.text}"),
-                                  Text("${word?.transliteration?.text}"),
-                                  Text(
-                                    "${word?.translation?.text}",
-                                    style: TextStyle(fontSize: 10),
-                                  ),
-                                ],
+                    ),
+                    Text(
+                      '( ${surahArgument.translatedName?.translation} )',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: appWhite,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      '${surahArgument.verseCount ?? ''} Ayat | ${surahArgument.revelationPlace ?? ''}',
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: appWhite,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            ListView.builder(
+              padding: EdgeInsets.only(top: 20),
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              itemCount: snapshot.data?.length,
+              itemBuilder: (context, index) {
+                wordverse.WordVerse? verse = snapshot.data?[index];
+                int? lengthGrid = verse?.words?.length;
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                          height: 40,
+                          width: 40,
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              fit: BoxFit.contain,
+                              image: AssetImage("assets/images/hexagonal.png"),
+                            ),
+                          ),
+                          child: Center(
+                            child: Text(
+                              "${index + 1}",
+                              style: TextStyle(
+                                color: Colors.black,
                               ),
                             ),
                           ),
-                        );
-                      },
-                      itemCount: lengthGrid! - 1,
+                        ),
+                        Expanded(
+                          child: Text(
+                            "${verse?.text?.textUthmani}",
+                            textAlign: TextAlign.end,
+                            softWrap: true,
+                            style: TextStyle(
+                              color: appGreenDark,
+                              fontWeight: FontWeight.w500,
+                              fontSize: 28,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
-              ],
-            );
-          },
+                    Text(
+                      "${verse?.transliteration}",
+                      textAlign: TextAlign.end,
+                      style: TextStyle(fontWeight: FontWeight.w500),
+                    ),
+                    Html(data: verse?.translation?.text),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    if (snapshot.hasData)
+                      Directionality(
+                        textDirection: TextDirection.rtl,
+                        child: GridView.builder(
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisSpacing: 20,
+                            mainAxisSpacing: 10,
+                            crossAxisCount: 3,
+                          ),
+                          itemBuilder: (_, int indexGrid) {
+                            var word = (verse!.words!)[indexGrid];
+
+                            return GestureDetector(
+                              onTap: () {
+                                controller.playAudioWBW(word.audio!);
+                                print(word.audio!);
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    color: appGreenLight,
+                                    borderRadius: BorderRadius.circular(20)),
+                                child: Center(
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Text(
+                                        "${indexGrid + 1}",
+                                        style: TextStyle(fontSize: 10),
+                                      ),
+                                      Text("${word.textUthmani}"),
+                                      Text("${word.transliteration}"),
+                                      Text(
+                                        word.wordTranslations!.text!,
+                                        style: TextStyle(fontSize: 10),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                          itemCount: lengthGrid!,
+                        ),
+                      ),
+                  ],
+                );
+              },
+            ),
+          ],
         );
       },
     );

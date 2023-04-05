@@ -7,6 +7,7 @@ import 'package:quranapp/app/constant/api.dart';
 import 'package:quranapp/app/data/models/verse.dart';
 import 'package:quranapp/app/data/models/word_chapter.dart';
 import 'package:just_audio/just_audio.dart';
+import 'package:quranapp/app/data/models/word_verse.dart';
 
 class DetailSurahController extends GetxController {
   final getStorageController = GetStorage();
@@ -31,24 +32,11 @@ class DetailSurahController extends GetxController {
     return allVerse;
   }
 
-  Future<List<WordChapter>> getWordVerses(int id) async {
-    var url =
-        "https://api.qurancdn.com/api/qdc/verses/by_chapter/$id?words=true&per_page=all&fields=text_uthmani&word_translation_language=id";
-    var res = await http.get(Uri.parse(url));
-    List rawlistVerse = json.decode(res.body)["verses"];
-    List<WordChapter> listVerse =
-        rawlistVerse.map((e) => WordChapter.fromJson(e)).toList();
-
-    // print(listVerse[0]["words"]);
-    print(listVerse);
-    return listVerse;
-  }
-
   // Future<List<WordChapter>> getWordVerses(int id) async {
   //   var url =
-  //       "$APIENDPOINT/words/by_chapter/1?language=13";
+  //       "https://api.qurancdn.com/api/qdc/verses/by_chapter/$id?words=true&per_page=all&fields=text_uthmani&word_translation_language=id";
   //   var res = await http.get(Uri.parse(url));
-  //   List rawlistVerse = json.decode(res.body)["words"];
+  //   List rawlistVerse = json.decode(res.body)["verses"];
   //   List<WordChapter> listVerse =
   //       rawlistVerse.map((e) => WordChapter.fromJson(e)).toList();
 
@@ -56,6 +44,17 @@ class DetailSurahController extends GetxController {
   //   print(listVerse);
   //   return listVerse;
   // }
+
+  Future<List<WordVerse>> getWordVerses(int id) async {
+    var url =
+        "${APIENDPOINT}verses/by_chapter/$id?translation=33&tafsir=1&recitation=7&words=true";
+    var res = await http.get(Uri.parse(url));
+    List rawlistVerse = json.decode(res.body)["verses"];
+    List<WordVerse> listVerse =
+        rawlistVerse.map((e) => WordVerse.fromJson(e)).toList();
+
+    return listVerse;
+  }
 
   void playAudio(Verse? ayat) async {
     if (ayat?.audio?.url != null) {
@@ -179,7 +178,7 @@ class DetailSurahController extends GetxController {
     if (url != null) {
       try {
         await player.stop();
-        await player.setUrl("https://verses.quran.com/$url");
+        await player.setUrl(url);
 
         await player.play();
 
