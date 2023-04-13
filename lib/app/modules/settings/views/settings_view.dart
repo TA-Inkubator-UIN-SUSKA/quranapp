@@ -133,6 +133,44 @@ class SettingsView extends GetView<SettingsController> {
                   );
                 },
               ),
+              SizedBox(
+                height: 20,
+              ),
+              Text(
+                "Pilih Style Penulisan Al-Quran",
+                style: TextStyle(fontSize: 12, color: Colors.black54),
+              ),
+              GetBuilder<SettingsController>(
+                builder: (c) {
+                  return DropdownButtonFormField(
+                    isExpanded: true,
+                    value: c.indexSelectedStyle,
+                    hint: Text(
+                      c.allStyle[c.indexSelectedStyle] ?? "null",
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    items: [
+                      for (int i = 0; i <= c.allStyle.length - 1; i++)
+                        DropdownMenuItem(
+                          child: Text(
+                            c.allStyle[i],
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          value: i,
+                          onTap: () {
+                            c.indexSelectedStyle = i;
+                            c.selectedIDController.write("indexStyle", i);
+                          },
+                        ),
+                    ],
+                    onChanged: (value) {
+                      c.selectStyle(value ?? 0);
+                      detailSurahC.update();
+                      detailJuzc.update();
+                    },
+                  );
+                },
+              ),
             ],
           );
         },

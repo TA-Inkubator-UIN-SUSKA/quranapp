@@ -1,2 +1,2 @@
 // const APIENDPOINT = "https://api.mfikridev.xyz/";
-const APIENDPOINT = "http://172.16.142.64:5000/";
+const APIENDPOINT = "http://192.168.38.150:5000/";

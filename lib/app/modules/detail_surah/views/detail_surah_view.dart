@@ -257,15 +257,61 @@ class DetailSurahView extends GetView<DetailSurahController> {
                         ),
                       ),
                     ),
+                    // "${ayat?.text?.textUthmani ?? "null"}",
                     Container(
                       padding: EdgeInsets.only(left: 20),
-                      child: Text(
-                        "${ayat?.text?.textUthmani ?? "null"}",
-                        style: TextStyle(
-                          fontSize: 30,
-                        ),
-                        textAlign: TextAlign.right,
-                      ),
+                      child: Builder(builder: (context) {
+                        switch (settingC.indexSelectedStyle) {
+                          case 0:
+                            return Text(
+                              "${ayat?.text?.textUthmani ?? "null"}",
+                              style: TextStyle(
+                                fontSize: 30,
+                              ),
+                              textAlign: TextAlign.right,
+                            );
+                          case 1:
+                            return Text(
+                              "${ayat?.text?.textUthmaniSimple ?? "null"}",
+                              style: TextStyle(
+                                fontSize: 30,
+                              ),
+                              textAlign: TextAlign.right,
+                            );
+                          case 2:
+                            return Text(
+                              "${ayat?.text?.textImlaei ?? "null"}",
+                              style: TextStyle(
+                                fontSize: 30,
+                              ),
+                              textAlign: TextAlign.right,
+                            );
+                          case 3:
+                            return Text(
+                              "${ayat?.text?.textImlaeiSimple ?? "null"}",
+                              style: TextStyle(
+                                fontSize: 30,
+                              ),
+                              textAlign: TextAlign.right,
+                            );
+                          case 4:
+                            return Text(
+                              "${ayat?.text?.textIndopak ?? "null"}",
+                              style: TextStyle(
+                                fontSize: 30,
+                              ),
+                              textAlign: TextAlign.right,
+                            );
+                          default:
+                            return Text(
+                              "${ayat?.text?.textUthmani ?? "null"}",
+                              style: TextStyle(
+                                fontSize: 30,
+                              ),
+                              textAlign: TextAlign.right,
+                            );
+                        }
+                      }),
                     ),
                     SizedBox(
                       height: 10,
@@ -394,16 +440,76 @@ class DetailSurahView extends GetView<DetailSurahController> {
                           ),
                         ),
                         Expanded(
-                          child: Text(
-                            "${verse?.text?.textUthmani}",
-                            textAlign: TextAlign.end,
-                            softWrap: true,
-                            style: TextStyle(
-                              color: appGreenDark,
-                              fontWeight: FontWeight.w500,
-                              fontSize: 28,
-                            ),
-                          ),
+                          child: Builder(builder: (context) {
+                            switch (settingC.indexSelectedStyle) {
+                              case 0:
+                                return Text(
+                                  "${verse?.text?.textUthmani}",
+                                  textAlign: TextAlign.end,
+                                  softWrap: true,
+                                  style: TextStyle(
+                                    color: appGreenDark,
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 28,
+                                  ),
+                                );
+                              case 1:
+                                return Text(
+                                  "${verse?.text?.textUthmaniSimple}",
+                                  textAlign: TextAlign.end,
+                                  softWrap: true,
+                                  style: TextStyle(
+                                    color: appGreenDark,
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 28,
+                                  ),
+                                );
+                              case 2:
+                                return Text(
+                                  "${verse?.text?.textImlaei}",
+                                  textAlign: TextAlign.end,
+                                  softWrap: true,
+                                  style: TextStyle(
+                                    color: appGreenDark,
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 28,
+                                  ),
+                                );
+                              case 3:
+                                return Text(
+                                  "${verse?.text?.textImlaeiSimple}",
+                                  textAlign: TextAlign.end,
+                                  softWrap: true,
+                                  style: TextStyle(
+                                    color: appGreenDark,
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 28,
+                                  ),
+                                );
+                              case 4:
+                                return Text(
+                                  "${verse?.text?.textIndopak}",
+                                  textAlign: TextAlign.end,
+                                  softWrap: true,
+                                  style: TextStyle(
+                                    color: appGreenDark,
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 28,
+                                  ),
+                                );
+                              default:
+                                return Text(
+                                  "${verse?.text?.textUthmani}",
+                                  textAlign: TextAlign.end,
+                                  softWrap: true,
+                                  style: TextStyle(
+                                    color: appGreenDark,
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 28,
+                                  ),
+                                );
+                            }
+                          }),
                         ),
                       ],
                     ),
@@ -448,7 +554,24 @@ class DetailSurahView extends GetView<DetailSurahController> {
                                         "${indexGrid + 1}",
                                         style: TextStyle(fontSize: 10),
                                       ),
-                                      Text("${word.textUthmani}"),
+                                      Builder(builder: (context) {
+                                        switch (settingC.indexSelectedStyle) {
+                                          case 0:
+                                            return Text("${word.textUthmani}");
+                                          case 1:
+                                            return Text(
+                                                "${word.textUthmaniSimple}");
+                                          case 2:
+                                            return Text("${word.textImlaei}");
+                                          case 3:
+                                            return Text(
+                                                "${word.textImlaeiSimple}");
+                                          case 4:
+                                            return Text("${word.textIndopak}");
+                                          default:
+                                            return Text("${word.textUthmani}");
+                                        }
+                                      }),
                                       Text("${word.transliteration}"),
                                       Text(
                                         word.wordTranslations!.text!,

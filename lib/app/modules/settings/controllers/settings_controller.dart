@@ -16,7 +16,16 @@ class SettingsController extends GetxController {
   List<Reciter> allReciters = [];
   var idSelectedTafsir = 1;
   var indexSelectedTafsir = 0;
+  var indexSelectedStyle = 0;
   List<tafsir.Tafsir> allTafsirs = [];
+
+  List allStyle = [
+    "Uthmani",
+    "Uthmani Simple",
+    "Imlaei",
+    "Imlaei Simple",
+    "Indopak"
+  ];
 
   SettingsController() {
     if (switchWBWController.read("switchWBW") != null) {
@@ -36,6 +45,11 @@ class SettingsController extends GetxController {
       update();
       print(
           "idSelectedReciter : ${idSelectedTafsir} - index : $indexSelectedTafsir");
+    }
+    if (selectedIDController.read("indexStyle") != null) {
+      indexSelectedStyle = selectedIDController.read("indexStyle");
+      update();
+      print("indexSelectedStyle : ${indexSelectedStyle}");
     }
   }
 
@@ -67,6 +81,12 @@ class SettingsController extends GetxController {
     selectedIDController.write("idTafsir", id);
     update();
     print(id);
+  }
+
+  selectStyle(int style) {
+    indexSelectedStyle = style;
+    selectedIDController.write("indexStyle", style);
+    update();
   }
 
   Future<List<tafsir.Tafsir>> getTafsirs() async {

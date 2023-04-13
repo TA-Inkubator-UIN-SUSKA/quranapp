@@ -60,14 +60,14 @@ class DetailSurahController extends GetxController {
       Get.snackbar(
         "Berhasil",
         "Berhasil menambahkan Bookmark!",
-        colorText: Colors.white,
+        colorText: Colors.black,
       );
     } else {
       Get.back();
       Get.snackbar(
         "Terjadi Kesalahan",
         "Bookmark telah tersedia",
-        colorText: Colors.white,
+        colorText: Colors.black,
       );
     }
 
