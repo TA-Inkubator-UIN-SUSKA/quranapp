@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
+
 import 'package:quranapp/app/routes/app_pages.dart';
 
 import '../controllers/splash_screen_controller.dart';
@@ -36,7 +37,12 @@ class SplashScreenView extends GetView<SplashScreenController> {
               child: SizedBox(
                 width: 300,
                 height: 300,
-                child: Lottie.asset("assets/lotties/splashscreen.json"),
+                child: Builder(builder: (context) {
+                  if (kIsWeb) {
+                    return Image.asset("assets/images/splash.png");
+                  }
+                  return Lottie.asset("assets/lotties/splashscreen.json");
+                }),
               ),
             ),
             const SizedBox(height: 30),
