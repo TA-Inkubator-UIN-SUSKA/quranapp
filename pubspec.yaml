@@ -10,9 +10,9 @@ dependencies:
   get: 4.6.5
   http: 0.13.5
   lottie: 2.2.0
-  just_audio: 0.9.31
+  just_audio: 0.9.34
   get_storage: 2.1.1
-  flutter_html: 2.2.1
+  flutter_html: ^3.0.0-alpha.6
   sqflite: 2.2.4+1
   path_provider: 2.0.12
   flutter: 
