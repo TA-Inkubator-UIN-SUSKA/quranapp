@@ -8,7 +8,6 @@ import 'package:quranapp/app/constant/api.dart';
 import 'package:quranapp/app/data/db/bookmark.dart';
 import 'package:quranapp/app/data/models/surah.dart';
 import 'package:quranapp/app/data/models/verse.dart';
-import 'package:quranapp/app/data/models/word_chapter.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:quranapp/app/data/models/word_verse.dart';
 import 'package:sqflite/sqflite.dart';
@@ -24,7 +23,7 @@ class DetailSurahController extends GetxController {
     if (getStorageController.read("switchWBW") != null) {
       isWBW = getStorageController.read("switchWBW");
       update();
-      print("isWBW : ${isWBW}");
+      // print("isWBW : ${isWBW}");
     }
   }
 
@@ -42,7 +41,7 @@ class DetailSurahController extends GetxController {
     List checkData = await db.query("bookmark",
         where:
             "surah = '${surah.name!.replaceAll("'", "+")}' and number_surah = ${surah.numberChapter!} and ayat = ${ayat.numberInChapter} and juz = ${ayat.idJuz} and via = 'surah' and index_ayat = $indexAyat");
-    if (checkData.length != 0) {
+    if (checkData.isNotEmpty) {
       flagExist = true;
     }
 
@@ -77,7 +76,7 @@ class DetailSurahController extends GetxController {
   Future<List<Verse>> getVerse(
       {required int idSurah, int idReciter = 6, int idTafsir = 1}) async {
     var res = await http.get(Uri.parse(
-        "${APIENDPOINT}verses/by_chapter/$idSurah?translation=33&tafsir=$idTafsir&recitation=$idReciter"));
+        "${baseUrl}verses/by_chapter/$idSurah?translation=33&tafsir=$idTafsir&recitation=$idReciter"));
     List data = json.decode(res.body)["verses"];
     List<Verse> allVerse = data.map((e) => Verse.fromJson(e)).toList();
     return allVerse;
@@ -98,7 +97,7 @@ class DetailSurahController extends GetxController {
 
   Future<List<WordVerse>> getWordVerses(int id) async {
     var url =
-        "${APIENDPOINT}verses/by_chapter/$id?translation=33&tafsir=1&recitation=7&words=true";
+        "${baseUrl}verses/by_chapter/$id?translation=33&tafsir=1&recitation=7&words=true";
     var res = await http.get(Uri.parse(url));
     List rawlistVerse = json.decode(res.body)["verses"];
     List<WordVerse> listVerse =
@@ -110,9 +109,7 @@ class DetailSurahController extends GetxController {
   void playAudio(Verse? ayat) async {
     if (ayat?.audio?.url != null) {
       try {
-        if (lastVerse == null) {
-          lastVerse = ayat;
-        }
+        lastVerse ??= ayat;
 
         lastVerse!.kondisiAudio = "stop";
         lastVerse = ayat;

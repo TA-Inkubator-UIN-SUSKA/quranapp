@@ -7,7 +7,6 @@ import 'package:http/http.dart' as http;
 import 'package:quranapp/app/constant/api.dart';
 import 'package:quranapp/app/data/models/surah.dart';
 import 'package:quranapp/app/data/models/verse.dart' as verse;
-import 'package:quranapp/app/data/models/word_chapter.dart';
 import 'package:quranapp/app/data/models/word_verse.dart';
 
 class DetailJuzController extends GetxController {
@@ -20,14 +19,14 @@ class DetailJuzController extends GetxController {
     if (getStorageController.read("switchWBW") != null) {
       isWBW = getStorageController.read("switchWBW");
       update();
-      print("isWBW : ${isWBW}");
+      // print("isWBW : ${isWBW}");
     }
   }
 
   Future<List<verse.Verse>> getVerse(
       {required int idJuz, int idReciter = 6, int idTafsir = 1}) async {
     var res = await http.get(Uri.parse(
-        "${APIENDPOINT}verses/by_juz/$idJuz?translation=33&tafsir=$idTafsir&recitation=$idReciter"));
+        "${baseUrl}verses/by_juz/$idJuz?translation=33&tafsir=$idTafsir&recitation=$idReciter"));
     List data = json.decode(res.body)["verses"];
     List<verse.Verse> allVerse =
         data.map((e) => verse.Verse.fromJson(e)).toList();
@@ -35,7 +34,7 @@ class DetailJuzController extends GetxController {
   }
 
   Future<List<Surah>> getSurahs() async {
-    var res = await http.get(Uri.parse("${APIENDPOINT}chapters?language=id"));
+    var res = await http.get(Uri.parse("${baseUrl}chapters?language=id"));
     List data = json.decode(res.body);
 
     List<Surah> allSurah = data.map((e) => Surah.fromJson(e)).toList();
@@ -44,7 +43,7 @@ class DetailJuzController extends GetxController {
 
   Future<List<WordVerse>> getWordVerses(int id) async {
     var url =
-        "${APIENDPOINT}verses/by_juz/$id?translation=33&tafsir=1&recitation=7&words=true";
+        "${baseUrl}verses/by_juz/$id?translation=33&tafsir=1&recitation=7&words=true";
     var res = await http.get(Uri.parse(url));
     List rawlistVerse = json.decode(res.body)["verses"];
     List<WordVerse> listVerse =

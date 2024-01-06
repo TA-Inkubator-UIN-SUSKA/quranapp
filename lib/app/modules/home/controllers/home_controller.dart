@@ -16,14 +16,14 @@ class HomeController extends GetxController {
     List<Map<String, dynamic>> dataLastRead = await db.query(
       "bookmark",
     );
-    if (dataLastRead.length == 0) {
+    if (dataLastRead.isEmpty) {
       return null;
     } else {}
     return dataLastRead.first;
   }
 
   Future<List<Surah>> getSurahs() async {
-    var res = await http.get(Uri.parse("${APIENDPOINT}chapters?language=id"));
+    var res = await http.get(Uri.parse("${baseUrl}chapters?language=id"));
     List data = json.decode(res.body);
 
     List<Surah> allSurah = data.map((e) => Surah.fromJson(e)).toList();
@@ -31,7 +31,7 @@ class HomeController extends GetxController {
   }
 
   Future<List<Juz>> getJuzs() async {
-    var res = await http.get(Uri.parse("${APIENDPOINT}juzs"));
+    var res = await http.get(Uri.parse("${baseUrl}juzs"));
     List data = json.decode(res.body);
 
     List<Juz> allJuz = data.map((e) => Juz.fromJson(e)).toList();

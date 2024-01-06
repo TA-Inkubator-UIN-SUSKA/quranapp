@@ -5,8 +5,6 @@ import 'package:get/get.dart';
 import 'package:quranapp/app/constant/theme.dart';
 import 'package:quranapp/app/data/models/surah.dart';
 import 'package:quranapp/app/data/models/verse.dart' as verse;
-import 'package:quranapp/app/data/models/word.dart';
-import 'package:quranapp/app/data/models/word_chapter.dart';
 import 'package:quranapp/app/data/models/word_verse.dart' as wordverse;
 import 'package:quranapp/app/modules/detail_surah/controllers/detail_surah_controller.dart';
 import 'package:quranapp/app/modules/home/controllers/home_controller.dart';
@@ -18,14 +16,16 @@ class DetailSurahView extends GetView<DetailSurahController> {
   final settingC = Get.put(SettingsController());
   final homeC = Get.find<HomeController>();
 
+  DetailSurahView({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          iconTheme: IconThemeData(color: appGreenDark),
+          iconTheme: const IconThemeData(color: appGreenDark),
           title: Text(
             '${surahArgument.id}. ${surahArgument.name}',
-            style: TextStyle(
+            style: const TextStyle(
               color: appGreenDark,
             ),
           ),
@@ -37,7 +37,7 @@ class DetailSurahView extends GetView<DetailSurahController> {
               onPressed: () {
                 Get.toNamed(Routes.SETTINGS);
               },
-              icon: Icon(
+              icon: const Icon(
                 Icons.settings,
                 color: appGreenDark,
               ),
@@ -63,7 +63,7 @@ class DetailSurahView extends GetView<DetailSurahController> {
           idTafsir: settingC.idSelectedTafsir),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Center(
+          return const Center(
             child: CircularProgressIndicator(),
           );
         }
@@ -86,7 +86,7 @@ class DetailSurahView extends GetView<DetailSurahController> {
                   children: [
                     Text(
                       '${surahArgument.name}',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                         color: appWhite,
@@ -94,18 +94,18 @@ class DetailSurahView extends GetView<DetailSurahController> {
                     ),
                     Text(
                       '( ${surahArgument.translatedName?.translation} )',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
                         color: appWhite,
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     Text(
                       '${surahArgument.verseCount ?? ''} Ayat | ${surahArgument.revelationPlace ?? ''}',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 16,
                         color: appWhite,
                       ),
@@ -115,9 +115,9 @@ class DetailSurahView extends GetView<DetailSurahController> {
               ),
             ),
             ListView.builder(
-              padding: EdgeInsets.only(top: 20),
+              padding: const EdgeInsets.only(top: 20),
               shrinkWrap: true,
-              physics: ClampingScrollPhysics(),
+              physics: const ClampingScrollPhysics(),
               itemCount: snapshot.data?.length,
               itemBuilder: (context, index) {
                 verse.Verse? ayat = snapshot.data?[index];
@@ -146,7 +146,7 @@ class DetailSurahView extends GetView<DetailSurahController> {
                               child: Center(
                                 child: Text(
                                   "${index + 1}",
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     color: Colors.white,
                                   ),
                                 ),
@@ -163,18 +163,18 @@ class DetailSurahView extends GetView<DetailSurahController> {
                                               BorderRadius.circular(10),
                                         ),
                                         child: Container(
-                                          padding: EdgeInsets.all(20),
+                                          padding: const EdgeInsets.all(20),
                                           child: ListView(
                                             children: [
                                               Text(
                                                 "Tafsir Ayat ${index + 1}",
-                                                style: TextStyle(
+                                                style: const TextStyle(
                                                   fontWeight: FontWeight.bold,
                                                   fontSize: 20,
                                                 ),
                                                 textAlign: TextAlign.center,
                                               ),
-                                              SizedBox(height: 20),
+                                              const SizedBox(height: 20),
                                               Html(
                                                   data: ayat?.tafsir?.text ??
                                                       'Tidak ada tafsir'),
@@ -183,7 +183,7 @@ class DetailSurahView extends GetView<DetailSurahController> {
                                         ),
                                       ));
                                     },
-                                    icon: Icon(Icons.info_outline),
+                                    icon: const Icon(Icons.info_outline),
                                   ),
                                   IconButton(
                                     onPressed: () {
@@ -201,15 +201,15 @@ class DetailSurahView extends GetView<DetailSurahController> {
                                               );
                                               homeC.update();
                                             },
-                                            child: Text("Last Read"),
                                             style: ElevatedButton.styleFrom(
                                               backgroundColor: appGreen,
                                             ),
+                                            child: const Text("Last Read"),
                                           ),
                                         ],
                                       );
                                     },
-                                    icon: Icon(
+                                    icon: const Icon(
                                       Icons.bookmark_add_outlined,
                                     ),
                                   ),
@@ -218,7 +218,7 @@ class DetailSurahView extends GetView<DetailSurahController> {
                                           onPressed: () {
                                             c.playAudio(ayat);
                                           },
-                                          icon: Icon(
+                                          icon: const Icon(
                                             Icons.play_arrow,
                                           ),
                                         )
@@ -230,7 +230,7 @@ class DetailSurahView extends GetView<DetailSurahController> {
                                                     onPressed: () {
                                                       c.pauseAudio(ayat!);
                                                     },
-                                                    icon: Icon(
+                                                    icon: const Icon(
                                                       Icons.pause,
                                                     ),
                                                   )
@@ -238,7 +238,7 @@ class DetailSurahView extends GetView<DetailSurahController> {
                                                     onPressed: () {
                                                       c.resumeAudio(ayat!);
                                                     },
-                                                    icon: Icon(
+                                                    icon: const Icon(
                                                       Icons.play_arrow,
                                                     ),
                                                   ),
@@ -246,7 +246,7 @@ class DetailSurahView extends GetView<DetailSurahController> {
                                               onPressed: () {
                                                 c.stopAudio(ayat!);
                                               },
-                                              icon: Icon(Icons.stop),
+                                              icon: const Icon(Icons.stop),
                                             ),
                                           ],
                                         ),
@@ -259,53 +259,53 @@ class DetailSurahView extends GetView<DetailSurahController> {
                     ),
                     // "${ayat?.text?.textUthmani ?? "null"}",
                     Container(
-                      padding: EdgeInsets.only(left: 20),
+                      padding: const EdgeInsets.only(left: 20),
                       child: Builder(builder: (context) {
                         switch (settingC.indexSelectedStyle) {
                           case 0:
                             return Text(
-                              "${ayat?.text?.textUthmani ?? "null"}",
-                              style: TextStyle(
+                              ayat?.text?.textUthmani ?? "null",
+                              style: const TextStyle(
                                 fontSize: 30,
                               ),
                               textAlign: TextAlign.right,
                             );
                           case 1:
                             return Text(
-                              "${ayat?.text?.textUthmaniSimple ?? "null"}",
-                              style: TextStyle(
+                              ayat?.text?.textUthmaniSimple ?? "null",
+                              style: const TextStyle(
                                 fontSize: 30,
                               ),
                               textAlign: TextAlign.right,
                             );
                           case 2:
                             return Text(
-                              "${ayat?.text?.textImlaei ?? "null"}",
-                              style: TextStyle(
+                              ayat?.text?.textImlaei ?? "null",
+                              style: const TextStyle(
                                 fontSize: 30,
                               ),
                               textAlign: TextAlign.right,
                             );
                           case 3:
                             return Text(
-                              "${ayat?.text?.textImlaeiSimple ?? "null"}",
-                              style: TextStyle(
+                              ayat?.text?.textImlaeiSimple ?? "null",
+                              style: const TextStyle(
                                 fontSize: 30,
                               ),
                               textAlign: TextAlign.right,
                             );
                           case 4:
                             return Text(
-                              "${ayat?.text?.textIndopak ?? "null"}",
-                              style: TextStyle(
+                              ayat?.text?.textIndopak ?? "null",
+                              style: const TextStyle(
                                 fontSize: 30,
                               ),
                               textAlign: TextAlign.right,
                             );
                           default:
                             return Text(
-                              "${ayat?.text?.textUthmani ?? "null"}",
-                              style: TextStyle(
+                              ayat?.text?.textUthmani ?? "null",
+                              style: const TextStyle(
                                 fontSize: 30,
                               ),
                               textAlign: TextAlign.right,
@@ -313,18 +313,18 @@ class DetailSurahView extends GetView<DetailSurahController> {
                         }
                       }),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     Text(
-                      "${ayat?.transliteration ?? "null"}",
-                      style: TextStyle(
+                      ayat?.transliteration ?? "null",
+                      style: const TextStyle(
                         fontSize: 14,
                         fontStyle: FontStyle.italic,
                       ),
                       textAlign: TextAlign.right,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     Html(data: ayat?.translation?.text),
@@ -335,7 +335,7 @@ class DetailSurahView extends GetView<DetailSurahController> {
                     //   ),
                     //   textAlign: TextAlign.right,
                     // ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                   ],
@@ -353,12 +353,12 @@ class DetailSurahView extends GetView<DetailSurahController> {
       future: controller.getWordVerses(surahArgument.id!),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Center(
+          return const Center(
             child: CircularProgressIndicator(),
           );
         }
         return ListView(
-          padding: EdgeInsets.fromLTRB(20, 0, 20, 20),
+          padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
           children: [
             Container(
               decoration: BoxDecoration(
@@ -376,7 +376,7 @@ class DetailSurahView extends GetView<DetailSurahController> {
                   children: [
                     Text(
                       '${surahArgument.name}',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                         color: appWhite,
@@ -384,18 +384,18 @@ class DetailSurahView extends GetView<DetailSurahController> {
                     ),
                     Text(
                       '( ${surahArgument.translatedName?.translation} )',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
                         color: appWhite,
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     Text(
                       '${surahArgument.verseCount ?? ''} Ayat | ${surahArgument.revelationPlace ?? ''}',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 16,
                         color: appWhite,
                       ),
@@ -405,9 +405,9 @@ class DetailSurahView extends GetView<DetailSurahController> {
               ),
             ),
             ListView.builder(
-              padding: EdgeInsets.only(top: 20),
+              padding: const EdgeInsets.only(top: 20),
               shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               itemCount: snapshot.data?.length,
               itemBuilder: (context, index) {
                 wordverse.WordVerse? verse = snapshot.data?[index];
@@ -415,7 +415,7 @@ class DetailSurahView extends GetView<DetailSurahController> {
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     Row(
@@ -424,7 +424,7 @@ class DetailSurahView extends GetView<DetailSurahController> {
                         Container(
                           height: 40,
                           width: 40,
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                             image: DecorationImage(
                               fit: BoxFit.contain,
                               image: AssetImage("assets/images/hexagonal.png"),
@@ -433,7 +433,7 @@ class DetailSurahView extends GetView<DetailSurahController> {
                           child: Center(
                             child: Text(
                               "${index + 1}",
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: Colors.black,
                               ),
                             ),
@@ -447,7 +447,7 @@ class DetailSurahView extends GetView<DetailSurahController> {
                                   "${verse?.text?.textUthmani}",
                                   textAlign: TextAlign.end,
                                   softWrap: true,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     color: appGreenDark,
                                     fontWeight: FontWeight.w500,
                                     fontSize: 28,
@@ -458,7 +458,7 @@ class DetailSurahView extends GetView<DetailSurahController> {
                                   "${verse?.text?.textUthmaniSimple}",
                                   textAlign: TextAlign.end,
                                   softWrap: true,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     color: appGreenDark,
                                     fontWeight: FontWeight.w500,
                                     fontSize: 28,
@@ -469,7 +469,7 @@ class DetailSurahView extends GetView<DetailSurahController> {
                                   "${verse?.text?.textImlaei}",
                                   textAlign: TextAlign.end,
                                   softWrap: true,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     color: appGreenDark,
                                     fontWeight: FontWeight.w500,
                                     fontSize: 28,
@@ -480,7 +480,7 @@ class DetailSurahView extends GetView<DetailSurahController> {
                                   "${verse?.text?.textImlaeiSimple}",
                                   textAlign: TextAlign.end,
                                   softWrap: true,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     color: appGreenDark,
                                     fontWeight: FontWeight.w500,
                                     fontSize: 28,
@@ -491,7 +491,7 @@ class DetailSurahView extends GetView<DetailSurahController> {
                                   "${verse?.text?.textIndopak}",
                                   textAlign: TextAlign.end,
                                   softWrap: true,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     color: appGreenDark,
                                     fontWeight: FontWeight.w500,
                                     fontSize: 28,
@@ -502,7 +502,7 @@ class DetailSurahView extends GetView<DetailSurahController> {
                                   "${verse?.text?.textUthmani}",
                                   textAlign: TextAlign.end,
                                   softWrap: true,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     color: appGreenDark,
                                     fontWeight: FontWeight.w500,
                                     fontSize: 28,
@@ -516,10 +516,10 @@ class DetailSurahView extends GetView<DetailSurahController> {
                     Text(
                       "${verse?.transliteration}",
                       textAlign: TextAlign.end,
-                      style: TextStyle(fontWeight: FontWeight.w500),
+                      style: const TextStyle(fontWeight: FontWeight.w500),
                     ),
                     Html(data: verse?.translation?.text),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     if (snapshot.hasData)
@@ -527,9 +527,9 @@ class DetailSurahView extends GetView<DetailSurahController> {
                         textDirection: TextDirection.rtl,
                         child: GridView.builder(
                           shrinkWrap: true,
-                          physics: NeverScrollableScrollPhysics(),
+                          physics: const NeverScrollableScrollPhysics(),
                           gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
+                              const SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisSpacing: 20,
                             mainAxisSpacing: 10,
                             crossAxisCount: 3,
@@ -540,7 +540,7 @@ class DetailSurahView extends GetView<DetailSurahController> {
                             return GestureDetector(
                               onTap: () {
                                 controller.playAudioWBW(word.audio!);
-                                print(word.audio!);
+                                // print(word.audio!);
                               },
                               child: Container(
                                 decoration: BoxDecoration(
@@ -552,7 +552,7 @@ class DetailSurahView extends GetView<DetailSurahController> {
                                     children: [
                                       Text(
                                         "${indexGrid + 1}",
-                                        style: TextStyle(fontSize: 10),
+                                        style: const TextStyle(fontSize: 10),
                                       ),
                                       Builder(builder: (context) {
                                         switch (settingC.indexSelectedStyle) {
@@ -575,7 +575,7 @@ class DetailSurahView extends GetView<DetailSurahController> {
                                       Text("${word.transliteration}"),
                                       Text(
                                         word.wordTranslations!.text!,
-                                        style: TextStyle(fontSize: 10),
+                                        style: const TextStyle(fontSize: 10),
                                       ),
                                     ],
                                   ),

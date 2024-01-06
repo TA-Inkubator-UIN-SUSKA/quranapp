@@ -18,12 +18,12 @@ class Tafsir {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
-    data['author_name'] = this.authorName;
-    data['slug'] = this.slug;
-    data['language_name'] = this.languageName;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['name'] = name;
+    data['author_name'] = authorName;
+    data['slug'] = slug;
+    data['language_name'] = languageName;
     return data;
   }
 }

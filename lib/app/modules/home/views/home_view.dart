@@ -30,24 +30,24 @@ class HomeView extends GetView<HomeController> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  const Text(
                     "Assalamualaikum",
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 5,
                   ),
-                  Text(
+                  const Text(
                     "Muslimin/Muslimat",
                     style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   GetBuilder<HomeController>(
                     builder: (c) {
                       return FutureBuilder<Map<String, dynamic>?>(
@@ -73,7 +73,7 @@ class HomeView extends GetView<HomeController> {
                                     right: 0,
                                     child: Opacity(
                                       opacity: 0.8,
-                                      child: Container(
+                                      child: SizedBox(
                                         height: 160,
                                         width: 160,
                                         child: Image.asset(
@@ -83,8 +83,8 @@ class HomeView extends GetView<HomeController> {
                                       ),
                                     ),
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(20.0),
+                                  const Padding(
+                                    padding: EdgeInsets.all(20.0),
                                     child: Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
@@ -144,7 +144,7 @@ class HomeView extends GetView<HomeController> {
                                       right: 10,
                                       child: Opacity(
                                         opacity: 0.8,
-                                        child: Container(
+                                        child: SizedBox(
                                           height: 160,
                                           width: 160,
                                           child: Image.asset(
@@ -160,7 +160,7 @@ class HomeView extends GetView<HomeController> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
-                                          Row(
+                                          const Row(
                                             children: [
                                               Icon(
                                                 Icons.menu_book_rounded,
@@ -174,7 +174,7 @@ class HomeView extends GetView<HomeController> {
                                               ),
                                             ],
                                           ),
-                                          SizedBox(
+                                          const SizedBox(
                                             height: 30,
                                           ),
                                           Text(
@@ -182,14 +182,14 @@ class HomeView extends GetView<HomeController> {
                                                     .toString()
                                                     .replaceAll("+", "'") ??
                                                 "null",
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                               color: appWhite,
                                               fontSize: 20,
                                             ),
                                           ),
                                           Text(
                                             "Ayat ${lastRead?["ayat"] ?? "null"}",
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                               color: appWhite,
                                               fontSize: 16,
                                             ),
@@ -227,7 +227,7 @@ class HomeView extends GetView<HomeController> {
                       );
                     },
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   Container(
@@ -237,25 +237,25 @@ class HomeView extends GetView<HomeController> {
                         boxShadow: [
                           BoxShadow(
                             color: Colors.grey.shade400,
-                            offset: Offset(0.0, 0.5),
+                            offset: const Offset(0.0, 0.5),
                             blurRadius: 0.5,
                           )
                         ]),
                     child: TabBar(
-                      indicator: UnderlineTabIndicator(
+                      indicator: const UnderlineTabIndicator(
                         borderSide: BorderSide(color: appGreen2, width: 3),
                         insets: EdgeInsets.symmetric(horizontal: 60),
                       ),
                       labelColor: appGreenDark,
-                      labelStyle: TextStyle(
+                      labelStyle: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w500,
                       ),
                       unselectedLabelStyle:
-                          TextStyle(fontWeight: FontWeight.w400),
+                          const TextStyle(fontWeight: FontWeight.w400),
                       unselectedLabelColor: Colors.grey.shade600,
-                      labelPadding: EdgeInsets.all(2),
-                      tabs: [
+                      labelPadding: const EdgeInsets.all(2),
+                      tabs: const [
                         Tab(
                           text: "Surah",
                         ),
@@ -265,7 +265,7 @@ class HomeView extends GetView<HomeController> {
                       ],
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   Expanded(
@@ -276,7 +276,7 @@ class HomeView extends GetView<HomeController> {
                           builder: (context, snapshot) {
                             if (snapshot.connectionState ==
                                 ConnectionState.waiting) {
-                              return Center(
+                              return const Center(
                                 child: CircularProgressIndicator(),
                               );
                             }
@@ -301,7 +301,7 @@ class HomeView extends GetView<HomeController> {
                                     title: Text("${surah.name}"),
                                     subtitle: Text(
                                       "${surah.revelationPlace} - ${surah.translatedName?.translation} - ${surah.verseCount} Ayat",
-                                      style: TextStyle(fontSize: 12),
+                                      style: const TextStyle(fontSize: 12),
                                     ),
                                     trailing: Text("${surah.arabicName}"));
                               },
@@ -313,7 +313,7 @@ class HomeView extends GetView<HomeController> {
                           builder: (context, snapshot) {
                             if (snapshot.connectionState ==
                                 ConnectionState.waiting) {
-                              return Center(
+                              return const Center(
                                 child: CircularProgressIndicator(),
                               );
                             }
@@ -341,17 +341,17 @@ class HomeView extends GetView<HomeController> {
                                     children: [
                                       Text(
                                         "Start : ${juz.juzStartInfo}",
-                                        style: TextStyle(fontSize: 12),
+                                        style: const TextStyle(fontSize: 12),
                                       ),
                                       Text(
                                         "End : ${juz.juzEndInfo}",
-                                        style: TextStyle(fontSize: 12),
+                                        style: const TextStyle(fontSize: 12),
                                       ),
                                     ],
                                   ),
                                   trailing: IconButton(
                                     onPressed: () {},
-                                    icon: Icon(Icons.more_vert),
+                                    icon: const Icon(Icons.more_vert),
                                   ),
                                 );
                               },

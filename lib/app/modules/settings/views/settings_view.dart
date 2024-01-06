@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:quranapp/app/constant/theme.dart';
-import 'package:quranapp/app/data/models/tafsir.dart';
 import 'package:quranapp/app/modules/detail_juz/controllers/detail_juz_controller.dart';
 import 'package:quranapp/app/modules/detail_surah/controllers/detail_surah_controller.dart';
 
@@ -12,12 +11,14 @@ class SettingsView extends GetView<SettingsController> {
   final detailSurahC = Get.put(DetailSurahController());
   final detailJuzc = Get.put(DetailJuzController());
 
+  SettingsView({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        iconTheme: IconThemeData(color: appWhite),
-        title: Text(
+        iconTheme: const IconThemeData(color: appWhite),
+        title: const Text(
           'Settings',
           style: TextStyle(
             color: appWhite,
@@ -34,17 +35,17 @@ class SettingsView extends GetView<SettingsController> {
         ]),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(
+            return const Center(
               child: CircularProgressIndicator(),
             );
           }
           return ListView(
-            padding: EdgeInsets.all(20),
+            padding: const EdgeInsets.all(20),
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
+                  const Text(
                     "Kata per Kata",
                     style: TextStyle(fontSize: 16),
                   ),
@@ -64,10 +65,10 @@ class SettingsView extends GetView<SettingsController> {
                   ),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
-              Text(
+              const Text(
                 "Pilih Qari",
                 style: TextStyle(fontSize: 12, color: Colors.black54),
               ),
@@ -81,9 +82,9 @@ class SettingsView extends GetView<SettingsController> {
                     items: [
                       for (int i = 0; i <= c.allReciters.length - 1; i++)
                         DropdownMenuItem(
+                          value: i + 1,
                           child: Text(
                               "${c.allReciters[i].reciterName ?? "null"} - ${c.allReciters[i].style == "" ? "Murattal" : c.allReciters[i].style}"),
-                          value: i + 1,
                         ),
                     ],
                     onChanged: (value) {
@@ -94,10 +95,10 @@ class SettingsView extends GetView<SettingsController> {
                   );
                 },
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
-              Text(
+              const Text(
                 "Pilih Tafsir",
                 style: TextStyle(fontSize: 12, color: Colors.black54),
               ),
@@ -113,16 +114,16 @@ class SettingsView extends GetView<SettingsController> {
                     items: [
                       for (int i = 0; i <= c.allTafsirs.length - 1; i++)
                         DropdownMenuItem(
-                          child: Text(
-                            "${c.allTafsirs[i].name ?? "null"} - ${c.allTafsirs[i].authorName ?? "null"} - ${c.allTafsirs[i].languageName}",
-                            overflow: TextOverflow.ellipsis,
-                          ),
                           value: c.allTafsirs[i].id,
                           onTap: () {
                             c.indexSelectedTafsir = i;
                             c.selectedIDController.write("indexTafsir", i);
-                            print(i);
+                            // print(i);
                           },
+                          child: Text(
+                            "${c.allTafsirs[i].name ?? "null"} - ${c.allTafsirs[i].authorName ?? "null"} - ${c.allTafsirs[i].languageName}",
+                            overflow: TextOverflow.ellipsis,
+                          ),
                         ),
                     ],
                     onChanged: (value) {
@@ -133,10 +134,10 @@ class SettingsView extends GetView<SettingsController> {
                   );
                 },
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
-              Text(
+              const Text(
                 "Pilih Style Penulisan Al-Quran",
                 style: TextStyle(fontSize: 12, color: Colors.black54),
               ),
@@ -152,15 +153,15 @@ class SettingsView extends GetView<SettingsController> {
                     items: [
                       for (int i = 0; i <= c.allStyle.length - 1; i++)
                         DropdownMenuItem(
-                          child: Text(
-                            c.allStyle[i],
-                            overflow: TextOverflow.ellipsis,
-                          ),
                           value: i,
                           onTap: () {
                             c.indexSelectedStyle = i;
                             c.selectedIDController.write("indexStyle", i);
                           },
+                          child: Text(
+                            c.allStyle[i],
+                            overflow: TextOverflow.ellipsis,
+                          ),
                         ),
                     ],
                     onChanged: (value) {

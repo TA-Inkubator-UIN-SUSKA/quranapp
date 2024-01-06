@@ -40,25 +40,25 @@ class WordChapter {
     if (json['words'] != null) {
       words = <Words>[];
       json['words'].forEach((v) {
-        words!.add(new Words.fromJson(v));
+        words!.add(Words.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['verse_number'] = this.verseNumber;
-    data['verse_key'] = this.verseKey;
-    data['hizb_number'] = this.hizbNumber;
-    data['rub_el_hizb_number'] = this.rubElHizbNumber;
-    data['ruku_number'] = this.rukuNumber;
-    data['manzil_number'] = this.manzilNumber;
-    data['text_uthmani'] = this.textUthmani;
-    data['page_number'] = this.pageNumber;
-    data['juz_number'] = this.juzNumber;
-    if (this.words != null) {
-      data['words'] = this.words!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['verse_number'] = verseNumber;
+    data['verse_key'] = verseKey;
+    data['hizb_number'] = hizbNumber;
+    data['rub_el_hizb_number'] = rubElHizbNumber;
+    data['ruku_number'] = rukuNumber;
+    data['manzil_number'] = manzilNumber;
+    data['text_uthmani'] = textUthmani;
+    data['page_number'] = pageNumber;
+    data['juz_number'] = juzNumber;
+    if (words != null) {
+      data['words'] = words!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -95,27 +95,27 @@ class Words {
     lineNumber = json['line_number'];
     text = json['text'];
     translation = json['translation'] != null
-        ? new Translation.fromJson(json['translation'])
+        ? Translation.fromJson(json['translation'])
         : null;
     transliteration = json['transliteration'] != null
-        ? new Translation.fromJson(json['transliteration'])
+        ? Translation.fromJson(json['transliteration'])
         : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['position'] = this.position;
-    data['audio_url'] = this.audioUrl;
-    data['char_type_name'] = this.charTypeName;
-    data['page_number'] = this.pageNumber;
-    data['line_number'] = this.lineNumber;
-    data['text'] = this.text;
-    if (this.translation != null) {
-      data['translation'] = this.translation!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['position'] = position;
+    data['audio_url'] = audioUrl;
+    data['char_type_name'] = charTypeName;
+    data['page_number'] = pageNumber;
+    data['line_number'] = lineNumber;
+    data['text'] = text;
+    if (translation != null) {
+      data['translation'] = translation!.toJson();
     }
-    if (this.transliteration != null) {
-      data['transliteration'] = this.transliteration!.toJson();
+    if (transliteration != null) {
+      data['transliteration'] = transliteration!.toJson();
     }
     return data;
   }
@@ -135,10 +135,10 @@ class Translation {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['text'] = this.text;
-    data['language_name'] = this.languageName;
-    data['language_id'] = this.languageId;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['text'] = text;
+    data['language_name'] = languageName;
+    data['language_id'] = languageId;
     return data;
   }
 }

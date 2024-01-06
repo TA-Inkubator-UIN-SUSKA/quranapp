@@ -51,7 +51,7 @@ class Word {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['id'] = id;
     data['text_uthmani'] = textUthmani;
     data['text_uthmani_simple'] = textUthmaniSimple;

@@ -29,21 +29,21 @@ class Surah {
     revelationPlace = json['revelation_place'];
     verseCount = json['verse_count'];
     translatedName = json['translated_name'] != null
-        ? new TranslatedName.fromJson(json['translated_name'])
+        ? TranslatedName.fromJson(json['translated_name'])
         : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
-    data['number_chapter'] = this.numberChapter;
-    data['arabic_name'] = this.arabicName;
-    data['revelation_order'] = this.revelationOrder;
-    data['revelation_place'] = this.revelationPlace;
-    data['verse_count'] = this.verseCount;
-    if (this.translatedName != null) {
-      data['translated_name'] = this.translatedName!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['name'] = name;
+    data['number_chapter'] = numberChapter;
+    data['arabic_name'] = arabicName;
+    data['revelation_order'] = revelationOrder;
+    data['revelation_place'] = revelationPlace;
+    data['verse_count'] = verseCount;
+    if (translatedName != null) {
+      data['translated_name'] = translatedName!.toJson();
     }
     return data;
   }
@@ -61,9 +61,9 @@ class TranslatedName {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['language_name'] = this.languageName;
-    data['translation'] = this.translation;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['language_name'] = languageName;
+    data['translation'] = translation;
     return data;
   }
 }

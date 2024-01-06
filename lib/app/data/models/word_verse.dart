@@ -30,42 +30,42 @@ class WordVerse {
     idChapter = json['id_chapter'];
     numberInChapter = json['number_in_chapter'];
     transliteration = json['transliteration'];
-    text = json['text'] != null ? new Text.fromJson(json['text']) : null;
+    text = json['text'] != null ? Text.fromJson(json['text']) : null;
     translation = json['translation'] != null
-        ? new Translation.fromJson(json['translation'])
+        ? Translation.fromJson(json['translation'])
         : null;
-    audio = json['audio'] != null ? new Audio.fromJson(json['audio']) : null;
+    audio = json['audio'] != null ? Audio.fromJson(json['audio']) : null;
     tafsir =
-        json['tafsir'] != null ? new Tafsir.fromJson(json['tafsir']) : null;
+        json['tafsir'] != null ? Tafsir.fromJson(json['tafsir']) : null;
     if (json['words'] != null) {
       words = <Words>[];
       json['words'].forEach((v) {
-        words!.add(new Words.fromJson(v));
+        words!.add(Words.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id_verse'] = this.idVerse;
-    data['id_juz'] = this.idJuz;
-    data['id_chapter'] = this.idChapter;
-    data['number_in_chapter'] = this.numberInChapter;
-    data['transliteration'] = this.transliteration;
-    if (this.text != null) {
-      data['text'] = this.text!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id_verse'] = idVerse;
+    data['id_juz'] = idJuz;
+    data['id_chapter'] = idChapter;
+    data['number_in_chapter'] = numberInChapter;
+    data['transliteration'] = transliteration;
+    if (text != null) {
+      data['text'] = text!.toJson();
     }
-    if (this.translation != null) {
-      data['translation'] = this.translation!.toJson();
+    if (translation != null) {
+      data['translation'] = translation!.toJson();
     }
-    if (this.audio != null) {
-      data['audio'] = this.audio!.toJson();
+    if (audio != null) {
+      data['audio'] = audio!.toJson();
     }
-    if (this.tafsir != null) {
-      data['tafsir'] = this.tafsir!.toJson();
+    if (tafsir != null) {
+      data['tafsir'] = tafsir!.toJson();
     }
-    if (this.words != null) {
-      data['words'] = this.words!.map((v) => v.toJson()).toList();
+    if (words != null) {
+      data['words'] = words!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -94,12 +94,12 @@ class Text {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['text_uthmani'] = this.textUthmani;
-    data['text_uthmani_simple'] = this.textUthmaniSimple;
-    data['text_imlaei'] = this.textImlaei;
-    data['text_imlaei_simple'] = this.textImlaeiSimple;
-    data['text_indopak'] = this.textIndopak;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['text_uthmani'] = textUthmani;
+    data['text_uthmani_simple'] = textUthmaniSimple;
+    data['text_imlaei'] = textImlaei;
+    data['text_imlaei_simple'] = textImlaeiSimple;
+    data['text_indopak'] = textIndopak;
     return data;
   }
 }
@@ -118,10 +118,10 @@ class Translation {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['text'] = this.text;
-    data['id_translation'] = this.idTranslation;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['text'] = text;
+    data['id_translation'] = idTranslation;
     return data;
   }
 }
@@ -140,10 +140,10 @@ class Audio {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['url'] = this.url;
-    data['id_recitation'] = this.idRecitation;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['url'] = url;
+    data['id_recitation'] = idRecitation;
     return data;
   }
 }
@@ -162,10 +162,10 @@ class Tafsir {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['text'] = this.text;
-    data['id_tafsir'] = this.idTafsir;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['text'] = text;
+    data['id_tafsir'] = idTafsir;
     return data;
   }
 }
@@ -223,29 +223,29 @@ class Words {
     unicodeIndopak = json['unicode_indopak'];
     idVerse = json['id_verse'];
     wordTranslations = json['word_translations'] != null
-        ? new WordTranslations.fromJson(json['word_translations'])
+        ? WordTranslations.fromJson(json['word_translations'])
         : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['text_uthmani'] = this.textUthmani;
-    data['text_uthmani_simple'] = this.textUthmaniSimple;
-    data['text_imlaei'] = this.textImlaei;
-    data['text_imlaei_simple'] = this.textImlaeiSimple;
-    data['text_indopak'] = this.textIndopak;
-    data['number'] = this.number;
-    data['audio'] = this.audio;
-    data['transliteration'] = this.transliteration;
-    data['unicode'] = this.unicode;
-    data['unicode_uthmani_simple'] = this.unicodeUthmaniSimple;
-    data['unicode_imlaei'] = this.unicodeImlaei;
-    data['unicode_imlaei_simple'] = this.unicodeImlaeiSimple;
-    data['unicode_indopak'] = this.unicodeIndopak;
-    data['id_verse'] = this.idVerse;
-    if (this.wordTranslations != null) {
-      data['word_translations'] = this.wordTranslations!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['text_uthmani'] = textUthmani;
+    data['text_uthmani_simple'] = textUthmaniSimple;
+    data['text_imlaei'] = textImlaei;
+    data['text_imlaei_simple'] = textImlaeiSimple;
+    data['text_indopak'] = textIndopak;
+    data['number'] = number;
+    data['audio'] = audio;
+    data['transliteration'] = transliteration;
+    data['unicode'] = unicode;
+    data['unicode_uthmani_simple'] = unicodeUthmaniSimple;
+    data['unicode_imlaei'] = unicodeImlaei;
+    data['unicode_imlaei_simple'] = unicodeImlaeiSimple;
+    data['unicode_indopak'] = unicodeIndopak;
+    data['id_verse'] = idVerse;
+    if (wordTranslations != null) {
+      data['word_translations'] = wordTranslations!.toJson();
     }
     return data;
   }
@@ -267,11 +267,11 @@ class WordTranslations {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['text'] = this.text;
-    data['id_language'] = this.idLanguage;
-    data['id_word_verse'] = this.idWordVerse;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['text'] = text;
+    data['id_language'] = idLanguage;
+    data['id_word_verse'] = idWordVerse;
     return data;
   }
 }

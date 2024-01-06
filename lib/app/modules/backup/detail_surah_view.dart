@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -6,14 +8,16 @@ import 'package:quranapp/app/modules/detail_surah/controllers/detail_surah_contr
 
 class DetailSurahView extends GetView<DetailSurahController> {
   int idSurah = Get.arguments;
+
+  DetailSurahView({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          iconTheme: IconThemeData(color: appGreenDark),
+          iconTheme: const IconThemeData(color: appGreenDark),
           title: Text(
-            '${idSurah}. Al -Fatihah',
-            style: TextStyle(
+            '$idSurah. Al -Fatihah',
+            style: const TextStyle(
               color: appGreenDark,
             ),
           ),
@@ -23,7 +27,7 @@ class DetailSurahView extends GetView<DetailSurahController> {
           actions: [
             IconButton(
               onPressed: () {},
-              icon: Icon(
+              icon: const Icon(
                 Icons.settings,
                 color: appGreenDark,
               ),
@@ -36,7 +40,7 @@ class DetailSurahView extends GetView<DetailSurahController> {
               children: [
                 ListView.builder(
                   shrinkWrap: true,
-                  physics: ClampingScrollPhysics(),
+                  physics: const ClampingScrollPhysics(),
                   itemCount: 7,
                   itemBuilder: (BuildContext context, int index) {
                     return Padding(
@@ -46,13 +50,13 @@ class DetailSurahView extends GetView<DetailSurahController> {
                         children: [
                           Container(
                             width: Get.width,
-                            padding: EdgeInsets.all(30),
+                            padding: const EdgeInsets.all(30),
                             decoration: BoxDecoration(
                               color: appGreenLight,
                               borderRadius: BorderRadius.circular(20),
                               border: Border.all(color: appGreenDark, width: 2),
                             ),
-                            child: Text(
+                            child: const Text(
                               "بِسْمِ ٱللَّهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ",
                               textAlign: TextAlign.right,
                               style: TextStyle(
@@ -60,22 +64,22 @@ class DetailSurahView extends GetView<DetailSurahController> {
                               ),
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 10,
                           ),
                           Text(
                             "${index + 1}. lorem lorem lorem",
                             textAlign: TextAlign.left,
-                            style: TextStyle(
+                            style: const TextStyle(
                                 fontWeight: FontWeight.w500,
                                 fontStyle: FontStyle.italic),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 10,
                           ),
                           Text(
                             "${index + 1}. Lorem ipsum dolor sit amet.",
-                            style: TextStyle(),
+                            style: const TextStyle(),
                           ),
                         ],
                       ),
@@ -84,7 +88,7 @@ class DetailSurahView extends GetView<DetailSurahController> {
                 ),
               ],
             );
-          },
+          }, future: null,
         ));
   }
 }
