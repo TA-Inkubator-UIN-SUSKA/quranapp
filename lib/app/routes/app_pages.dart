@@ -1,3 +1,5 @@
+// ignore_for_file: constant_identifier_names
+
 import 'package:get/get.dart';
 
 import '../modules/detail_juz/bindings/detail_juz_binding.dart';
@@ -27,7 +29,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.SPLASH_SCREEN,
-      page: () => SplashScreenView(),
+      page: () => const SplashScreenView(),
       binding: SplashScreenBinding(),
     ),
     GetPage(

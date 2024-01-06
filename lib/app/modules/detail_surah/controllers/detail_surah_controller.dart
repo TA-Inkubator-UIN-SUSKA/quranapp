@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_null_comparison
+
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -70,7 +72,7 @@ class DetailSurahController extends GetxController {
       );
     }
 
-    var data = await db.query("bookmark");
+    // var data = await db.query("bookmark");
   }
 
   Future<List<Verse>> getVerse(
