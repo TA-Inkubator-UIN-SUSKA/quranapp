@@ -259,7 +259,6 @@ class DetailSurahView extends GetView<DetailSurahController> {
                         ),
                       ),
                     ),
-                    // "${ayat?.text?.textUthmani ?? "null"}",
                     Container(
                       padding: const EdgeInsets.only(left: 20),
                       child: Builder(builder: (context) {
@@ -330,13 +329,6 @@ class DetailSurahView extends GetView<DetailSurahController> {
                       height: 20,
                     ),
                     Html(data: ayat?.translation?.text),
-                    // Text(
-                    //   "${ayat?.translation?.text ?? "null"}",
-                    //   style: TextStyle(
-                    //     fontSize: 14,
-                    //   ),
-                    //   textAlign: TextAlign.right,
-                    // ),
                     const SizedBox(
                       height: 20,
                     ),
