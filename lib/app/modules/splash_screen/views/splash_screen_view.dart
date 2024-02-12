@@ -17,7 +17,7 @@ class SplashScreenView extends GetView<SplashScreenController> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Text(
-              'QuranType',
+              'Quran E-Mufassir',
               style: TextStyle(
                 fontSize: 25,
                 fontWeight: FontWeight.bold,

@@ -14,7 +14,8 @@ dependencies:
   get_storage: 2.1.1
   flutter_html: ^3.0.0-alpha.6
   sqflite: 2.2.4+1
-  path_provider: 2.0.12
+  path_provider: 2.0.14
+  share_plus: 7.1.0
   flutter: 
     sdk: flutter
 

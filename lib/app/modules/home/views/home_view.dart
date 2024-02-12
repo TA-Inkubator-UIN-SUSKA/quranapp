@@ -15,13 +15,6 @@ class HomeView extends GetView<HomeController> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: appBackground,
-      // appBar: AppBar(
-      //   backgroundColor: appGreen,
-      //   title: Text(
-      //     "QuranType",
-      //   ),
-      //   centerTitle: true,
-      // ),
       body: SafeArea(
         child: DefaultTabController(
             length: 2,
@@ -209,16 +202,17 @@ class HomeView extends GetView<HomeController> {
                                   //     "juz": dataMapPerJuz,
                                   //     "bookmark": lastRead,
                                   //   });
-      
+
                                   //   break;
                                   default:
-                                    Get.toNamed(Routes.DETAIL_SURAH, arguments: {
-                                      "name": lastRead["surah"]
-                                          .toString()
-                                          .replaceAll("+", "'"),
-                                      "number": lastRead["number_surah"],
-                                      "bookmark": lastRead,
-                                    });
+                                    Get.toNamed(Routes.DETAIL_SURAH,
+                                        arguments: {
+                                          "name": lastRead["surah"]
+                                              .toString()
+                                              .replaceAll("+", "'"),
+                                          "number": lastRead["number_surah"],
+                                          "bookmark": lastRead,
+                                        });
                                 }
                               },
                             ),
@@ -296,7 +290,8 @@ class HomeView extends GetView<HomeController> {
                                           color: appGreenLight,
                                           borderRadius:
                                               BorderRadius.circular(10)),
-                                      child: Center(child: Text("${index + 1}")),
+                                      child:
+                                          Center(child: Text("${index + 1}")),
                                     ),
                                     title: Text("${surah.name}"),
                                     subtitle: Text(
@@ -332,12 +327,14 @@ class HomeView extends GetView<HomeController> {
                                     width: 40,
                                     decoration: BoxDecoration(
                                         color: appGreenLight,
-                                        borderRadius: BorderRadius.circular(10)),
+                                        borderRadius:
+                                            BorderRadius.circular(10)),
                                     child: Center(child: Text("${index + 1}")),
                                   ),
                                   title: Text("Juz ${index + 1}"),
                                   subtitle: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Text(
                                         "Start : ${juz.juzStartInfo}",

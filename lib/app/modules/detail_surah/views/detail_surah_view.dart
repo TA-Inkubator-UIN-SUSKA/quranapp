@@ -12,6 +12,7 @@ import 'package:quranapp/app/modules/detail_surah/controllers/detail_surah_contr
 import 'package:quranapp/app/modules/home/controllers/home_controller.dart';
 import 'package:quranapp/app/modules/settings/controllers/settings_controller.dart';
 import 'package:quranapp/app/routes/app_pages.dart';
+import 'package:share_plus/share_plus.dart';
 
 class DetailSurahView extends GetView<DetailSurahController> {
   Surah surahArgument = Get.arguments["surah"];
@@ -214,6 +215,14 @@ class DetailSurahView extends GetView<DetailSurahController> {
                                     icon: const Icon(
                                       Icons.bookmark_add_outlined,
                                     ),
+                                  ),
+                                  IconButton(
+                                    onPressed: () {
+                                      Share.share(
+                                          "${ayat?.text?.textUthmani ?? "null"}\n ${ayat?.translation?.text ?? "null"}",
+                                          subject: 'sharing');
+                                    },
+                                    icon: Icon(Icons.share),
                                   ),
                                   (ayat?.kondisiAudio == "stop")
                                       ? IconButton(
