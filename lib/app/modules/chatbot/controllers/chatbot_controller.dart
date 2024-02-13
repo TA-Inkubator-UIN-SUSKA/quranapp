@@ -13,17 +13,44 @@ class ChatbotController extends GetxController {
   final scrollC = ScrollController();
 
   final list = <Message>[
-    Message(msg: "Hello, how can i help you?", msgType: MessageType.bot),
-    Message(msg: "Laborum consequat magna non id irure velit consequat esse minim.?", msgType: MessageType.user)
+    Message(
+      msg: "Hello, how can i help you?",
+      answer: "",
+      question: "Hello, how can i help you?",
+      msgType: MessageType.bot,
+    ),
+    Message(
+        msg:
+            "Laborum consequat magna non id irure velit consequat esse minim.?",
+        answer: "",
+        question:
+            "Laborum consequat magna non id irure velit consequat esse minim.?",
+        msgType: MessageType.user),
+    Message(
+      msg:
+          "Ut consectetur et commodo excepteur ut officia excepteur. Nostrud adipisicing deserunt pariatur non. Voluptate dolore nulla ex duis ex et elit reprehenderit. Excepteur ut ad fugiat incididunt labore et ex excepteur esse nulla qui tempor. Nostrud ex anim et dolore irure magna ex cupidatat sit Lorem.?",
+      answer:
+          "Ut consectetur et commodo excepteur ut officia excepteur. Nostrud adipisicing deserunt pariatur non. Voluptate dolore nulla ex duis ex et elit reprehenderit. Excepteur ut ad fugiat incididunt labore et ex excepteur esse nulla qui tempor. Nostrud ex anim et dolore irure magna ex cupidatat sit Lorem.?",
+      question:
+          "Laborum consequat magna non id irure velit consequat esse minim.?",
+      msgType: MessageType.bot,
+    ),
   ].obs;
 
   Future<void> askQuestion() async {
     log(textC.text);
     try {
       if (textC.text.trim().isNotEmpty) {
-        list.add(Message(msg: textC.text, msgType: MessageType.user));
-        list.add(
-            Message(msg: "Waiting for response!", msgType: MessageType.bot));
+        list.add(Message(
+            msg: textC.text,
+            question: textC.text,
+            answer: "",
+            msgType: MessageType.user));
+        list.add(Message(
+            msg: "Waiting for response!",
+            msgType: MessageType.bot,
+            answer: '',
+            question: textC.text));
 
         final res = await http.post(
             Uri.parse("https://api-chat-quran.e-mufassir.com/al-azhar-prompt"),
@@ -37,9 +64,15 @@ class ChatbotController extends GetxController {
         list.removeLast();
         log(res.body);
 
-        list.add(Message(
-            msg: jsonDecode(res.body)["answer"], msgType: MessageType.bot));
+        list.add(
+          Message(
+              msg: jsonDecode(res.body)["answer"],
+              msgType: MessageType.bot,
+              answer: jsonDecode(res.body)["answer"],
+              question: textC.text),
+        );
         textC.text = '';
+        textC.clear();
       } else {
         Get.snackbar("Info", "Tanyakan sesuatu",
             backgroundColor: Colors.blue.withOpacity(0.8),

@@ -1,5 +1,3 @@
-// ignore_for_file: must_be_immutable
-
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 
@@ -15,7 +13,7 @@ import 'package:quranapp/app/routes/app_pages.dart';
 import 'package:share_plus/share_plus.dart';
 
 class DetailSurahView extends GetView<DetailSurahController> {
-  Surah surahArgument = Get.arguments["surah"];
+  final Surah surahArgument = Get.arguments["surah"];
   final settingC = Get.put(SettingsController());
   final homeC = Get.find<HomeController>();
 

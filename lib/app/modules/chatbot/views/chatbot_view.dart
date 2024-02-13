@@ -13,9 +13,15 @@ class ChatbotView extends GetView<ChatbotController> {
     mq = MediaQuery.sizeOf(context);
     return Scaffold(
         appBar: AppBar(
-          title: const Text('ChatbotView'),
-          backgroundColor: appGreen,
+          iconTheme: IconThemeData(color: appGreenDark),
+          title: const Text(
+            'ChatbotView',
+            style: TextStyle(color: appGreenDark),
+          ),
+          backgroundColor: appWhite,
+          elevation: 0,
           centerTitle: true,
+          actions: [IconButton(onPressed: () {}, icon: Icon(Icons.history))],
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         floatingActionButton: Padding(
@@ -64,7 +70,7 @@ class ChatbotView extends GetView<ChatbotController> {
             // controller: _c.scrollC,
             padding: EdgeInsets.only(
               top: mq.height * 0.02,
-              bottom: mq.height * 0.15,
+              bottom: mq.height * 0.12,
             ),
             children:
                 controller.list.map((e) => MessageCard(message: e)).toList())));
