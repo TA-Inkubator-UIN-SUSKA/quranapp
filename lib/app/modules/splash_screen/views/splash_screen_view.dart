@@ -48,7 +48,7 @@ class SplashScreenView extends GetView<SplashScreenController> {
             const SizedBox(height: 30),
             ElevatedButton(
               onPressed: () {
-                Get.offAllNamed(Routes.HOME);
+                Get.offAllNamed(Routes.DASHBOARD);
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.green,

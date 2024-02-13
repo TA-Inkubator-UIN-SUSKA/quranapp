@@ -11,6 +11,8 @@ abstract class Routes {
   static const DETAIL_JUZ = _Paths.DETAIL_JUZ;
   static const DETAIL_SURAH_WBW = _Paths.DETAIL_SURAH_WBW;
   static const SETTINGS = _Paths.SETTINGS;
+  static const DASHBOARD = _Paths.DASHBOARD;
+  static const CHATBOT = _Paths.CHATBOT;
 }
 
 abstract class _Paths {
@@ -21,4 +23,6 @@ abstract class _Paths {
   static const DETAIL_JUZ = '/detail-juz';
   static const DETAIL_SURAH_WBW = '/detail-surah-wbw';
   static const SETTINGS = '/settings';
+  static const DASHBOARD = '/dashboard';
+  static const CHATBOT = '/chatbot';
 }
