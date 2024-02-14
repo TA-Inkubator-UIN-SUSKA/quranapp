@@ -11,6 +11,7 @@ import 'package:sqflite/sqflite.dart';
 
 class HomeController extends GetxController {
   DatabaseManager database = DatabaseManager.instance;
+  List<Surah> listSurah = [];
 
   Future<Map<String, dynamic>?> getLastRead() async {
     Database db = await database.db;
@@ -29,9 +30,9 @@ class HomeController extends GetxController {
       List data = json.decode(res.body);
       // log(data.toString());
 
-      List<Surah> allSurah = data.map((e) => Surah.fromJson(e)).toList();
+      listSurah = data.map((e) => Surah.fromJson(e)).toList();
 
-      return allSurah;
+      return listSurah;
     } catch (e) {
       Get.snackbar("Terjadi Kesalahan", "$e");
       log(e.toString());

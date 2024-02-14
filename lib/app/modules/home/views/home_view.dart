@@ -9,7 +9,9 @@ import 'package:quranapp/app/routes/app_pages.dart';
 import '../controllers/home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
-  const HomeView({Key? key}) : super(key: key);
+  final search = ''.obs;
+
+  HomeView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -284,15 +286,15 @@ class HomeView extends GetView<HomeController> {
                               SizedBox(
                                 width: mq.width * 0.9,
                                 child: TextFormField(
-                                  // onChanged: (s) =>
-                                  //     search.value = s.toLowerCase(),
+                                  onChanged: (s) =>
+                                      search.value = s.toLowerCase(),
                                   // controller: _c.resultC,
                                   maxLines: null,
                                   onTapOutside: (event) =>
                                       FocusScope.of(context).unfocus(),
                                   decoration: const InputDecoration(
                                     suffixIcon: Icon(CupertinoIcons.search),
-                                    hintText: "Cari Surah...",
+                                    hintText: "Cari Surah atau Arti Surah...",
                                     hintStyle: TextStyle(
                                       fontSize: 12,
                                     ),
@@ -309,34 +311,49 @@ class HomeView extends GetView<HomeController> {
                                 ),
                               ),
                               Expanded(
-                                child: ListView.builder(
-                                  physics: BouncingScrollPhysics(),
-                                  itemCount: snapshot.data?.length,
-                                  itemBuilder: (context, index) {
-                                    Surah surah = snapshot.data![index];
-                                    return ListTile(
-                                        onTap: () {
-                                          Get.toNamed(Routes.DETAIL_SURAH,
-                                              arguments: {"surah": surah});
-                                        },
-                                        leading: Container(
-                                          height: 40,
-                                          width: 40,
-                                          decoration: BoxDecoration(
-                                              color: appGreenLight,
-                                              borderRadius:
-                                                  BorderRadius.circular(10)),
-                                          child: Center(
-                                              child: Text("${index + 1}")),
-                                        ),
-                                        title: Text("${surah.name}"),
-                                        subtitle: Text(
-                                          "${surah.translatedName?.translation} - ${surah.verseCount} Ayat",
-                                          style: const TextStyle(fontSize: 12),
-                                        ),
-                                        trailing: Text("${surah.arabicName}"));
-                                  },
-                                ),
+                                child: Obx(() {
+                                  List<Surah> listSurah = search.isEmpty
+                                      ? controller.listSurah
+                                      : controller.listSurah
+                                          .where((surah) =>
+                                              surah.name!
+                                                  .toLowerCase()
+                                                  .contains(search.value) ||
+                                              surah.translatedName!.translation!
+                                                  .toLowerCase()
+                                                  .contains(search.value))
+                                          .toList();
+                                  return ListView.builder(
+                                    physics: const BouncingScrollPhysics(),
+                                    itemCount: listSurah.length,
+                                    itemBuilder: (context, index) {
+                                      Surah surah = listSurah[index];
+                                      return ListTile(
+                                          onTap: () {
+                                            Get.toNamed(Routes.DETAIL_SURAH,
+                                                arguments: {"surah": surah});
+                                          },
+                                          leading: Container(
+                                            height: 40,
+                                            width: 40,
+                                            decoration: BoxDecoration(
+                                                color: appGreenLight,
+                                                borderRadius:
+                                                    BorderRadius.circular(10)),
+                                            child: Center(
+                                                child: Text("${index + 1}")),
+                                          ),
+                                          title: Text("${surah.name}"),
+                                          subtitle: Text(
+                                            "${surah.translatedName?.translation} - ${surah.verseCount} Ayat",
+                                            style:
+                                                const TextStyle(fontSize: 12),
+                                          ),
+                                          trailing:
+                                              Text("${surah.arabicName}"));
+                                    },
+                                  );
+                                }),
                               ),
                             ],
                           );
