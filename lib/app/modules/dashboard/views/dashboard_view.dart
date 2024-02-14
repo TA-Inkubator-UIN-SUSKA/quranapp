@@ -1,9 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
-
-
+import 'package:lottie/lottie.dart';
 import '../../../constant/theme.dart';
 import '../../../routes/app_pages.dart';
 import '../controllers/dashboard_controller.dart';
@@ -15,6 +13,7 @@ class DashboardView extends GetView<DashboardController> {
     mq = MediaQuery.sizeOf(context);
 
     return Scaffold(
+      backgroundColor: appBackground,
       body: SafeArea(
         child: ListView(
           padding:
@@ -54,15 +53,12 @@ class DashboardView extends GetView<DashboardController> {
                   Positioned(
                     bottom: -20,
                     right: 10,
-                    child: Opacity(
-                      opacity: 0.8,
-                      child: SizedBox(
-                        height: 140,
-                        width: 140,
-                        child: Image.asset(
-                          'assets/images/Quran.png',
-                          fit: BoxFit.cover,
-                        ),
+                    child: SizedBox(
+                      height: 140,
+                      width: 140,
+                      child: Lottie.asset(
+                        'assets/lotties/moslem.json',
+                        fit: BoxFit.cover,
                       ),
                     ),
                   ),
@@ -71,7 +67,7 @@ class DashboardView extends GetView<DashboardController> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
+                        const Text(
                           "Ahad",
                           style: TextStyle(
                               color: appWhite, fontWeight: FontWeight.bold),
@@ -132,9 +128,9 @@ class DashboardView extends GetView<DashboardController> {
                         Container(
                           height: 50,
                           width: 50,
-                          margin: EdgeInsets.only(right: 10),
-                          child: Image.asset(
-                            'assets/images/Quran.png',
+                          margin: const EdgeInsets.only(right: 10),
+                          child: Lottie.asset(
+                            'assets/lotties/bookmark.json',
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -147,18 +143,18 @@ class DashboardView extends GetView<DashboardController> {
                                   color: appWhite.withOpacity(0.8),
                                   fontSize: 14),
                             ),
-                            SizedBox(height: 2),
-                            Text(
+                            const SizedBox(height: 2),
+                            const Text(
                               "Al-Fatihah : 1",
-                              style: const TextStyle(
+                              style: TextStyle(
                                   color: appWhite,
                                   fontSize: 16,
                                   fontWeight: FontWeight.w600),
                             ),
                           ],
                         ),
-                        Spacer(),
-                        Icon(
+                        const Spacer(),
+                        const Icon(
                           CupertinoIcons.right_chevron,
                           color: Colors.white,
                         )
@@ -168,106 +164,109 @@ class DashboardView extends GetView<DashboardController> {
                 ),
               ),
             ),
+            const SizedBox(height: 10),
             GridView(
               shrinkWrap: true,
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2, childAspectRatio: 0.75),
               children: [
-                Container(
-                  margin: EdgeInsets.symmetric(horizontal: mq.width * 0.01),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    gradient: LinearGradient(
-                      colors: [
-                        appGreen.withOpacity(0.8),
-                        appGreenDark,
-                      ],
+                GestureDetector(
+                  onTap: () {
+                    Get.toNamed(Routes.HOME);
+                  },
+                  child: Container(
+                    margin: EdgeInsets.symmetric(horizontal: mq.width * 0.01),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      gradient: LinearGradient(
+                        colors: [
+                          appGreen.withOpacity(0.8),
+                          appGreenDark,
+                        ],
+                      ),
                     ),
-                  ),
-                  width: Get.width,
-                  child: Padding(
-                    padding: EdgeInsets.all(mq.width * 0.015),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Opacity(
-                          opacity: 0.8,
-                          child: SizedBox(
-                            height: 100,
-                            width: 100,
-                            child: Image.asset(
-                              'assets/images/Quran.png',
-                              fit: BoxFit.cover,
+                    width: Get.width,
+                    child: Padding(
+                      padding: const EdgeInsets.all(14),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Lottie.asset("assets/lotties/quran_read.json",
+                              width: mq.width * 0.4, height: mq.height * 0.2),
+                          const Spacer(flex: 2),
+                          const Text(
+                            "Baca Al-Qur'an",
+                            style: TextStyle(
+                                color: appWhite, fontWeight: FontWeight.w500),
+                          ),
+                          const SizedBox(height: 4),
+                          const Text(
+                            "Go to >",
+                            style: TextStyle(
+                              color: appWhite,
+                              fontSize: 12,
                             ),
                           ),
-                        ),
-                        Spacer(flex: 2),
-                        Text(
-                          "Chat Bot Quran",
-                          style: TextStyle(
-                            color: appWhite,
+                          const Spacer()
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    Get.toNamed(Routes.CHATBOT);
+                  },
+                  child: Container(
+                    margin: EdgeInsets.symmetric(horizontal: mq.width * 0.01),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      gradient: LinearGradient(
+                        colors: [
+                          appGreen.withOpacity(0.8),
+                          appGreenDark,
+                        ],
+                      ),
+                    ),
+                    width: Get.width,
+                    child: Padding(
+                      padding: const EdgeInsets.all(14),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Lottie.asset("assets/lotties/chat.json",
+                              width: mq.width * 0.4, height: mq.height * 0.2),
+                          const Spacer(flex: 2),
+                          const Text(
+                            "Tanya Chatbot",
+                            style: TextStyle(
+                                color: appWhite, fontWeight: FontWeight.w500),
                           ),
-                        ),
-                        const SizedBox(height: 4),
-                        Text(
-                          "Go to >",
-                          style: TextStyle(
-                            color: appWhite,
-                            fontSize: 12,
+                          const SizedBox(height: 4),
+                          const Row(
+                            children: [
+                              Text(
+                                "Go to ",
+                                style: TextStyle(
+                                  color: appWhite,
+                                  fontSize: 12,
+                                ),
+                              ),
+                              Icon(
+                                CupertinoIcons.right_chevron,
+                                size: 14,
+                                color: Colors.white,
+                              )
+                            ],
                           ),
-                        ),
-                        Spacer()
-                      ],
+                          const Spacer()
+                        ],
+                      ),
                     ),
                   ),
                 )
               ],
-            ),
-            Row(
-              children: [
-                Expanded(
-                    child: Container(
-                  margin: EdgeInsets.symmetric(horizontal: mq.width * 0.01),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    gradient: LinearGradient(
-                      colors: [
-                        appGreen.withOpacity(0.8),
-                        appGreenDark,
-                      ],
-                    ),
-                  ),
-                  width: Get.width,
-                  height: mq.height * 0.2,
-                )),
-                Expanded(
-                    child: Container(
-                  margin: EdgeInsets.symmetric(horizontal: mq.width * 0.01),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    gradient: LinearGradient(
-                      colors: [
-                        appGreen.withOpacity(0.8),
-                        appGreenDark,
-                      ],
-                    ),
-                  ),
-                  width: Get.width,
-                  height: mq.height * 0.2,
-                ))
-              ],
-            ),
-            ElevatedButton(
-              onPressed: () {
-                Get.toNamed(Routes.HOME);
-              },
-              child: const Text("Quran"),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                Get.toNamed(Routes.CHATBOT);
-              },
-              child: const Text("Chatbot"),
             ),
           ],
         ),
