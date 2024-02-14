@@ -1,9 +1,11 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:quranapp/app/routes/app_pages.dart';
+
 
 import '../../../constant/theme.dart';
+import '../../../routes/app_pages.dart';
 import '../controllers/dashboard_controller.dart';
 
 class DashboardView extends GetView<DashboardController> {
@@ -13,10 +15,10 @@ class DashboardView extends GetView<DashboardController> {
     mq = MediaQuery.sizeOf(context);
 
     return Scaffold(
-      
       body: SafeArea(
         child: ListView(
-          // padding: EdgeInsets.symmetric(horizontal: mq.width * 0.05),
+          padding:
+              EdgeInsets.symmetric(horizontal: mq.width * 0.05, vertical: 16),
           children: [
             const Text(
               "Assalamualaikum",
@@ -55,8 +57,8 @@ class DashboardView extends GetView<DashboardController> {
                     child: Opacity(
                       opacity: 0.8,
                       child: SizedBox(
-                        height: 160,
-                        width: 160,
+                        height: 140,
+                        width: 140,
                         child: Image.asset(
                           'assets/images/Quran.png',
                           fit: BoxFit.cover,
@@ -69,47 +71,101 @@ class DashboardView extends GetView<DashboardController> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Row(
-                          children: [
-                            Icon(
-                              Icons.menu_book_rounded,
-                              color: appWhite,
-                            ),
-                            Text(
-                              "  Last Read",
-                              style: TextStyle(
-                                color: appWhite,
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 30),
-                        const Text(
-                          "Al-Fatihah",
+                        Text(
+                          "Ahad",
                           style: TextStyle(
-                            color: appWhite,
-                            fontSize: 20,
-                          ),
+                              color: appWhite, fontWeight: FontWeight.bold),
+                        ),
+                        const SizedBox(height: 20),
+                        const Text(
+                          "29 Muharram 1445",
+                          style: TextStyle(
+                              color: appWhite,
+                              fontSize: 19,
+                              fontWeight: FontWeight.w500),
                         ),
                         Text(
-                          "Ayat 1",
+                          "12 Januari 2024",
                           style: TextStyle(
                             color: appWhite.withOpacity(0.5),
                             fontSize: 14,
                           ),
                         ),
-                        const SizedBox(height: 12),
-                        const Text(
-                          "Go to >",
-                          style: TextStyle(
-                            color: appWhite,
-                            fontSize: 12,
-                          ),
-                        ),
+                        const SizedBox(height: 8),
                       ],
                     ),
                   ),
                 ],
+              ),
+            ),
+            const SizedBox(height: 20),
+            const Text(
+              "Sudah baca Qur'an hari ini?",
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.w600,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 10),
+            Material(
+              borderRadius: BorderRadius.circular(20),
+              color: Colors.transparent,
+              child: InkWell(
+                borderRadius: BorderRadius.circular(20),
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    gradient: LinearGradient(
+                      colors: [
+                        appGreen.withOpacity(0.8),
+                        appGreenDark,
+                      ],
+                    ),
+                  ),
+                  width: Get.width,
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Container(
+                          height: 50,
+                          width: 50,
+                          margin: EdgeInsets.only(right: 10),
+                          child: Image.asset(
+                            'assets/images/Quran.png',
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Terakhir baca",
+                              style: TextStyle(
+                                  color: appWhite.withOpacity(0.8),
+                                  fontSize: 14),
+                            ),
+                            SizedBox(height: 2),
+                            Text(
+                              "Al-Fatihah : 1",
+                              style: const TextStyle(
+                                  color: appWhite,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600),
+                            ),
+                          ],
+                        ),
+                        Spacer(),
+                        Icon(
+                          CupertinoIcons.right_chevron,
+                          color: Colors.white,
+                        )
+                      ],
+                    ),
+                  ),
+                ),
               ),
             ),
             GridView(

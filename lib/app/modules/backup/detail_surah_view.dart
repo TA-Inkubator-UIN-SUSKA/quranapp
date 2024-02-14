@@ -1,13 +1,10 @@
-// ignore_for_file: must_be_immutable
-
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
-import 'package:quranapp/app/constant/theme.dart';
-import 'package:quranapp/app/modules/detail_surah/controllers/detail_surah_controller.dart';
+import '../../constant/theme.dart';
+import '../detail_surah/controllers/detail_surah_controller.dart';
 
 class DetailSurahView extends GetView<DetailSurahController> {
-  int idSurah = Get.arguments;
+  final int idSurah = Get.arguments;
 
   DetailSurahView({super.key});
   @override
@@ -88,7 +85,8 @@ class DetailSurahView extends GetView<DetailSurahController> {
                 ),
               ],
             );
-          }, future: null,
+          },
+          future: null,
         ));
   }
 }

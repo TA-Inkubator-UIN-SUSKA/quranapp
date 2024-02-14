@@ -2,10 +2,11 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:quranapp/app/data/models/message.dart';
 import 'package:share_plus/share_plus.dart';
 import '../constant/theme.dart';
 import 'package:flutter/services.dart';
+
+import '../data/models/message.dart';
 
 class MessageCard extends StatelessWidget {
   final Message message;

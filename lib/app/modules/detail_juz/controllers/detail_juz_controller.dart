@@ -6,10 +6,10 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:http/http.dart' as http;
-import 'package:quranapp/app/constant/api.dart';
-import 'package:quranapp/app/data/models/surah.dart';
-import 'package:quranapp/app/data/models/verse.dart' as verse;
-import 'package:quranapp/app/data/models/word_verse.dart';
+import '../../../constant/api.dart';
+import '../../../data/models/surah.dart';
+import '../../../data/models/verse.dart' as verse;
+import '../../../data/models/word_verse.dart';
 
 class DetailJuzController extends GetxController {
   final getStorageController = GetStorage();

@@ -2,10 +2,10 @@ import 'dart:convert';
 
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:quranapp/app/constant/api.dart';
-import 'package:quranapp/app/data/models/reciter.dart';
+import '../../../constant/api.dart';
+import '../../../data/models/reciter.dart';
 import 'package:http/http.dart' as http;
-import 'package:quranapp/app/data/models/tafsir.dart' as tafsir;
+import '../../../data/models/tafsir.dart' as tafsir;
 
 class SettingsController extends GetxController {
   final switchWBWController = GetStorage();

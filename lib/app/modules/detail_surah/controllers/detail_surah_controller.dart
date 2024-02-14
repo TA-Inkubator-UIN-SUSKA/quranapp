@@ -6,12 +6,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
-import 'package:quranapp/app/constant/api.dart';
-import 'package:quranapp/app/data/db/bookmark.dart';
-import 'package:quranapp/app/data/models/surah.dart';
-import 'package:quranapp/app/data/models/verse.dart';
+import '../../../constant/api.dart';
+import '../../../data/db/bookmark.dart';
+import '../../../data/models/surah.dart';
+import '../../../data/models/verse.dart';
 import 'package:just_audio/just_audio.dart';
-import 'package:quranapp/app/data/models/word_verse.dart';
+import '../../../data/models/word_verse.dart';
 import 'package:sqflite/sqflite.dart';
 
 class DetailSurahController extends GetxController {

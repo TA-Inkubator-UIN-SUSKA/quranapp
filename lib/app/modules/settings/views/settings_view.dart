@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:quranapp/app/constant/theme.dart';
-import 'package:quranapp/app/modules/detail_juz/controllers/detail_juz_controller.dart';
-import 'package:quranapp/app/modules/detail_surah/controllers/detail_surah_controller.dart';
+import '../../../constant/theme.dart';
+import '../../../modules/detail_juz/controllers/detail_juz_controller.dart';
+import '../../../modules/detail_surah/controllers/detail_surah_controller.dart';
 
 import '../controllers/settings_controller.dart';
 

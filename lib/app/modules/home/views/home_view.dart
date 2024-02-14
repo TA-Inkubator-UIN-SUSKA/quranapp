@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:quranapp/app/constant/theme.dart';
-import 'package:quranapp/app/data/models/juz.dart';
-import 'package:quranapp/app/data/models/surah.dart';
-import 'package:quranapp/app/routes/app_pages.dart';
+import '../../../constant/theme.dart';
+import '../../../data/models/juz.dart';
+import '../../../data/models/surah.dart';
+import '../../../routes/app_pages.dart';
 
 import '../controllers/home_controller.dart';
 

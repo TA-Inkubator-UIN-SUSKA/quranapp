@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 
 import 'package:get/get.dart';
-import 'package:quranapp/app/constant/theme.dart';
-import 'package:quranapp/app/data/models/surah.dart';
-import 'package:quranapp/app/data/models/verse.dart' as verse;
-import 'package:quranapp/app/data/models/word_verse.dart' as wordverse;
-import 'package:quranapp/app/modules/detail_surah/controllers/detail_surah_controller.dart';
-import 'package:quranapp/app/modules/home/controllers/home_controller.dart';
-import 'package:quranapp/app/modules/settings/controllers/settings_controller.dart';
-import 'package:quranapp/app/routes/app_pages.dart';
+import '../../../constant/theme.dart';
+import '../../../data/models/surah.dart';
+import '../../../data/models/verse.dart' as verse;
+import '../../../data/models/word_verse.dart' as wordverse;
+import '../../../modules/detail_surah/controllers/detail_surah_controller.dart';
+import '../../../modules/home/controllers/home_controller.dart';
+import '../../../modules/settings/controllers/settings_controller.dart';
+import '../../../routes/app_pages.dart';
 import 'package:share_plus/share_plus.dart';
 
 class DetailSurahView extends GetView<DetailSurahController> {

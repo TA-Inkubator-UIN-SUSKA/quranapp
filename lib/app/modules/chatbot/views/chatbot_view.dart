@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
-import 'package:quranapp/app/constant/theme.dart';
-import 'package:quranapp/app/widgets/message_card.dart';
-
+import '../../../constant/theme.dart';
+import '../../../widgets/message_card.dart';
 import '../controllers/chatbot_controller.dart';
 
 class ChatbotView extends GetView<ChatbotController> {

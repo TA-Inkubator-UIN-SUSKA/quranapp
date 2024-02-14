@@ -1,7 +1,7 @@
-name: quranapp
+name: quran_emufassir
 version: 1.0.0+1
 publish_to: none
-description: A new Flutter project.
+description: Asisten Muslim
 environment: 
   sdk: '>=2.18.6 <3.0.0'
 
@@ -16,6 +16,7 @@ dependencies:
   sqflite: 2.2.4+1
   path_provider: 2.0.14
   share_plus: 7.1.0
+  # icons_launcher: 2.1.7
   flutter: 
     sdk: flutter
 

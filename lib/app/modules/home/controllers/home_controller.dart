@@ -3,10 +3,10 @@ import 'dart:developer';
 
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import 'package:quranapp/app/constant/api.dart';
-import 'package:quranapp/app/data/db/bookmark.dart';
-import 'package:quranapp/app/data/models/juz.dart';
-import 'package:quranapp/app/data/models/surah.dart';
+import '../../../constant/api.dart';
+import '../../../data/db/bookmark.dart';
+import '../../../data/models/juz.dart';
+import '../../../data/models/surah.dart';
 import 'package:sqflite/sqflite.dart';
 
 class HomeController extends GetxController {

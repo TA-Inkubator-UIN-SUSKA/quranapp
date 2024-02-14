@@ -4,13 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 
 import 'package:get/get.dart';
-import 'package:quranapp/app/constant/theme.dart';
-import 'package:quranapp/app/data/models/surah.dart';
-import 'package:quranapp/app/data/models/verse.dart' as verse;
-import 'package:quranapp/app/data/models/word_verse.dart' as wordverse;
+import '../../../constant/theme.dart';
+import '../../../data/models/surah.dart';
+import '../../../data/models/verse.dart' as verse;
+import '../../../data/models/word_verse.dart' as wordverse;
 
-import 'package:quranapp/app/modules/settings/controllers/settings_controller.dart';
-import 'package:quranapp/app/routes/app_pages.dart';
+import '../../../modules/settings/controllers/settings_controller.dart';
+import '../../../routes/app_pages.dart';
 
 import '../controllers/detail_juz_controller.dart';
 
@@ -415,7 +415,8 @@ class DetailJuzView extends GetView<DetailJuzController> {
                     child: GridView.builder(
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
-                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisSpacing: 20,
                         mainAxisSpacing: 10,
                         crossAxisCount: 3,

@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 
-import 'package:quranapp/app/routes/app_pages.dart';
+import '../../../routes/app_pages.dart';
 
 import '../controllers/splash_screen_controller.dart';
 
