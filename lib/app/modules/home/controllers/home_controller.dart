@@ -27,9 +27,10 @@ class HomeController extends GetxController {
     try {
       var res = await http.get(Uri.parse("${baseUrl}chapters?language=id"));
       List data = json.decode(res.body);
-      log(data.toString());
+      // log(data.toString());
 
       List<Surah> allSurah = data.map((e) => Surah.fromJson(e)).toList();
+
       return allSurah;
     } catch (e) {
       Get.snackbar("Terjadi Kesalahan", "$e");
