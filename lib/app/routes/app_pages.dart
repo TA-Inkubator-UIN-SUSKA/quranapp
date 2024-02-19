@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:quran_emufassir/app/modules/chatbot/views/home_chatbot_view.dart';
 
 import '../modules/chatbot/bindings/chatbot_binding.dart';
 import '../modules/chatbot/views/chatbot_view.dart';
@@ -27,7 +28,7 @@ class AppPages {
   static final routes = [
     GetPage(
       name: _Paths.HOME,
-      page: () =>  HomeView(),
+      page: () => HomeView(),
       binding: HomeBinding(),
     ),
     GetPage(
@@ -57,8 +58,12 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.CHATBOT,
-      page: () => const ChatbotView(),
+      page: () => ChatbotView(),
       binding: ChatbotBinding(),
     ),
+    GetPage(
+        name: _Paths.HOME_CHATBOT,
+        page: () => const HomeChatbotView(),
+        binding: ChatbotBinding())
   ];
 }

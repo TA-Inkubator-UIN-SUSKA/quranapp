@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:share_plus/share_plus.dart';
@@ -32,7 +30,6 @@ class MessageCard extends StatelessWidget {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      log("message");
                       Get.dialog(Dialog(
                         elevation: 0,
                         backgroundColor: Colors.transparent,
@@ -78,7 +75,8 @@ class MessageCard extends StatelessWidget {
                                       );
                                       Get.snackbar('Copied!',
                                           'Text copied to clipboard.',
-                                          snackPosition: SnackPosition.BOTTOM);
+                                          snackPosition: SnackPosition.BOTTOM,
+                                          backgroundColor: Colors.white);
                                     },
                                     child: Row(
                                       mainAxisSize: MainAxisSize.min,

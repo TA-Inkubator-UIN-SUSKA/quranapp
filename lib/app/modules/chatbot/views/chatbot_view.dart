@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../constant/theme.dart';
@@ -5,15 +7,20 @@ import '../../../widgets/message_card.dart';
 import '../controllers/chatbot_controller.dart';
 
 class ChatbotView extends GetView<ChatbotController> {
-  const ChatbotView({Key? key}) : super(key: key);
+  final String routesEndPoint = Get.arguments["routes_endpoint"];
+  final String title = Get.arguments["title"];
+
+  ChatbotView({super.key});
+
   @override
   Widget build(BuildContext context) {
+    log(routesEndPoint);
     mq = MediaQuery.sizeOf(context);
     return Scaffold(
         appBar: AppBar(
           iconTheme: IconThemeData(color: appGreenDark),
-          title: const Text(
-            'ChatbotView',
+          title: Text(
+            "Chatbot $title",
             style: TextStyle(color: appGreenDark),
           ),
           backgroundColor: Colors.transparent,
@@ -56,7 +63,7 @@ class ChatbotView extends GetView<ChatbotController> {
                     size: 28,
                   ),
                   onPressed: () {
-                    controller.askQuestion();
+                    controller.askQuestion(routesEndPoint);
                   },
                 ),
               ),

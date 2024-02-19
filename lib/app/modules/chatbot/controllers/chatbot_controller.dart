@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
 import '../../../data/models/message.dart';
+import '../../../helper/my_dialogs.dart';
 
 class ChatbotController extends GetxController {
   final textC = TextEditingController();
@@ -37,7 +38,7 @@ class ChatbotController extends GetxController {
     ),
   ].obs;
 
-  Future<void> askQuestion() async {
+  Future<void> askQuestion(String endpoint) async {
     log(textC.text);
     try {
       if (textC.text.trim().isNotEmpty) {
@@ -53,7 +54,7 @@ class ChatbotController extends GetxController {
             question: textC.text));
 
         final res = await http.post(
-            Uri.parse("https://api-chat-quran.e-mufassir.com/al-azhar-prompt"),
+            Uri.parse("https://api-chat-quran.e-mufassir.com/$endpoint"),
             body: {
               "question": textC.text
             },
@@ -74,10 +75,7 @@ class ChatbotController extends GetxController {
         textC.text = '';
         textC.clear();
       } else {
-        Get.snackbar("Info", "Tanyakan sesuatu",
-            backgroundColor: Colors.blue.withOpacity(0.8),
-            colorText: Colors.white);
-        // MyDialog.info("Ask something!");
+        MyDialog.info("Tanyakan sesuatu!");
       }
     } catch (e) {
       log("$e");

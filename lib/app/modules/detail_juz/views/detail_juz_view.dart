@@ -31,7 +31,7 @@ class DetailJuzView extends GetView<DetailJuzController> {
               color: appGreenDark,
             ),
           ),
-          backgroundColor: appWhite,
+          backgroundColor: Colors.transparent,
           elevation: 0,
           centerTitle: true,
           actions: [

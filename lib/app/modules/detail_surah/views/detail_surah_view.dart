@@ -30,7 +30,7 @@ class DetailSurahView extends GetView<DetailSurahController> {
               color: appGreenDark,
             ),
           ),
-          backgroundColor: appWhite,
+          backgroundColor: Colors.transparent,
           elevation: 0,
           centerTitle: true,
           actions: [
@@ -69,6 +69,7 @@ class DetailSurahView extends GetView<DetailSurahController> {
           );
         }
         return ListView(
+          physics: const BouncingScrollPhysics(),
           padding: const EdgeInsets.fromLTRB(20, 10, 20, 20),
           children: [
             Container(
@@ -166,7 +167,7 @@ class DetailSurahView extends GetView<DetailSurahController> {
                                         child: Container(
                                           padding: const EdgeInsets.all(20),
                                           child: ListView(
-                                            physics: BouncingScrollPhysics(),
+                                            physics: const BouncingScrollPhysics(),
                                             children: [
                                               Text(
                                                 "Tafsir Ayat ${index + 1}",
@@ -221,7 +222,7 @@ class DetailSurahView extends GetView<DetailSurahController> {
                                           "${ayat?.text?.textUthmani ?? "null"}\n ${ayat?.translation?.text ?? "null"}",
                                           subject: 'sharing');
                                     },
-                                    icon: Icon(Icons.share),
+                                    icon: const Icon(Icons.share),
                                   ),
                                   (ayat?.kondisiAudio == "stop")
                                       ? IconButton(
