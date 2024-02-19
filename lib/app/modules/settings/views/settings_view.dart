@@ -75,6 +75,7 @@ class SettingsView extends GetView<SettingsController> {
               GetBuilder<SettingsController>(
                 builder: (c) {
                   return DropdownButtonFormField(
+                    isExpanded: true,
                     value: c.idSelectedReciter,
                     hint: Text(
                         c.allReciters[c.idSelectedReciter - 1].reciterName ??

@@ -11,7 +11,7 @@ class SettingsController extends GetxController {
   final switchWBWController = GetStorage();
   final selectedIDController = GetStorage();
   var isWBW = false;
-  var idSelectedReciter = 6;
+  var idSelectedReciter = 7;
   List<Reciter> allReciters = [];
   var idSelectedTafsir = 1;
   var indexSelectedTafsir = 0;

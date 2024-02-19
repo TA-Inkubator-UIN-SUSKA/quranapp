@@ -16,6 +16,7 @@ class DashboardView extends GetView<DashboardController> {
       backgroundColor: appBackground,
       body: SafeArea(
         child: ListView(
+          physics: const BouncingScrollPhysics(),
           padding:
               EdgeInsets.symmetric(horizontal: mq.width * 0.05, vertical: 16),
           children: [
@@ -32,7 +33,7 @@ class DashboardView extends GetView<DashboardController> {
             const Text(
               "Muslimin/Muslimat",
               style: TextStyle(
-                fontSize: 24,
+                fontSize: 22,
                 fontWeight: FontWeight.w600,
               ),
             ),
@@ -166,6 +167,7 @@ class DashboardView extends GetView<DashboardController> {
             ),
             const SizedBox(height: 10),
             GridView(
+              physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2, childAspectRatio: 0.75),
@@ -267,6 +269,79 @@ class DashboardView extends GetView<DashboardController> {
                   ),
                 )
               ],
+            ),
+            const SizedBox(height: 20),
+            const Text(
+              "Ingin membantu pengembangan aplikasi?",
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 10),
+            Material(
+              borderRadius: BorderRadius.circular(20),
+              color: Colors.transparent,
+              child: InkWell(
+                onTap: () {
+                  controller.launchDonationURL();
+                },
+                borderRadius: BorderRadius.circular(20),
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    gradient: LinearGradient(
+                      colors: [
+                        appGreen.withOpacity(0.8),
+                        appGreenDark,
+                      ],
+                    ),
+                  ),
+                  width: Get.width,
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Container(
+                          height: 50,
+                          width: 50,
+                          margin: const EdgeInsets.only(right: 10),
+                          child: Lottie.asset(
+                            'assets/lotties/donation.json',
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Salurkan",
+                              style: TextStyle(
+                                  color: appWhite.withOpacity(0.8),
+                                  fontSize: 14),
+                            ),
+                            const SizedBox(height: 2),
+                            const Text(
+                              "Donasimu disini!",
+                              style: TextStyle(
+                                  color: appWhite,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600),
+                            ),
+                          ],
+                        ),
+                        const Spacer(),
+                        const Icon(
+                          Icons.open_in_new_rounded,
+                          color: Colors.white,
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              ),
             ),
           ],
         ),

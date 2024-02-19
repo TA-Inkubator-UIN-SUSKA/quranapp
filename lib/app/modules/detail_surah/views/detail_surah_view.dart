@@ -166,6 +166,7 @@ class DetailSurahView extends GetView<DetailSurahController> {
                                         child: Container(
                                           padding: const EdgeInsets.all(20),
                                           child: ListView(
+                                            physics: BouncingScrollPhysics(),
                                             children: [
                                               Text(
                                                 "Tafsir Ayat ${index + 1}",
