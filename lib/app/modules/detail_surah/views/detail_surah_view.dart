@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:get/get.dart';
+import 'package:quran_emufassir/app/helper/custom_loading.dart';
+import 'package:quran_emufassir/app/helper/my_dialogs.dart';
 import '../../../constant/theme.dart';
 import '../../../data/models/surah.dart';
 import '../../../data/models/verse.dart' as verse;
@@ -64,7 +66,7 @@ class DetailSurahView extends GetView<DetailSurahController> {
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(
-            child: CircularProgressIndicator(),
+            child: CustomLoading(),
           );
         }
         return ListView(
@@ -370,7 +372,7 @@ class DetailSurahView extends GetView<DetailSurahController> {
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(
-            child: CircularProgressIndicator(),
+            child: CustomLoading(),
           );
         }
         return ListView(

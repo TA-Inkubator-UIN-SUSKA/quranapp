@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import '../../../constant/theme.dart';
 import '../../../data/models/juz.dart';
 import '../../../data/models/surah.dart';
+import '../../../helper/custom_loading.dart';
 import '../../../routes/app_pages.dart';
 
 import '../controllers/home_controller.dart';
@@ -278,7 +279,7 @@ class HomeView extends GetView<HomeController> {
                           if (snapshot.connectionState ==
                               ConnectionState.waiting) {
                             return const Center(
-                              child: CircularProgressIndicator(),
+                              child: CustomLoading(),
                             );
                           }
                           return Column(
@@ -365,7 +366,7 @@ class HomeView extends GetView<HomeController> {
                           if (snapshot.connectionState ==
                               ConnectionState.waiting) {
                             return const Center(
-                              child: CircularProgressIndicator(),
+                              child: CustomLoading(),
                             );
                           }
                           return ListView.builder(

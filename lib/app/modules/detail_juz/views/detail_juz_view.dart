@@ -7,6 +7,7 @@ import '../../../data/models/surah.dart';
 import '../../../data/models/verse.dart' as verse;
 import '../../../data/models/word_verse.dart' as wordverse;
 
+import '../../../helper/custom_loading.dart';
 import '../../../modules/settings/controllers/settings_controller.dart';
 import '../../../routes/app_pages.dart';
 
@@ -51,7 +52,7 @@ class DetailJuzView extends GetView<DetailJuzController> {
             listSurah = snapshot.data ?? [];
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(
-                child: CircularProgressIndicator(),
+                child: CustomLoading(),
               );
             }
             return GetBuilder<DetailJuzController>(
@@ -76,7 +77,7 @@ class DetailJuzView extends GetView<DetailJuzController> {
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(
-            child: CircularProgressIndicator(),
+            child: CustomLoading(),
           );
         }
         return ListView.builder(
@@ -297,7 +298,7 @@ class DetailJuzView extends GetView<DetailJuzController> {
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(
-            child: CircularProgressIndicator(),
+            child: CustomLoading(),
           );
         }
         return ListView.builder(

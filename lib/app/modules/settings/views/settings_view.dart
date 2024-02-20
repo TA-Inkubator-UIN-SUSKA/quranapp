@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import '../../../constant/theme.dart';
+import '../../../helper/custom_loading.dart';
 import '../../../modules/detail_juz/controllers/detail_juz_controller.dart';
 import '../../../modules/detail_surah/controllers/detail_surah_controller.dart';
 
@@ -36,7 +37,7 @@ class SettingsView extends GetView<SettingsController> {
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(
-              child: CircularProgressIndicator(),
+              child: CustomLoading(),
             );
           }
           return ListView(

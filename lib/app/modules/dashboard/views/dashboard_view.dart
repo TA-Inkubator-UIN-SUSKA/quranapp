@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
+import 'package:quran_emufassir/app/helper/custom_loading.dart';
 import '../../../constant/theme.dart';
 import '../../../routes/app_pages.dart';
 import '../controllers/dashboard_controller.dart';
@@ -20,7 +21,7 @@ class DashboardView extends GetView<DashboardController> {
         builder: (context, snapshot) {
           Map<String, dynamic>? resultObj = snapshot.data;
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
+            return const Center(child: CustomLoading());
           }
           return ListView(
             physics: const BouncingScrollPhysics(),
@@ -262,11 +263,6 @@ class DashboardView extends GetView<DashboardController> {
                                     fontSize: 12,
                                   ),
                                 ),
-                                const Icon(
-                                  CupertinoIcons.right_chevron,
-                                  size: 14,
-                                  color: Colors.white,
-                                )
                               ],
                             ),
                             const Spacer()

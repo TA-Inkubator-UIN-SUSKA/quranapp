@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:quran_emufassir/app/constant/theme.dart';
 
+import 'custom_loading.dart';
+
 class MyDialog {
   static void info(String msg) {
     Get.snackbar("Info", msg,
@@ -19,9 +21,9 @@ class MyDialog {
         backgroundColor: Colors.red.withOpacity(0.8), colorText: Colors.white);
   }
 
-  // static void showLoadingDialog() {
-  //   Get.dialog(const Center(
-  //     child: CustomLoading(),
-  //   ));
-  // }
+  static void showLoadingDialog() {
+    Get.dialog(const Center(
+      child: CustomLoading(),
+    ));
+  }
 }
