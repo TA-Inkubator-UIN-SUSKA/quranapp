@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
-
 import 'package:get/get.dart';
 import '../../../constant/theme.dart';
 import '../../../data/models/surah.dart';
@@ -165,28 +164,42 @@ class DetailSurahView extends GetView<DetailSurahController> {
                                               BorderRadius.circular(10),
                                         ),
                                         child: Container(
-                                          padding: const EdgeInsets.all(20),
-                                          child: ListView(
-                                            physics: const BouncingScrollPhysics(),
-                                            children: [
-                                              Text(
-                                                "Tafsir Ayat ${index + 1}",
-                                                style: const TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 20,
+                                          height: mq.height * 0.7,
+                                          padding: const EdgeInsets.all(7),
+                                          child: Scrollbar(
+                                            thumbVisibility: true,
+                                            child: ListView(
+                                              padding: const EdgeInsets.all(16),
+                                              physics:
+                                                  const BouncingScrollPhysics(),
+                                              children: [
+                                                Text(
+                                                  "Tafsir Ayat ${index + 1}",
+                                                  style: const TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 20,
+                                                  ),
+                                                  textAlign: TextAlign.center,
                                                 ),
-                                                textAlign: TextAlign.center,
-                                              ),
-                                              const SizedBox(height: 20),
-                                              Html(
-                                                  data: ayat?.tafsir?.text ??
-                                                      'Tidak ada tafsir'),
-                                            ],
+                                                const SizedBox(height: 20),
+                                                SelectableText(
+                                                    ayat?.tafsir?.text ??
+                                                        'Tidak ada tafsir'),
+                                                const SizedBox(height: 10),
+                                                Text(
+                                                  "Sumber : ${controller.sourceTafsir}",
+                                                  style: const TextStyle(
+                                                    color: Colors.black54,
+                                                    fontSize: 12,
+                                                  ),
+                                                )
+                                              ],
+                                            ),
                                           ),
                                         ),
                                       ));
                                     },
-                                    icon: const Icon(Icons.info_outline),
+                                    icon: const Icon(Icons.menu_book_rounded),
                                   ),
                                   IconButton(
                                     onPressed: () {

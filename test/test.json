@@ -1,54 +1,44 @@
-{
-    "id_verse": 1,
-    "id_juz": 1,
-    "id_chapter": 1,
-    "number_in_chapter": 1,
-    "transliteration": "bis'mi l-lahi l-raḥmāni l-raḥīmi",
-    "text": {
-        "text_uthmani": "بِسْمِ ٱللَّهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ",
-        "text_uthmani_simple": "بسم الله الرحمن الرحيم",
-        "text_imlaei": "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ",
-        "text_imlaei_simple": "بسم الله الرحمن الرحيم",
-        "text_indopak": "بِسۡمِ اللهِ الرَّحۡمٰنِ الرَّحِيۡمِ"
-    },
-    "translation": {
+[
+    {
         "id": 1,
-        "text": "In The Name of Allah, The All-Merciful, The Ever-Merciful.",
-        "id_translation": 17
+        "name": "Tafsir Kemenag - Panjang (Long)",
+        "author_name": "Kemenag",
+        "slug": "id-long-kemenag",
+        "language_name": "indonesian"
     },
-    "audio": {
-        "id": 37417,
-        "url": "https://verses.quran.com/Alafasy/mp3/001001.mp3",
-        "id_recitation": "7"
-    },
-    "tafsir": {
+    {
         "id": 2,
-        "text": "Surah al-Fatihah dimulai dengan Basmalah\nAda beberapa pendapat ulama berkenaan dengan Basmalah yang terdapat pada permulaan surah Al-Fatihah. Di antara pendapat-pendapat itu, yang termasyhur ialah:\n1.Basmalah adalah ayat tersendiri, diturunkan Allah untuk jadi kepala masing-masing surah, dan pembatas antara satu surah dengan surah yang lain. Jadi dia bukanlah satu ayat dari al-Fatihah atau dari surah yang lain, yang dimulai dengan Basmalah itu. Ini pendapat Imam Malik beserta ahli qiraah dan fuqaha (ahli fikih) Medinah, Basrah dan Syam, dan juga pendapat Imam Abu Hanifah dan pengikut-pengikutnya. Sebab itu menurut Imam Abu Hanifah, Basmalah itu tidak dikeraskan membacanya dalam salat, bahkan Imam Malik tidak membaca Basmalah sama sekali.\nHadis Nabi saw:\n\nDari Anas bin Malik, dia berkata, \"Saya salat di belakang Nabi saw, Abu Bakar, Umar dan Usman. Mereka memulai dengan al-hamdulillahi rabbil 'alamin, tidak menyebut Bismillahirrahmanirrahim di awal bacaan, dan tidak pula di akhirnya.\"(Riwayat al-Bukhari dan Muslim).\n\n2.Basmalah adalah salah satu ayat dari al-Fatihah, dan pada surah an-Naml/27:30, /27:30) yang dimulai dengan Basmalah. Ini adalah pendapat Imam Syafi'i beserta ahli qiraah Mekah dan Kufah. Sebab itu menurut mereka Basmalah itu dibaca dengan suara keras dalam salat (jahar). Dalil-dalil yang menunjukkan hal itu antara lain Hadis Nabi saw: \nDari Ibnu 'Abbas, ia berkata, Rasulullah saw mengeraskan bacaan Bismillahirrahmanirrahim. (Riwayat al-hakim dalam al-Mustadrak dan menurutnya, hadis ini sahih)\nDari Ummu Salamah, katanya, Rasulullah saw berhenti berkali-kali dalam bacaanya Bismillahirrahmanirrahim, al-hamdulillahi Rabbil- 'alamin, ar-Rahmanir-rahim, Maliki Yaumid-din. (Riwayat Ahmad, Abu Daud, Ibnu Khuzaimah dan al-hakim. Menurut ad-Daruqutni, sanad hadis ini sahih).\n\nAbu Hurairah juga salat dan mengeraskan bacaan basmalah. Setelah selesai salat, dia berkata, \"Saya ini adalah orang yang salatnya paling mirip dengan Rasulullah.\" Muawiyah juga pernah salat di Medinah tanpa mengeraskan suara basmalah. Ia diprotes oleh para sahabat lain yang hadir disitu. Akhirnya pada salat berikutnya Muawiyah mengeraskan bacaan basmalah. \nKalau kita perhatikan bahwa sahabat-sahabat Rasulullah saw telah sependapat menuliskan Basmalah pada permulaan surah dari surah Al-Qur'an, kecuali surah at-Taubah (karena memang dari semula turunnya tidak dimulai dengan Basmalah) dan bahwa Rasulullah saw melarang menuliskan sesuatu yang bukan Al-Qur'an agar tidak bercampur aduk dengan Al-Qur'an, sehingga mereka tidak menuliskan 'amin pada akhir surah al-Fatihah, maka Basmalah itu adalah salah satu ayat dari Al-Qur'an. Dengan kata lain, bahwa \"basmalah-basmalah\" yang terdapat di dalam Al-Qur'an adalah ayat-ayat Al-Qur'an, lepas dari pendapat apakah satu ayat dari al-Fatihah atau dari surah lain, yang dimulai dengan Basmalah atau tidak.\nSebagaimana disebutkan di atas bahwa surah al-Fatihah itu terdiri dari tujuh ayat. Mereka yang berpendapat bahwa Basmalah itu tidak termasuk satu ayat dari al-Fatihah, memandang:\n\nadalah salah satu ayat, dengan demikian ayat-ayat al-Fatihah itu tetap tujuh.\n\n\n\"Dengan nama Allah\" maksudnya \"Dengan nama Allah saya baca atau saya mulai\". Seakan-akan Nabi berkata, \"Saya baca surah ini dengan menyebut nama Allah, bukan dengan menyebut nama saya sendiri, sebab ia wahyu dari Tuhan, bukan dari saya sendiri.\" Maka Basmalah di sini mengandung arti bahwa Al-Qur'an itu wahyu dari Allah, bukan karangan Muhammad saw dan Muhammad itu hanyalah seorang Pesuruh Allah yang dapat perintah menyampaikan Al-Qur'an kepada manusia.\n\nMakna kata Allah \nAllah adalah nama bagi Zat yang ada dengan sendirinya (wajibul-wujud). Kata \"Allah\" hanya dipakai oleh bangsa Arab kepada Tuhan yang sebenarnya, yang berhak disembah, yang mempunyai sifat-sifat kesempurnaan. Mereka tidak memakai kata itu untuk tuhan-tuhan atau dewa-dewa mereka yang lain. \n\nHikmah Membaca Basmalah\nSeorang yang selalu membaca Basmalah sebelum melakukan pekerjaan yang penting, berarti ia selalu mengingat Allah pada setiap pekerjaannya. Dengan demikian ia akan melakukan pekerjaan tersebut dengan selalu memperhatikan norma-norma Allah dan tidak merugikan orang lain. Dampaknya, pekerjaan yang dilakukannya akan berbuah sebagai amalan ukhrawi. \nSeorang Muslim diperintahkan membaca Basmalah pada waktu mengerjakan sesuatu yang baik. Yang demikian itu untuk mengingatkan bahwa sesuatu yang dikerjakan adalah karena perintah Allah, atau karena telah diizinkan-Nya. Maka karena Allah dia mengerjakan pekerjaan itu dan kepada-Nya dia meminta pertolongan agar pekerjaan terlaksana dengan baik dan berhasil.\nNabi saw bersabda:\n\"Setiap pekerjaan penting yang tidak dimulai dengan menyebut Basmalah adalah buntung (kurang berkahnya).\" (Riwayat Abdul-Qadir ar-Rahawi).\n\nOrang Arab sebelum datang Islam mengerjakan sesuatu dengan menyebut al-Lata dan al-'Uzza, nama-nama berhala mereka. Sebab itu, Allah mengajarkan kepada penganut-penganut agama Islam yang telah mengesakan-Nya, agar mereka mengerjakan sesuatu dengan menyebut nama Allah.",
-        "id_tafsir": "1"
+        "name": "Tafsir Kemenag - Pendek (Short)",
+        "author_name": "Kemenag",
+        "slug": "id-short-kemenag",
+        "language_name": "indonesian"
     },
-    "words": [
-        {
-            "id": 4,
-            "text_uthmani": "ٱلرَّحِيمِ",
-            "text_uthmani_simple": "الرحيم",
-            "text_imlaei": "الرَّحِيمِ",
-            "text_imlaei_simple": "الرحيم",
-            "text_indopak": "الرَّحِيۡمِ",
-            "number": 4,
-            "audio": "https://verses.quran.com/wbw/001_001_004.mp3",
-            "transliteration": "l-raḥīmi",
-            "unicode":"",
-            "unicode_uthmani_simple":"",
-            "unicode_imlaei":"",
-            "unicode_imlaei_simple":"",
-            "unicode_indopak":"",
-            "id_verse": 1,
-            "word_translations": {
-                "id": 154864,
-                "text": "Maha Penyayang",
-                "id_language": 13,
-                "id_word_verse": 4
-            }
-        }
-    ]
-}
+    {
+        "id": 3,
+        "name": "Tafsir Quraish",
+        "author_name": "Muhammad Quraish Shihab",
+        "slug": "id-quraish-quraish-shihab",
+        "language_name": "indonesian"
+    },
+    {
+        "id": 4,
+        "name": "Tafsir Al-Jalalain",
+        "author_name": "Jalaluddin al-Mahalli dan Jalaluddin as-Suyuthi",
+        "slug": "id-jalalayn",
+        "language_name": "indonesian"
+    },
+    {
+        "id": 7,
+        "name": "Tafsir Ibn Kathir",
+        "author_name": "Hafiz Ibn Kathir",
+        "slug": "id-tafisr-ibn-kathir",
+        "language_name": "indonesian"
+    },
+    {
+        "id": 169,
+        "name": "Tafsir Ibn Kathir",
+        "author_name": "Hafiz Ibn Kathir",
+        "slug": "en-tafisr-ibn-kathir",
+        "language_name": "english"
+    }
+]

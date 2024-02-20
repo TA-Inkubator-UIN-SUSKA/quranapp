@@ -1,5 +1,3 @@
-// ignore_for_file: must_be_immutable
-
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 
@@ -16,10 +14,11 @@ import '../controllers/detail_juz_controller.dart';
 
 class DetailJuzView extends GetView<DetailJuzController> {
   final settingC = Get.put(SettingsController());
+  final int idJuz = Get.arguments;
   List<Surah> listSurah = [];
-  int idJuz = Get.arguments;
 
   DetailJuzView({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

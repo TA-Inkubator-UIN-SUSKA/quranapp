@@ -209,10 +209,10 @@ class DashboardView extends GetView<DashboardController> {
                                   color: appWhite, fontWeight: FontWeight.w500),
                             ),
                             const SizedBox(height: 4),
-                            const Text(
-                              "Go to >",
+                            Text(
+                              "Lihat selengkapnya >",
                               style: TextStyle(
-                                color: appWhite,
+                                color: appWhite.withOpacity(0.6),
                                 fontSize: 12,
                               ),
                             ),
@@ -253,16 +253,16 @@ class DashboardView extends GetView<DashboardController> {
                                   color: appWhite, fontWeight: FontWeight.w500),
                             ),
                             const SizedBox(height: 4),
-                            const Row(
+                            Row(
                               children: [
                                 Text(
-                                  "Go to ",
+                                  "Lihat selengkapnya >",
                                   style: TextStyle(
-                                    color: appWhite,
+                                    color: appWhite.withOpacity(0.6),
                                     fontSize: 12,
                                   ),
                                 ),
-                                Icon(
+                                const Icon(
                                   CupertinoIcons.right_chevron,
                                   size: 14,
                                   color: Colors.white,

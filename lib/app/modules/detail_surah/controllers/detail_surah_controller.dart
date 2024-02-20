@@ -1,14 +1,14 @@
-// ignore_for_file: unnecessary_null_comparison
-
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
+import 'package:quran_emufassir/app/helper/data_tafsirs.dart';
 import '../../../constant/api.dart';
 import '../../../data/db/bookmark.dart';
 import '../../../data/models/surah.dart';
+import '../../../data/models/tafsir.dart' as tafsir;
 import '../../../data/models/verse.dart';
 import 'package:just_audio/just_audio.dart';
 import '../../../data/models/word_verse.dart';
@@ -20,12 +20,12 @@ class DetailSurahController extends GetxController {
   var isWBW = false;
   Verse? lastVerse;
   DatabaseManager database = DatabaseManager.instance;
+  String? sourceTafsir;
 
   DetailSurahController() {
     if (getStorageController.read("switchWBW") != null) {
       isWBW = getStorageController.read("switchWBW");
       update();
-      // print("isWBW : ${isWBW}");
     }
   }
 
@@ -77,25 +77,20 @@ class DetailSurahController extends GetxController {
 
   Future<List<Verse>> getVerse(
       {required int idSurah, int idReciter = 6, int idTafsir = 1}) async {
+    sourceTafsir = getSourceTafsir(idTafsir);
     var res = await http.get(Uri.parse(
         "${baseUrl}verses/by_chapter/$idSurah?translation=33&tafsir=$idTafsir&recitation=$idReciter"));
     List data = json.decode(res.body)["verses"];
     List<Verse> allVerse = data.map((e) => Verse.fromJson(e)).toList();
+
     return allVerse;
   }
 
-  // Future<List<WordChapter>> getWordVerses(int id) async {
-  //   var url =
-  //       "https://api.qurancdn.com/api/qdc/verses/by_chapter/$id?words=true&per_page=all&fields=text_uthmani&word_translation_language=id";
-  //   var res = await http.get(Uri.parse(url));
-  //   List rawlistVerse = json.decode(res.body)["verses"];
-  //   List<WordChapter> listVerse =
-  //       rawlistVerse.map((e) => WordChapter.fromJson(e)).toList();
-
-  //   // print(listVerse[0]["words"]);
-  //   print(listVerse);
-  //   return listVerse;
-  // }
+  String? getSourceTafsir(int idTafsir) {
+    tafsir.Tafsir sourceTafsir =
+        listTafsir.firstWhere((element) => element.id == idTafsir);
+    return sourceTafsir.name;
+  }
 
   Future<List<WordVerse>> getWordVerses(int id) async {
     var url =
@@ -225,7 +220,7 @@ class DetailSurahController extends GetxController {
   }
 
   void playAudioWBW(String url) async {
-    if (url != null) {
+    if (url.isNotEmpty) {
       try {
         await player.stop();
         await player.setUrl(url);

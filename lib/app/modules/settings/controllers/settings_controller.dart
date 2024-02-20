@@ -1,7 +1,7 @@
 import 'dart:convert';
-
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:quran_emufassir/app/helper/data_tafsirs.dart';
 import '../../../constant/api.dart';
 import '../../../data/models/reciter.dart';
 import 'package:http/http.dart' as http;
@@ -16,7 +16,7 @@ class SettingsController extends GetxController {
   var idSelectedTafsir = 1;
   var indexSelectedTafsir = 0;
   var indexSelectedStyle = 0;
-  List<tafsir.Tafsir> allTafsirs = [];
+  List<tafsir.Tafsir> allTafsirs = listTafsir;
 
   List allStyle = [
     "Uthmani",
@@ -88,13 +88,14 @@ class SettingsController extends GetxController {
     update();
   }
 
-  Future<List<tafsir.Tafsir>> getTafsirs() async {
-    var res = await http.get(Uri.parse("${baseUrl}tafsirs"));
-    List data = json.decode(res.body);
+  // Future<List<tafsir.Tafsir>> getTafsirs() async {
+  //   var res = await http.get(Uri.parse("${baseUrl}tafsirs"));
+  //   List data = json.decode(res.body);
 
-    List<tafsir.Tafsir> listTafsir =
-        data.map((e) => tafsir.Tafsir.fromJson(e)).toList();
-    allTafsirs = listTafsir;
-    return listTafsir;
-  }
+  //   List<tafsir.Tafsir> listTafsir =
+  //       data.map((e) => tafsir.Tafsir.fromJson(e)).toList();
+  //   allTafsirs = listTafsir;
+  //   log(data.toString());
+  //   return listTafsir;
+  // }
 }

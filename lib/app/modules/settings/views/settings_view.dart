@@ -31,7 +31,7 @@ class SettingsView extends GetView<SettingsController> {
       body: FutureBuilder(
         future: Future.wait([
           controller.getReciter(),
-          controller.getTafsirs(),
+          // controller.getTafsirs(),
         ]),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
@@ -122,7 +122,7 @@ class SettingsView extends GetView<SettingsController> {
                             // print(i);
                           },
                           child: Text(
-                            "${c.allTafsirs[i].name ?? "null"} - ${c.allTafsirs[i].authorName ?? "null"} - ${c.allTafsirs[i].languageName}",
+                            c.allTafsirs[i].name ?? "null",
                             overflow: TextOverflow.ellipsis,
                           ),
                         ),
