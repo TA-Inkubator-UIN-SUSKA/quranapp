@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:quran_emufassir/app/helper/data_tafsirs.dart';
+import 'package:quran_emufassir/app/helper/my_dialogs.dart';
 import '../../../constant/api.dart';
 import '../../../data/db/bookmark.dart';
 import '../../../data/models/surah.dart';
@@ -106,13 +107,18 @@ class DetailSurahController extends GetxController {
   void playAudio(Verse? ayat) async {
     if (ayat?.audio?.url != null) {
       try {
+        MyDialog.showLoadingDialog();
+
+        // Fix Kebocoran Audio
         lastVerse ??= ayat;
         lastVerse!.kondisiAudio = "stop";
         lastVerse = ayat;
         lastVerse!.kondisiAudio = "stop";
+
         update();
         log(ayat!.kondisiAudio);
 
+        // Url Formatter
         String url = ayat.audio!.url!;
         if (ayat.audio!.url!.contains("https") == false) {
           url = "https:${ayat.audio!.url!}";
@@ -122,6 +128,9 @@ class DetailSurahController extends GetxController {
         ayat.kondisiAudio = "playing";
         update();
         log(ayat.kondisiAudio);
+        Get.back();
+
+        // Playing
         await player.play();
         ayat.kondisiAudio = "stop";
         update();
@@ -225,9 +234,11 @@ class DetailSurahController extends GetxController {
   void playAudioWBW(String url) async {
     if (url.isNotEmpty) {
       try {
+        MyDialog.showLoadingDialog();
         await player.stop();
         await player.setUrl(url);
 
+        Get.back();
         await player.play();
 
         await player.stop();

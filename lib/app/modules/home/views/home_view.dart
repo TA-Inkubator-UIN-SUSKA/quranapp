@@ -20,12 +20,23 @@ class HomeView extends GetView<HomeController> {
       appBar: AppBar(
         iconTheme: const IconThemeData(color: appGreenDark),
         title: const Text(
-          'Quran',
+          "Al-Qur'an Indonesia",
           style: TextStyle(color: appGreenDark),
         ),
         backgroundColor: Colors.transparent,
         elevation: 0,
         centerTitle: true,
+        actions: [
+          IconButton(
+            onPressed: () {
+              Get.toNamed(Routes.SETTINGS);
+            },
+            icon: const Icon(
+              Icons.settings,
+              color: appGreenDark,
+            ),
+          )
+        ],
       ),
       backgroundColor: appBackground,
       body: SafeArea(

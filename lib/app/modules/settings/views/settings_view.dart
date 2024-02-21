@@ -20,7 +20,7 @@ class SettingsView extends GetView<SettingsController> {
       appBar: AppBar(
         iconTheme: const IconThemeData(color: appWhite),
         title: const Text(
-          'Settings',
+          'Pengaturan',
           style: TextStyle(
             color: appWhite,
           ),

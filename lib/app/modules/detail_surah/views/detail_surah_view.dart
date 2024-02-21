@@ -10,7 +10,6 @@ import '../../../data/models/word_verse.dart' as wordverse;
 import '../../../modules/detail_surah/controllers/detail_surah_controller.dart';
 import '../../../modules/home/controllers/home_controller.dart';
 import '../../../modules/settings/controllers/settings_controller.dart';
-import '../../../routes/app_pages.dart';
 import 'package:share_plus/share_plus.dart';
 
 class DetailSurahView extends GetView<DetailSurahController> {
@@ -35,31 +34,9 @@ class DetailSurahView extends GetView<DetailSurahController> {
           backgroundColor: Colors.transparent,
           elevation: 0,
           centerTitle: true,
-          actions: [
-            IconButton(
-              onPressed: () {
-                Get.toNamed(Routes.SETTINGS);
-              },
-              icon: const Icon(
-                Icons.settings,
-                color: appGreenDark,
-              ),
-            )
-          ],
         ),
         body: Builder(
-            builder: (c) => controller.isWBW ? futureWBW() : futureSurah())
-
-        // GetBuilder<DetailSurahController>(
-        //   builder: (c) {
-        //     if (c.isWBW) {
-        //       return futureWBW();
-        //     } else {
-        //       return futureSurah();
-        //     }
-        //   },
-        // ),
-        );
+            builder: (c) => controller.isWBW ? futureWBW() : futureSurah()));
   }
 
   FutureBuilder<List<verse.Verse>> futureSurah() {
@@ -567,7 +544,6 @@ class DetailSurahView extends GetView<DetailSurahController> {
                             return GestureDetector(
                               onTap: () {
                                 controller.playAudioWBW(word.audio!);
-                                // print(word.audio!);
                               },
                               child: Container(
                                 decoration: BoxDecoration(
