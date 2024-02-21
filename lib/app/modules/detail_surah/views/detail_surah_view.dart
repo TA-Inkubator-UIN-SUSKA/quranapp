@@ -3,19 +3,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:get/get.dart';
 import 'package:quran_emufassir/app/helper/custom_loading.dart';
+import 'package:quran_emufassir/app/modules/dashboard/controllers/dashboard_controller.dart';
 import '../../../constant/theme.dart';
 import '../../../data/models/surah.dart';
 import '../../../data/models/verse.dart' as verse;
 import '../../../data/models/word_verse.dart' as wordverse;
 import '../../../modules/detail_surah/controllers/detail_surah_controller.dart';
-import '../../../modules/home/controllers/home_controller.dart';
 import '../../../modules/settings/controllers/settings_controller.dart';
 import 'package:share_plus/share_plus.dart';
 
 class DetailSurahView extends GetView<DetailSurahController> {
   final Surah surahArgument = Get.arguments["surah"];
   final settingC = Get.put(SettingsController());
-  final homeC = Get.find<HomeController>();
+  final dashboardC = Get.find<DashboardController>();
 
   DetailSurahView({super.key});
 
@@ -199,11 +199,12 @@ class DetailSurahView extends GetView<DetailSurahController> {
                                           ElevatedButton(
                                             onPressed: () async {
                                               await c.addBookmark(
+                                                true,
                                                 surahArgument,
                                                 ayat!,
                                                 index,
                                               );
-                                              homeC.update();
+                                              dashboardC.update();
                                             },
                                             style: ElevatedButton.styleFrom(
                                               backgroundColor: appGreen,

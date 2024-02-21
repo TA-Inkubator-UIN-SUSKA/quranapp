@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../constant/theme.dart';
@@ -18,15 +17,17 @@ class ChatbotView extends GetView<ChatbotController> {
     mq = MediaQuery.sizeOf(context);
     return Scaffold(
         appBar: AppBar(
-          iconTheme: IconThemeData(color: appGreenDark),
+          iconTheme: const IconThemeData(color: appGreenDark),
           title: Text(
             "Chatbot $title",
-            style: TextStyle(color: appGreenDark),
+            style: const TextStyle(color: appGreenDark),
           ),
           backgroundColor: Colors.transparent,
           elevation: 0,
           centerTitle: true,
-          actions: [IconButton(onPressed: () {}, icon: Icon(Icons.history))],
+          actions: [
+            IconButton(onPressed: () {}, icon: const Icon(Icons.history))
+          ],
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         floatingActionButton: Padding(

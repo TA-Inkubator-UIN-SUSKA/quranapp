@@ -16,109 +16,40 @@ class DashboardView extends GetView<DashboardController> {
     return Scaffold(
       backgroundColor: appBackground,
       body: SafeArea(
-          child: FutureBuilder<Map<String, dynamic>?>(
-        future: controller.getHijriahDate(),
-        builder: (context, snapshot) {
-          Map<String, dynamic>? resultObj = snapshot.data;
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CustomLoading());
-          }
-          return ListView(
-            physics: const BouncingScrollPhysics(),
-            padding:
-                EdgeInsets.symmetric(horizontal: mq.width * 0.05, vertical: 16),
-            children: [
-              const Text(
-                "Assalamu'alaikum",
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              const SizedBox(
-                height: 5,
-              ),
-              const Text(
-                "Muslimin/Muslimat",
-                style: TextStyle(
-                  fontSize: 22,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              const SizedBox(height: 20),
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  gradient: LinearGradient(
-                    colors: [
-                      appGreen.withOpacity(0.8),
-                      appGreenDark,
-                    ],
+        child: GetBuilder<DashboardController>(
+          builder: (controller) => FutureBuilder(
+            future: Future.wait(
+                [controller.getHijriahDate(), controller.getLastRead()]),
+            builder: (context, snapshot) {
+              Map<String, dynamic>? objHijriahDate = snapshot.data?[0];
+              Map<String, dynamic>? lastRead = snapshot.data?[1];
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(child: CustomLoading());
+              }
+              return ListView(
+                physics: const BouncingScrollPhysics(),
+                padding: EdgeInsets.symmetric(
+                    horizontal: mq.width * 0.05, vertical: 16),
+                children: [
+                  const Text(
+                    "Assalamu'alaikum",
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
-                ),
-                width: Get.width,
-                child: Stack(
-                  children: [
-                    Positioned(
-                      bottom: -20,
-                      right: 10,
-                      child: SizedBox(
-                        height: 140,
-                        width: 140,
-                        child: Lottie.asset(
-                          'assets/lotties/moslem.json',
-                          fit: BoxFit.cover,
-                        ),
-                      ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  const Text(
+                    "Muslimin/Muslimat",
+                    style: TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.w600,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(20.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "${resultObj?["hari"]}",
-                            style: const TextStyle(
-                                color: appWhite, fontWeight: FontWeight.bold),
-                          ),
-                          const SizedBox(height: 20),
-                          Text(
-                            "${resultObj?["tanggal_hijriyah"]}${resultObj?["bulan_hijriyah"]}${resultObj?["tahun_hijriyah"]}",
-                            style: const TextStyle(
-                                color: appWhite,
-                                fontSize: 19,
-                                fontWeight: FontWeight.w500),
-                          ),
-                          Text(
-                            "${resultObj?["tanggal_masehi"]} ${resultObj?["bulan_masehi"]} ${resultObj?["tahun_masehi"]}",
-                            style: TextStyle(
-                              color: appWhite.withOpacity(0.5),
-                              fontSize: 14,
-                            ),
-                          ),
-                          const SizedBox(height: 8),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 20),
-              const Text(
-                "Sudah baca Qur'an hari ini?",
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w600,
-                ),
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: 10),
-              Material(
-                borderRadius: BorderRadius.circular(20),
-                color: Colors.transparent,
-                child: InkWell(
-                  borderRadius: BorderRadius.circular(20),
-                  child: Container(
+                  ),
+                  const SizedBox(height: 20),
+                  Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
                       gradient: LinearGradient(
@@ -129,133 +60,166 @@ class DashboardView extends GetView<DashboardController> {
                       ),
                     ),
                     width: Get.width,
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Container(
-                            height: 50,
-                            width: 50,
-                            margin: const EdgeInsets.only(right: 10),
+                    child: Stack(
+                      children: [
+                        Positioned(
+                          bottom: -20,
+                          right: 10,
+                          child: SizedBox(
+                            height: 140,
+                            width: 140,
                             child: Lottie.asset(
-                              'assets/lotties/bookmark.json',
+                              'assets/lotties/moslem.json',
                               fit: BoxFit.cover,
                             ),
                           ),
-                          Column(
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(20.0),
+                          child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                "Terakhir baca",
-                                style: TextStyle(
-                                    color: appWhite.withOpacity(0.8),
-                                    fontSize: 14),
-                              ),
-                              const SizedBox(height: 2),
-                              const Text(
-                                "Al-Fatihah : 1",
-                                style: TextStyle(
+                                "${objHijriahDate?["hari"]}",
+                                style: const TextStyle(
                                     color: appWhite,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w600),
+                                    fontWeight: FontWeight.bold),
                               ),
+                              const SizedBox(height: 20),
+                              Text(
+                                "${objHijriahDate?["tanggal_hijriyah"]}${objHijriahDate?["bulan_hijriyah"]}${objHijriahDate?["tahun_hijriyah"]}",
+                                style: const TextStyle(
+                                    color: appWhite,
+                                    fontSize: 19,
+                                    fontWeight: FontWeight.w500),
+                              ),
+                              Text(
+                                "${objHijriahDate?["tanggal_masehi"]} ${objHijriahDate?["bulan_masehi"]} ${objHijriahDate?["tahun_masehi"]}",
+                                style: TextStyle(
+                                  color: appWhite.withOpacity(0.5),
+                                  fontSize: 14,
+                                ),
+                              ),
+                              const SizedBox(height: 8),
                             ],
                           ),
-                          const Spacer(),
-                          const Icon(
-                            CupertinoIcons.right_chevron,
-                            color: Colors.white,
-                          )
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
-                ),
-              ),
-              const SizedBox(height: 10),
-              GridView(
-                physics: const NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2, childAspectRatio: 0.75),
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      Get.toNamed(Routes.HOME);
-                    },
-                    child: Container(
-                      margin: EdgeInsets.symmetric(horizontal: mq.width * 0.01),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        gradient: LinearGradient(
-                          colors: [
-                            appGreen.withOpacity(0.8),
-                            appGreenDark,
-                          ],
+                  const SizedBox(height: 20),
+                  const Text(
+                    "Sudah baca Qur'an hari ini?",
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w600,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 10),
+                  Material(
+                    borderRadius: BorderRadius.circular(20),
+                    color: Colors.transparent,
+                    child: InkWell(
+                      borderRadius: BorderRadius.circular(20),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          gradient: LinearGradient(
+                            colors: [
+                              appGreen.withOpacity(0.8),
+                              appGreenDark,
+                            ],
+                          ),
                         ),
-                      ),
-                      width: Get.width,
-                      child: Padding(
-                        padding: const EdgeInsets.all(14),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Lottie.asset("assets/lotties/quran_read.json",
-                                width: mq.width * 0.4, height: mq.height * 0.2),
-                            const Spacer(flex: 2),
-                            const Text(
-                              "Baca Al-Qur'an",
-                              style: TextStyle(
-                                  color: appWhite, fontWeight: FontWeight.w500),
-                            ),
-                            const SizedBox(height: 4),
-                            Text(
-                              "Lihat selengkapnya >",
-                              style: TextStyle(
-                                color: appWhite.withOpacity(0.6),
-                                fontSize: 12,
+                        width: Get.width,
+                        child: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Container(
+                                height: 50,
+                                width: 50,
+                                margin: const EdgeInsets.only(right: 10),
+                                child: Lottie.asset(
+                                  'assets/lotties/bookmark.json',
+                                  fit: BoxFit.cover,
+                                ),
                               ),
-                            ),
-                            const Spacer()
-                          ],
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Terakhir baca",
+                                    style: TextStyle(
+                                        color: appWhite.withOpacity(0.8),
+                                        fontSize: 14),
+                                  ),
+                                  const SizedBox(height: 2),
+                                  Text(
+                                    lastRead != null
+                                        ? "${lastRead["surah"]} : ${lastRead["ayat"]}"
+                                        : "Belum ada data",
+                                    style: const TextStyle(
+                                        color: appWhite,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w600),
+                                  ),
+                                ],
+                              ),
+                              const Spacer(),
+                              const Icon(
+                                CupertinoIcons.right_chevron,
+                                color: Colors.white,
+                              )
+                            ],
+                          ),
                         ),
                       ),
                     ),
                   ),
-                  GestureDetector(
-                    onTap: () {
-                      Get.toNamed(Routes.HOME_CHATBOT);
-                    },
-                    child: Container(
-                      margin: EdgeInsets.symmetric(horizontal: mq.width * 0.01),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        gradient: LinearGradient(
-                          colors: [
-                            appGreen.withOpacity(0.8),
-                            appGreenDark,
-                          ],
-                        ),
-                      ),
-                      width: Get.width,
-                      child: Padding(
-                        padding: const EdgeInsets.all(14),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Lottie.asset("assets/lotties/chat.json",
-                                width: mq.width * 0.4, height: mq.height * 0.2),
-                            const Spacer(flex: 2),
-                            const Text(
-                              "Tanya Chatbot",
-                              style: TextStyle(
-                                  color: appWhite, fontWeight: FontWeight.w500),
+                  const SizedBox(height: 10),
+                  GridView(
+                    physics: const NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2, childAspectRatio: 0.75),
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          Get.toNamed(Routes.HOME);
+                        },
+                        child: Container(
+                          margin:
+                              EdgeInsets.symmetric(horizontal: mq.width * 0.01),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            gradient: LinearGradient(
+                              colors: [
+                                appGreen.withOpacity(0.8),
+                                appGreenDark,
+                              ],
                             ),
-                            const SizedBox(height: 4),
-                            Row(
+                          ),
+                          width: Get.width,
+                          child: Padding(
+                            padding: const EdgeInsets.all(14),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
+                                Lottie.asset("assets/lotties/quran_read.json",
+                                    width: mq.width * 0.4,
+                                    height: mq.height * 0.2),
+                                const Spacer(flex: 2),
+                                const Text(
+                                  "Baca Al-Qur'an",
+                                  style: TextStyle(
+                                      color: appWhite,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                                const SizedBox(height: 4),
                                 Text(
                                   "Lihat selengkapnya >",
                                   style: TextStyle(
@@ -263,93 +227,144 @@ class DashboardView extends GetView<DashboardController> {
                                     fontSize: 12,
                                   ),
                                 ),
+                                const Spacer()
                               ],
                             ),
-                            const Spacer()
-                          ],
+                          ),
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          Get.toNamed(Routes.HOME_CHATBOT);
+                        },
+                        child: Container(
+                          margin:
+                              EdgeInsets.symmetric(horizontal: mq.width * 0.01),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            gradient: LinearGradient(
+                              colors: [
+                                appGreen.withOpacity(0.8),
+                                appGreenDark,
+                              ],
+                            ),
+                          ),
+                          width: Get.width,
+                          child: Padding(
+                            padding: const EdgeInsets.all(14),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Lottie.asset("assets/lotties/chat.json",
+                                    width: mq.width * 0.4,
+                                    height: mq.height * 0.2),
+                                const Spacer(flex: 2),
+                                const Text(
+                                  "Tanya Chatbot",
+                                  style: TextStyle(
+                                      color: appWhite,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                                const SizedBox(height: 4),
+                                Row(
+                                  children: [
+                                    Text(
+                                      "Lihat selengkapnya >",
+                                      style: TextStyle(
+                                        color: appWhite.withOpacity(0.6),
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const Spacer()
+                              ],
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                  const SizedBox(height: 20),
+                  const Text(
+                    "Ingin membantu pengembangan aplikasi?",
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 10),
+                  Material(
+                    borderRadius: BorderRadius.circular(20),
+                    color: Colors.transparent,
+                    child: InkWell(
+                      onTap: () {
+                        controller.launchDonationURL();
+                      },
+                      borderRadius: BorderRadius.circular(20),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          gradient: LinearGradient(
+                            colors: [
+                              appGreen.withOpacity(0.8),
+                              appGreenDark,
+                            ],
+                          ),
+                        ),
+                        width: Get.width,
+                        child: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Container(
+                                height: 50,
+                                width: 50,
+                                margin: const EdgeInsets.only(right: 10),
+                                child: Lottie.asset(
+                                  'assets/lotties/donation.json',
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Salurkan",
+                                    style: TextStyle(
+                                        color: appWhite.withOpacity(0.8),
+                                        fontSize: 14),
+                                  ),
+                                  const SizedBox(height: 2),
+                                  const Text(
+                                    "Donasimu disini!",
+                                    style: TextStyle(
+                                        color: appWhite,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w600),
+                                  ),
+                                ],
+                              ),
+                              const Spacer(),
+                              const Icon(
+                                Icons.open_in_new_rounded,
+                                color: Colors.white,
+                              )
+                            ],
+                          ),
                         ),
                       ),
                     ),
-                  )
-                ],
-              ),
-              const SizedBox(height: 20),
-              const Text(
-                "Ingin membantu pengembangan aplikasi?",
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                ),
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: 10),
-              Material(
-                borderRadius: BorderRadius.circular(20),
-                color: Colors.transparent,
-                child: InkWell(
-                  onTap: () {
-                    controller.launchDonationURL();
-                  },
-                  borderRadius: BorderRadius.circular(20),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      gradient: LinearGradient(
-                        colors: [
-                          appGreen.withOpacity(0.8),
-                          appGreenDark,
-                        ],
-                      ),
-                    ),
-                    width: Get.width,
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Container(
-                            height: 50,
-                            width: 50,
-                            margin: const EdgeInsets.only(right: 10),
-                            child: Lottie.asset(
-                              'assets/lotties/donation.json',
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "Salurkan",
-                                style: TextStyle(
-                                    color: appWhite.withOpacity(0.8),
-                                    fontSize: 14),
-                              ),
-                              const SizedBox(height: 2),
-                              const Text(
-                                "Donasimu disini!",
-                                style: TextStyle(
-                                    color: appWhite,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w600),
-                              ),
-                            ],
-                          ),
-                          const Spacer(),
-                          const Icon(
-                            Icons.open_in_new_rounded,
-                            color: Colors.white,
-                          )
-                        ],
-                      ),
-                    ),
                   ),
-                ),
-              ),
-            ],
-          );
-        },
-      )),
+                ],
+              );
+            },
+          ),
+        ),
+      ),
     );
   }
 }

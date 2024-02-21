@@ -31,6 +31,7 @@ class DetailSurahController extends GetxController {
   }
 
   Future addBookmark(
+    bool lastRead,
     Surah surah,
     Verse ayat,
     int indexAyat,
@@ -56,6 +57,7 @@ class DetailSurahController extends GetxController {
         "juz": ayat.idJuz,
         "via": "surah",
         "index_ayat": indexAyat,
+        "last_read": lastRead == true ? 1 : 0,
       });
 
       Get.back();

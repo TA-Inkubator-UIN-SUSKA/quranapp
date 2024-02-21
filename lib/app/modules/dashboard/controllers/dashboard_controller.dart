@@ -1,11 +1,15 @@
 import 'dart:convert';
-
 import 'package:get/get.dart';
 import 'package:quran_emufassir/app/helper/my_dialogs.dart';
+import 'package:sqflite/sqflite.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:http/http.dart' as http;
 
+import '../../../data/db/bookmark.dart';
+
 class DashboardController extends GetxController {
+  DatabaseManager database = DatabaseManager.instance;
+
   Future<void> launchDonationURL() async {
     String url = 'https://quran.e-mufassir.com/donation';
 
@@ -30,7 +34,23 @@ class DashboardController extends GetxController {
       var data = (jsonDecode(res.body))[0];
       return data;
     } catch (e) {
+      Get.defaultDialog(
+        title: "Terjadi Kesalahan!",
+        middleText: "Gagal mendapatkan data!",
+      );
       return {};
     }
+  }
+
+  Future<Map<String, dynamic>?> getLastRead() async {
+    Database db = await database.db;
+    List<Map<String, dynamic>> dataLastRead = await db.query(
+      "bookmark",
+      where: "last_read = 1",
+    );
+    if (dataLastRead.isEmpty) {
+      return null;
+    }
+    return dataLastRead.first;
   }
 }
