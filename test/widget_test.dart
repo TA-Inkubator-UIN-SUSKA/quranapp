@@ -1,4 +1,3 @@
-
 import 'package:quran_emufassir/app/data/models/tafsir.dart';
 import 'package:quran_emufassir/app/helper/data_tafsirs.dart';
 

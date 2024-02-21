@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -78,6 +78,7 @@ class DetailSurahController extends GetxController {
   Future<List<Verse>> getVerse(
       {required int idSurah, int idReciter = 6, int idTafsir = 1}) async {
     sourceTafsir = getSourceTafsir(idTafsir);
+    log("getVerse");
     var res = await http.get(Uri.parse(
         "${baseUrl}verses/by_chapter/$idSurah?translation=33&tafsir=$idTafsir&recitation=$idReciter"));
     List data = json.decode(res.body)["verses"];
@@ -99,7 +100,6 @@ class DetailSurahController extends GetxController {
     List rawlistVerse = json.decode(res.body)["verses"];
     List<WordVerse> listVerse =
         rawlistVerse.map((e) => WordVerse.fromJson(e)).toList();
-
     return listVerse;
   }
 
@@ -107,12 +107,13 @@ class DetailSurahController extends GetxController {
     if (ayat?.audio?.url != null) {
       try {
         lastVerse ??= ayat;
-
         lastVerse!.kondisiAudio = "stop";
         lastVerse = ayat;
         lastVerse!.kondisiAudio = "stop";
         update();
-        String url = ayat!.audio!.url!;
+        log(ayat!.kondisiAudio);
+
+        String url = ayat.audio!.url!;
         if (ayat.audio!.url!.contains("https") == false) {
           url = "https:${ayat.audio!.url!}";
         }
@@ -120,9 +121,11 @@ class DetailSurahController extends GetxController {
         await player.setUrl(url);
         ayat.kondisiAudio = "playing";
         update();
+        log(ayat.kondisiAudio);
         await player.play();
         ayat.kondisiAudio = "stop";
         update();
+        log(ayat.kondisiAudio);
         await player.stop();
       } on PlayerException catch (e) {
         Get.defaultDialog(

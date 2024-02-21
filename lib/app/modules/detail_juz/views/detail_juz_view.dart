@@ -1,22 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
-
 import 'package:get/get.dart';
 import '../../../constant/theme.dart';
 import '../../../data/models/surah.dart';
 import '../../../data/models/verse.dart' as verse;
 import '../../../data/models/word_verse.dart' as wordverse;
-
 import '../../../helper/custom_loading.dart';
 import '../../../modules/settings/controllers/settings_controller.dart';
 import '../../../routes/app_pages.dart';
-
 import '../controllers/detail_juz_controller.dart';
 
 class DetailJuzView extends GetView<DetailJuzController> {
   final settingC = Get.put(SettingsController());
   final int idJuz = Get.arguments;
-  List<Surah> listSurah = [];
+  static List<Surah> listSurah = [];
 
   DetailJuzView({super.key});
 

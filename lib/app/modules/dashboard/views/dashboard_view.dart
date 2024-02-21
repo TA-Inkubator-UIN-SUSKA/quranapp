@@ -29,7 +29,7 @@ class DashboardView extends GetView<DashboardController> {
                 EdgeInsets.symmetric(horizontal: mq.width * 0.05, vertical: 16),
             children: [
               const Text(
-                "Assalamualaikum",
+                "Assalamu'alaikum",
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w500,
