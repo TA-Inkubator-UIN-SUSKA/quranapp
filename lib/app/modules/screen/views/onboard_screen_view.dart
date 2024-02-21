@@ -1,14 +1,14 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/foundation.dart' show kIsWeb;
+
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
+import 'package:quran_emufassir/app/constant/theme.dart';
 
 import '../../../routes/app_pages.dart';
 
-import '../controllers/splash_screen_controller.dart';
-
-class SplashScreenView extends GetView<SplashScreenController> {
-  const SplashScreenView({Key? key}) : super(key: key);
+class OnboardScreenView extends GetView {
+  const OnboardScreenView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,20 +17,21 @@ class SplashScreenView extends GetView<SplashScreenController> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Text(
-              'Quran E-Mufassir',
+              "Qur'an E-Mufassir",
               style: TextStyle(
-                fontSize: 25,
-                fontWeight: FontWeight.bold,
-              ),
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: appFontFamily,
+                  color: appGreen),
             ),
             const SizedBox(
-              height: 10,
+              height: 8,
             ),
             const Text(
               "Mudah Beribadah Dimana Saja!",
             ),
-            const SizedBox(
-              height: 40,
+            SizedBox(
+              height: mq.height * 0.05,
             ),
             ClipRRect(
               borderRadius: BorderRadius.circular(20),
@@ -45,7 +46,9 @@ class SplashScreenView extends GetView<SplashScreenController> {
                 }),
               ),
             ),
-            const SizedBox(height: 30),
+            SizedBox(
+              height: mq.height * 0.05,
+            ),
             ElevatedButton(
               onPressed: () {
                 Get.offAllNamed(Routes.DASHBOARD);

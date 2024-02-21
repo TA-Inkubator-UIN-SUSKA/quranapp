@@ -29,5 +29,12 @@ flutter:
   assets: 
     - assets/lotties/
     - assets/images/
+  fonts:
+    - family: Arvo
+      fonts:
+        - asset: assets/fonts/Arvo-Regular.ttf
+        - asset: assets/fonts/Arvo-Bold.ttf
+        - asset: assets/fonts/Arvo-BoldItalic.ttf
+        - asset: assets/fonts/Arvo-Italic.ttf
   uses-material-design: true
 

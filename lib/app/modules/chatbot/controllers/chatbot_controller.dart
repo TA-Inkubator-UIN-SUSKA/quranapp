@@ -15,25 +15,9 @@ class ChatbotController extends GetxController {
 
   final list = <Message>[
     Message(
-      msg: "Hello, how can i help you?",
+      msg: "Assalamu'alaikum, ada yang bisa saya bantu?",
       answer: "",
-      question: "Hello, how can i help you?",
-      msgType: MessageType.bot,
-    ),
-    Message(
-        msg:
-            "Laborum consequat magna non id irure velit consequat esse minim.?",
-        answer: "",
-        question:
-            "Laborum consequat magna non id irure velit consequat esse minim.?",
-        msgType: MessageType.user),
-    Message(
-      msg:
-          "Ut consectetur et commodo excepteur ut officia excepteur. Nostrud adipisicing deserunt pariatur non. Voluptate dolore nulla ex duis ex et elit reprehenderit. Excepteur ut ad fugiat incididunt labore et ex excepteur esse nulla qui tempor. Nostrud ex anim et dolore irure magna ex cupidatat sit Lorem.?",
-      answer:
-          "Ut consectetur et commodo excepteur ut officia excepteur. Nostrud adipisicing deserunt pariatur non. Voluptate dolore nulla ex duis ex et elit reprehenderit. Excepteur ut ad fugiat incididunt labore et ex excepteur esse nulla qui tempor. Nostrud ex anim et dolore irure magna ex cupidatat sit Lorem.?",
-      question:
-          "Laborum consequat magna non id irure velit consequat esse minim.?",
+      question: "Assalamu'alaikum, ada yang bisa saya bantu?",
       msgType: MessageType.bot,
     ),
   ].obs;
@@ -47,11 +31,8 @@ class ChatbotController extends GetxController {
             question: textC.text,
             answer: "",
             msgType: MessageType.user));
-        list.add(Message(
-            msg: "Waiting for response!",
-            msgType: MessageType.bot,
-            answer: '',
-            question: textC.text));
+
+        MyDialog.showLoadingDialog();
 
         final res = await http.post(
             Uri.parse("https://api-chat-quran.e-mufassir.com/$endpoint"),
@@ -62,8 +43,6 @@ class ChatbotController extends GetxController {
               HttpHeaders.contentTypeHeader:
                   'application/x-www-form-urlencoded',
             });
-        list.removeLast();
-        log(res.body);
 
         list.add(
           Message(
@@ -72,6 +51,7 @@ class ChatbotController extends GetxController {
               answer: jsonDecode(res.body)["answer"],
               question: textC.text),
         );
+        Get.back();
         textC.text = '';
         textC.clear();
       } else {

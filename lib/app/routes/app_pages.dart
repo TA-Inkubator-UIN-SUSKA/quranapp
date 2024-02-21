@@ -1,5 +1,9 @@
+// ignore_for_file: constant_identifier_names
+
 import 'package:get/get.dart';
 import 'package:quran_emufassir/app/modules/chatbot/views/home_chatbot_view.dart';
+import 'package:quran_emufassir/app/modules/screen/views/onboard_screen_view.dart';
+import 'package:quran_emufassir/app/modules/screen/views/splash_screen_view.dart';
 
 import '../modules/chatbot/bindings/chatbot_binding.dart';
 import '../modules/chatbot/views/chatbot_view.dart';
@@ -13,10 +17,6 @@ import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/settings/bindings/settings_binding.dart';
 import '../modules/settings/views/settings_view.dart';
-import '../modules/splash_screen/bindings/splash_screen_binding.dart';
-import '../modules/splash_screen/views/splash_screen_view.dart';
-
-// ignore_for_file: constant_identifier_names
 
 part 'app_routes.dart';
 
@@ -34,7 +34,10 @@ class AppPages {
     GetPage(
       name: _Paths.SPLASH_SCREEN,
       page: () => const SplashScreenView(),
-      binding: SplashScreenBinding(),
+    ),
+    GetPage(
+      name: _Paths.ONBOARD_SCREEN,
+      page: () => const OnboardScreenView(),
     ),
     GetPage(
       name: _Paths.DETAIL_SURAH,
