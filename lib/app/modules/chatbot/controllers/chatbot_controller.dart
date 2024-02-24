@@ -34,15 +34,11 @@ class ChatbotController extends GetxController {
 
         MyDialog.showLoadingDialog();
 
-        final res = await http.post(
-            Uri.parse("https://api-chat-quran.e-mufassir.com/$endpoint"),
-            body: {
-              "question": textC.text
-            },
-            headers: {
-              HttpHeaders.contentTypeHeader:
-                  'application/x-www-form-urlencoded',
-            });
+        final res = await http.post(Uri.parse(endpoint), body: {
+          "question": textC.text
+        }, headers: {
+          HttpHeaders.contentTypeHeader: 'application/x-www-form-urlencoded',
+        });
 
         list.add(
           Message(
