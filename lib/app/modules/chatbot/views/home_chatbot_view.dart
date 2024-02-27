@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 import 'package:quran_emufassir/app/data/models/chatbot.dart';
 import 'package:quran_emufassir/app/helper/data_chatbots.dart';

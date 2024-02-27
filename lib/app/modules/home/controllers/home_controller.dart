@@ -20,7 +20,8 @@ class HomeController extends GetxController {
     );
     if (dataLastRead.isEmpty) {
       return null;
-    } else {}
+    }
+    log(dataLastRead.toString());
     return dataLastRead.first;
   }
 

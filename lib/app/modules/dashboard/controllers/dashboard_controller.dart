@@ -1,5 +1,9 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:get/get.dart';
+import 'package:quran_emufassir/app/data/models/bookmark.dart';
+import 'package:quran_emufassir/app/data/models/hijriah_date.dart';
+import 'package:quran_emufassir/app/data/models/surah.dart';
 import 'package:quran_emufassir/app/helper/my_dialogs.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -20,7 +24,7 @@ class DashboardController extends GetxController {
     }
   }
 
-  Future<Map<String, dynamic>?> getHijriahDate() async {
+  Future<HijriahDate?> getHijriahDate() async {
     try {
       var now = DateTime.now();
       String dateNow = "${now.year}-${now.month}-${now.day}";
@@ -31,18 +35,19 @@ class DashboardController extends GetxController {
               'fe9d2f561bmshc61222cc1e90908p1b4ed3jsn1593cec972a4',
         },
       );
-      var data = (jsonDecode(res.body))[0];
+      HijriahDate data = HijriahDate.fromJson((jsonDecode(res.body))[0]);
       return data;
     } catch (e) {
       Get.defaultDialog(
         title: "Terjadi Kesalahan!",
         middleText: "Gagal mendapatkan data!",
       );
-      return {};
+      return null;
     }
   }
 
-  Future<Map<String, dynamic>?> getLastRead() async {
+  Future<Bookmark?> getLastRead() async {
+    log("getLastRead");
     Database db = await database.db;
     List<Map<String, dynamic>> dataLastRead = await db.query(
       "bookmark",
@@ -51,6 +56,11 @@ class DashboardController extends GetxController {
     if (dataLastRead.isEmpty) {
       return null;
     }
-    return dataLastRead.first;
+    print("${(dataLastRead)}");
+    Bookmark lastRead = Bookmark.fromJson(dataLastRead.first);
+    print("${(lastRead.surah)}");
+    // Surah surah = Surah.fromJson(jsonDecode(lastRead.surah!));
+    // print("test : ${surah.toString()}");
+    return lastRead;
   }
 }

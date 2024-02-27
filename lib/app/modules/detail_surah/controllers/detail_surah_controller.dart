@@ -51,7 +51,7 @@ class DetailSurahController extends GetxController {
 
     if (flagExist == false) {
       await db.insert("bookmark", {
-        "surah": surah.name!.replaceAll("'", "+"),
+        "surah": surahToJson(surah),
         "number_surah": surah.numberChapter!,
         "ayat": ayat.numberInChapter!,
         "juz": ayat.idJuz,

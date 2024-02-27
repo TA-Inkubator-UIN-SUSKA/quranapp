@@ -1,5 +1,9 @@
 // https://api.mfikridev.xyz/chapters?language=id
 
+import 'dart:convert';
+
+String surahToJson(Surah data) => json.encode(data.toJson());
+
 class Surah {
   int? id;
   String? name;

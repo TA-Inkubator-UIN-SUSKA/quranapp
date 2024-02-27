@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
+import 'package:quran_emufassir/app/data/models/bookmark.dart';
+import 'package:quran_emufassir/app/data/models/hijriah_date.dart';
 import 'package:quran_emufassir/app/helper/custom_loading.dart';
 import '../../../constant/theme.dart';
 import '../../../routes/app_pages.dart';
@@ -21,11 +23,13 @@ class DashboardView extends GetView<DashboardController> {
             future: Future.wait(
                 [controller.getHijriahDate(), controller.getLastRead()]),
             builder: (context, snapshot) {
-              Map<String, dynamic>? objHijriahDate = snapshot.data?[0];
-              Map<String, dynamic>? lastRead = snapshot.data?[1];
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const Center(child: CustomLoading());
               }
+
+              HijriahDate? objHijriahDate = snapshot.data?[0] as HijriahDate?;
+              Bookmark? lastRead = (snapshot.data?[1]) as Bookmark?;
+
               return ListView(
                 physics: const BouncingScrollPhysics(),
                 padding: EdgeInsets.symmetric(
@@ -80,21 +84,21 @@ class DashboardView extends GetView<DashboardController> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                "${objHijriahDate?["hari"]}",
+                                "${objHijriahDate?.hari}",
                                 style: const TextStyle(
                                     color: appWhite,
                                     fontWeight: FontWeight.bold),
                               ),
                               const SizedBox(height: 20),
                               Text(
-                                "${objHijriahDate?["tanggal_hijriyah"]}${objHijriahDate?["bulan_hijriyah"]}${objHijriahDate?["tahun_hijriyah"]}",
+                                "${objHijriahDate?.tanggalHijriyah}${objHijriahDate?.bulanHijriyah}${objHijriahDate?.tahunHijriyah}",
                                 style: const TextStyle(
                                     color: appWhite,
                                     fontSize: 19,
                                     fontWeight: FontWeight.w500),
                               ),
                               Text(
-                                "${objHijriahDate?["tanggal_masehi"]} ${objHijriahDate?["bulan_masehi"]} ${objHijriahDate?["tahun_masehi"]}",
+                                "${objHijriahDate?.tanggalMasehi} ${objHijriahDate?.bulanMasehi} ${objHijriahDate?.tahunMasehi}",
                                 style: TextStyle(
                                   color: appWhite.withOpacity(0.5),
                                   fontSize: 14,
@@ -121,6 +125,28 @@ class DashboardView extends GetView<DashboardController> {
                     borderRadius: BorderRadius.circular(20),
                     color: Colors.transparent,
                     child: InkWell(
+                      onTap: () {
+                        switch (lastRead?.via) {
+                          // case "juz":
+                          //   Map<String, dynamic> dataMapPerJuz =
+                          //       controller.allJuz[lastRead["juz"] - 1];
+                          //   Get.toNamed(Routes.DETAIL_JUZ, arguments: {
+                          //     "juz": dataMapPerJuz,
+                          //     "bookmark": lastRead,
+                          //   });
+
+                          //   break;
+                          default:
+                            Get.toNamed(Routes.DETAIL_SURAH, arguments: {
+                              "name": lastRead?.surah
+                                  .toString()
+                                  .replaceAll("+", "'"),
+                              "number": lastRead?.numberSurah,
+                              "bookmark": lastRead,
+                              "surah": lastRead?.surah
+                            });
+                        }
+                      },
                       borderRadius: BorderRadius.circular(20),
                       child: Container(
                         decoration: BoxDecoration(
@@ -158,9 +184,11 @@ class DashboardView extends GetView<DashboardController> {
                                   ),
                                   const SizedBox(height: 2),
                                   Text(
-                                    lastRead != null
-                                        ? "${lastRead["surah"]} : ${lastRead["ayat"]}"
-                                        : "Belum ada data",
+                                    lastRead?.surah?.name == null
+                                        ? ""
+                                        : "${lastRead!.surah!.name
+                                            .toString()
+                                            .replaceAll("+", "'")} : ${lastRead.ayat}",
                                     style: const TextStyle(
                                         color: appWhite,
                                         fontSize: 16,

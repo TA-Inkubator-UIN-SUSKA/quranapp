@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:get/get.dart';
+import 'package:quran_emufassir/app/data/models/bookmark.dart';
 import 'package:quran_emufassir/app/helper/custom_loading.dart';
 import 'package:quran_emufassir/app/modules/dashboard/controllers/dashboard_controller.dart';
 import '../../../constant/theme.dart';
@@ -21,7 +22,20 @@ class DetailSurahView extends GetView<DetailSurahController> {
 
   @override
   Widget build(BuildContext context) {
-    log("build");
+    log(surahArgument.toJson().toString());
+
+    if (Get.arguments["bookmark"] != null) {
+      Bookmark? bookmark = Get.arguments["bookmark"];
+      log("index ${bookmark!.indexAyat}");
+      log("index scroll ${bookmark.indexAyat! + 2}");
+
+      // if (bookmark!.indexAyat > 1) {
+      //   controller.scrollC.scrollToIndex(
+      //     bookmark!["index_ayat"] + 2,
+      //     preferPosition: AutoScrollPosition.begin,
+      //   );
+      // }
+    }
     return Scaffold(
         appBar: AppBar(
           iconTheme: const IconThemeData(color: appGreenDark),
@@ -51,6 +65,7 @@ class DetailSurahView extends GetView<DetailSurahController> {
             child: CustomLoading(),
           );
         }
+
         return ListView(
           physics: const BouncingScrollPhysics(),
           padding: const EdgeInsets.fromLTRB(20, 10, 20, 20),
