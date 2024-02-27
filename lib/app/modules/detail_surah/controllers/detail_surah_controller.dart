@@ -6,6 +6,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:quran_emufassir/app/helper/data_tafsirs.dart';
 import 'package:quran_emufassir/app/helper/my_dialogs.dart';
+import 'package:scroll_to_index/scroll_to_index.dart';
 import '../../../constant/api.dart';
 import '../../../data/db/bookmark.dart';
 import '../../../data/models/surah.dart';
@@ -16,6 +17,7 @@ import '../../../data/models/word_verse.dart';
 import 'package:sqflite/sqflite.dart';
 
 class DetailSurahController extends GetxController {
+  AutoScrollController scrollC = AutoScrollController();
   final getStorageController = GetStorage();
   final player = AudioPlayer();
   var isWBW = false;

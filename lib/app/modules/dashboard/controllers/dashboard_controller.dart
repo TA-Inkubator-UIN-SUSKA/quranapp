@@ -3,7 +3,6 @@ import 'dart:developer';
 import 'package:get/get.dart';
 import 'package:quran_emufassir/app/data/models/bookmark.dart';
 import 'package:quran_emufassir/app/data/models/hijriah_date.dart';
-import 'package:quran_emufassir/app/data/models/surah.dart';
 import 'package:quran_emufassir/app/helper/my_dialogs.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:url_launcher/url_launcher.dart';

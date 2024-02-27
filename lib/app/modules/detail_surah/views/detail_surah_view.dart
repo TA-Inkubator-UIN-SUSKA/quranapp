@@ -1,10 +1,10 @@
-import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:get/get.dart';
 import 'package:quran_emufassir/app/data/models/bookmark.dart';
 import 'package:quran_emufassir/app/helper/custom_loading.dart';
 import 'package:quran_emufassir/app/modules/dashboard/controllers/dashboard_controller.dart';
+import 'package:scroll_to_index/scroll_to_index.dart';
 import '../../../constant/theme.dart';
 import '../../../data/models/surah.dart';
 import '../../../data/models/verse.dart' as verse;
@@ -14,6 +14,7 @@ import '../../../modules/settings/controllers/settings_controller.dart';
 import 'package:share_plus/share_plus.dart';
 
 class DetailSurahView extends GetView<DetailSurahController> {
+  final AutoScrollController scrollC = AutoScrollController();
   final Surah surahArgument = Get.arguments["surah"];
   final settingC = Get.put(SettingsController());
   final dashboardC = Get.find<DashboardController>();
@@ -22,20 +23,6 @@ class DetailSurahView extends GetView<DetailSurahController> {
 
   @override
   Widget build(BuildContext context) {
-    log(surahArgument.toJson().toString());
-
-    if (Get.arguments["bookmark"] != null) {
-      Bookmark? bookmark = Get.arguments["bookmark"];
-      log("index ${bookmark!.indexAyat}");
-      log("index scroll ${bookmark.indexAyat! + 2}");
-
-      // if (bookmark!.indexAyat > 1) {
-      //   controller.scrollC.scrollToIndex(
-      //     bookmark!["index_ayat"] + 2,
-      //     preferPosition: AutoScrollPosition.begin,
-      //   );
-      // }
-    }
     return Scaffold(
         appBar: AppBar(
           iconTheme: const IconThemeData(color: appGreenDark),
@@ -66,51 +53,68 @@ class DetailSurahView extends GetView<DetailSurahController> {
           );
         }
 
+        if (Get.arguments["bookmark"] != null) {
+          Bookmark? bookmark = Get.arguments["bookmark"];
+
+          if (bookmark!.indexAyat! > 1) {
+            controller.scrollC.scrollToIndex(
+              bookmark.indexAyat! + 1,
+              preferPosition: AutoScrollPosition.begin,
+            );
+          }
+        }
+
         return ListView(
+          controller: controller.scrollC,
           physics: const BouncingScrollPhysics(),
           padding: const EdgeInsets.fromLTRB(20, 10, 20, 20),
           children: [
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                gradient: LinearGradient(
-                  colors: [
-                    appGreen.withOpacity(0.8),
-                    appGreenDark,
-                  ],
+            AutoScrollTag(
+              controller: controller.scrollC,
+              index: 0,
+              key: const ValueKey(0),
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  gradient: LinearGradient(
+                    colors: [
+                      appGreen.withOpacity(0.8),
+                      appGreenDark,
+                    ],
+                  ),
                 ),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Column(
-                  children: [
-                    Text(
-                      '${surahArgument.name}',
-                      style: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: appWhite,
+                child: Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Column(
+                    children: [
+                      Text(
+                        '${surahArgument.name}',
+                        style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: appWhite,
+                        ),
                       ),
-                    ),
-                    Text(
-                      '( ${surahArgument.translatedName?.translation} )',
-                      style: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        color: appWhite,
+                      Text(
+                        '( ${surahArgument.translatedName?.translation} )',
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: appWhite,
+                        ),
                       ),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Text(
-                      '${surahArgument.verseCount ?? ''} Ayat | ${surahArgument.revelationPlace ?? ''}',
-                      style: const TextStyle(
-                        fontSize: 16,
-                        color: appWhite,
+                      const SizedBox(
+                        height: 10,
                       ),
-                    ),
-                  ],
+                      Text(
+                        '${surahArgument.verseCount ?? ''} Ayat | ${surahArgument.revelationPlace ?? ''}',
+                        style: const TextStyle(
+                          fontSize: 16,
+                          color: appWhite,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -121,244 +125,250 @@ class DetailSurahView extends GetView<DetailSurahController> {
               itemCount: snapshot.data?.length,
               itemBuilder: (context, index) {
                 verse.Verse? ayat = snapshot.data?[index];
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        color: appGreenLight,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                          vertical: 5.0,
-                          horizontal: 10.0,
+                return AutoScrollTag(
+                  controller: controller.scrollC,
+                  index: index + 1,
+                  key: ValueKey(index + 1),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          color: appGreenLight,
+                          borderRadius: BorderRadius.circular(10),
                         ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Container(
-                              height: 40,
-                              width: 40,
-                              decoration: BoxDecoration(
-                                  color: appGreen,
-                                  borderRadius: BorderRadius.circular(10)),
-                              child: Center(
-                                child: Text(
-                                  "${index + 1}",
-                                  style: const TextStyle(
-                                    color: Colors.white,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 5.0,
+                            horizontal: 10.0,
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Container(
+                                height: 40,
+                                width: 40,
+                                decoration: BoxDecoration(
+                                    color: appGreen,
+                                    borderRadius: BorderRadius.circular(10)),
+                                child: Center(
+                                  child: Text(
+                                    "${index + 1}",
+                                    style: const TextStyle(
+                                      color: Colors.white,
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                            GetBuilder<DetailSurahController>(
-                              builder: (c) => Row(
-                                children: [
-                                  IconButton(
-                                    onPressed: () {
-                                      Get.dialog(
-                                        Dialog(
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                          ),
-                                          child: Container(
-                                            height: mq.height * 0.7,
-                                            padding: const EdgeInsets.all(7),
-                                            child: Scrollbar(
-                                              thumbVisibility: true,
-                                              child: ListView(
-                                                padding:
-                                                    const EdgeInsets.all(16),
-                                                physics:
-                                                    const BouncingScrollPhysics(),
-                                                children: [
-                                                  Text(
-                                                    "Tafsir Ayat ${index + 1}",
-                                                    style: const TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontSize: 20,
+                              GetBuilder<DetailSurahController>(
+                                builder: (c) => Row(
+                                  children: [
+                                    IconButton(
+                                      onPressed: () {
+                                        Get.dialog(
+                                          Dialog(
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                            ),
+                                            child: Container(
+                                              height: mq.height * 0.7,
+                                              padding: const EdgeInsets.all(7),
+                                              child: Scrollbar(
+                                                thumbVisibility: true,
+                                                child: ListView(
+                                                  padding:
+                                                      const EdgeInsets.all(16),
+                                                  physics:
+                                                      const BouncingScrollPhysics(),
+                                                  children: [
+                                                    Text(
+                                                      "Tafsir Ayat ${index + 1}",
+                                                      style: const TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        fontSize: 20,
+                                                      ),
+                                                      textAlign:
+                                                          TextAlign.center,
                                                     ),
-                                                    textAlign: TextAlign.center,
-                                                  ),
-                                                  const SizedBox(height: 20),
-                                                  SelectableText(
-                                                      ayat?.tafsir?.text ??
-                                                          'Tidak ada tafsir'),
-                                                  const SizedBox(height: 10),
-                                                  Text(
-                                                    "Sumber : ${controller.sourceTafsir}",
-                                                    style: const TextStyle(
-                                                      color: Colors.black54,
-                                                      fontSize: 12,
-                                                    ),
-                                                  )
-                                                ],
+                                                    const SizedBox(height: 20),
+                                                    SelectableText(
+                                                        ayat?.tafsir?.text ??
+                                                            'Tidak ada tafsir'),
+                                                    const SizedBox(height: 10),
+                                                    Text(
+                                                      "Sumber : ${controller.sourceTafsir}",
+                                                      style: const TextStyle(
+                                                        color: Colors.black54,
+                                                        fontSize: 12,
+                                                      ),
+                                                    )
+                                                  ],
+                                                ),
                                               ),
                                             ),
                                           ),
-                                        ),
-                                      );
-                                    },
-                                    icon: const Icon(Icons.menu_book_rounded),
-                                  ),
-                                  IconButton(
-                                    onPressed: () {
-                                      Get.defaultDialog(
-                                        title: "Bookmark",
-                                        middleText:
-                                            "Apakah anda yakin ingin menambahkan penanda?",
-                                        actions: [
-                                          ElevatedButton(
-                                            onPressed: () async {
-                                              await c.addBookmark(
-                                                true,
-                                                surahArgument,
-                                                ayat!,
-                                                index,
-                                              );
-                                              dashboardC.update();
-                                            },
-                                            style: ElevatedButton.styleFrom(
-                                              backgroundColor: appGreen,
-                                            ),
-                                            child: const Text("Last Read"),
-                                          ),
-                                        ],
-                                      );
-                                    },
-                                    icon: const Icon(
-                                      Icons.bookmark_add_outlined,
+                                        );
+                                      },
+                                      icon: const Icon(Icons.menu_book_rounded),
                                     ),
-                                  ),
-                                  IconButton(
-                                    onPressed: () {
-                                      Share.share(
-                                          "${ayat?.text?.textUthmani ?? "null"}\n ${ayat?.translation?.text ?? "null"}",
-                                          subject: 'sharing');
-                                    },
-                                    icon: const Icon(Icons.share),
-                                  ),
-                                  (ayat?.kondisiAudio == "stop")
-                                      ? IconButton(
-                                          onPressed: () {
-                                            c.playAudio(ayat);
-                                          },
-                                          icon: const Icon(
-                                            Icons.play_arrow,
-                                          ),
-                                        )
-                                      : Row(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            (ayat?.kondisiAudio == "playing")
-                                                ? IconButton(
-                                                    onPressed: () {
-                                                      c.pauseAudio(ayat!);
-                                                    },
-                                                    icon: const Icon(
-                                                      Icons.pause,
-                                                    ),
-                                                  )
-                                                : IconButton(
-                                                    onPressed: () {
-                                                      c.resumeAudio(ayat!);
-                                                    },
-                                                    icon: const Icon(
-                                                      Icons.play_arrow,
-                                                    ),
-                                                  ),
-                                            IconButton(
-                                              onPressed: () {
-                                                c.stopAudio(ayat!);
+                                    IconButton(
+                                      onPressed: () {
+                                        Get.defaultDialog(
+                                          title: "Bookmark",
+                                          middleText:
+                                              "Apakah anda yakin ingin menambahkan penanda?",
+                                          actions: [
+                                            ElevatedButton(
+                                              onPressed: () async {
+                                                await c.addBookmark(
+                                                  true,
+                                                  surahArgument,
+                                                  ayat!,
+                                                  index,
+                                                );
+                                                dashboardC.update();
                                               },
-                                              icon: const Icon(Icons.stop),
+                                              style: ElevatedButton.styleFrom(
+                                                backgroundColor: appGreen,
+                                              ),
+                                              child: const Text("Last Read"),
                                             ),
                                           ],
-                                        ),
-                                ],
+                                        );
+                                      },
+                                      icon: const Icon(
+                                        Icons.bookmark_add_outlined,
+                                      ),
+                                    ),
+                                    IconButton(
+                                      onPressed: () {
+                                        Share.share(
+                                            "${ayat?.text?.textUthmani ?? "null"}\n ${ayat?.translation?.text ?? "null"}",
+                                            subject: 'sharing');
+                                      },
+                                      icon: const Icon(Icons.share),
+                                    ),
+                                    (ayat?.kondisiAudio == "stop")
+                                        ? IconButton(
+                                            onPressed: () {
+                                              c.playAudio(ayat);
+                                            },
+                                            icon: const Icon(
+                                              Icons.play_arrow,
+                                            ),
+                                          )
+                                        : Row(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              (ayat?.kondisiAudio == "playing")
+                                                  ? IconButton(
+                                                      onPressed: () {
+                                                        c.pauseAudio(ayat!);
+                                                      },
+                                                      icon: const Icon(
+                                                        Icons.pause,
+                                                      ),
+                                                    )
+                                                  : IconButton(
+                                                      onPressed: () {
+                                                        c.resumeAudio(ayat!);
+                                                      },
+                                                      icon: const Icon(
+                                                        Icons.play_arrow,
+                                                      ),
+                                                    ),
+                                              IconButton(
+                                                onPressed: () {
+                                                  c.stopAudio(ayat!);
+                                                },
+                                                icon: const Icon(Icons.stop),
+                                              ),
+                                            ],
+                                          ),
+                                  ],
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.only(left: 20),
-                      child: Builder(builder: (context) {
-                        switch (settingC.indexSelectedStyle) {
-                          case 0:
-                            return Text(
-                              ayat?.text?.textUthmani ?? "null",
-                              style: const TextStyle(
-                                fontSize: 30,
-                              ),
-                              textAlign: TextAlign.right,
-                            );
-                          case 1:
-                            return Text(
-                              ayat?.text?.textUthmaniSimple ?? "null",
-                              style: const TextStyle(
-                                fontSize: 30,
-                              ),
-                              textAlign: TextAlign.right,
-                            );
-                          case 2:
-                            return Text(
-                              ayat?.text?.textImlaei ?? "null",
-                              style: const TextStyle(
-                                fontSize: 30,
-                              ),
-                              textAlign: TextAlign.right,
-                            );
-                          case 3:
-                            return Text(
-                              ayat?.text?.textImlaeiSimple ?? "null",
-                              style: const TextStyle(
-                                fontSize: 30,
-                              ),
-                              textAlign: TextAlign.right,
-                            );
-                          case 4:
-                            return Text(
-                              ayat?.text?.textIndopak ?? "null",
-                              style: const TextStyle(
-                                fontSize: 30,
-                              ),
-                              textAlign: TextAlign.right,
-                            );
-                          default:
-                            return Text(
-                              ayat?.text?.textUthmani ?? "null",
-                              style: const TextStyle(
-                                fontSize: 30,
-                              ),
-                              textAlign: TextAlign.right,
-                            );
-                        }
-                      }),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Text(
-                      ayat?.transliteration ?? "null",
-                      style: const TextStyle(
-                        fontSize: 14,
-                        fontStyle: FontStyle.italic,
+                      Container(
+                        padding: const EdgeInsets.only(left: 20),
+                        child: Builder(builder: (context) {
+                          switch (settingC.indexSelectedStyle) {
+                            case 0:
+                              return Text(
+                                ayat?.text?.textUthmani ?? "null",
+                                style: const TextStyle(
+                                  fontSize: 30,
+                                ),
+                                textAlign: TextAlign.right,
+                              );
+                            case 1:
+                              return Text(
+                                ayat?.text?.textUthmaniSimple ?? "null",
+                                style: const TextStyle(
+                                  fontSize: 30,
+                                ),
+                                textAlign: TextAlign.right,
+                              );
+                            case 2:
+                              return Text(
+                                ayat?.text?.textImlaei ?? "null",
+                                style: const TextStyle(
+                                  fontSize: 30,
+                                ),
+                                textAlign: TextAlign.right,
+                              );
+                            case 3:
+                              return Text(
+                                ayat?.text?.textImlaeiSimple ?? "null",
+                                style: const TextStyle(
+                                  fontSize: 30,
+                                ),
+                                textAlign: TextAlign.right,
+                              );
+                            case 4:
+                              return Text(
+                                ayat?.text?.textIndopak ?? "null",
+                                style: const TextStyle(
+                                  fontSize: 30,
+                                ),
+                                textAlign: TextAlign.right,
+                              );
+                            default:
+                              return Text(
+                                ayat?.text?.textUthmani ?? "null",
+                                style: const TextStyle(
+                                  fontSize: 30,
+                                ),
+                                textAlign: TextAlign.right,
+                              );
+                          }
+                        }),
                       ),
-                      textAlign: TextAlign.right,
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Html(data: ayat?.translation?.text),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                  ],
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        ayat?.transliteration ?? "null",
+                        style: const TextStyle(
+                          fontSize: 14,
+                          fontStyle: FontStyle.italic,
+                        ),
+                        textAlign: TextAlign.right,
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Html(data: ayat?.translation?.text),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                    ],
+                  ),
                 );
               },
             )
