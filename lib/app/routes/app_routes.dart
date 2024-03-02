@@ -14,6 +14,7 @@ abstract class Routes {
   static const DASHBOARD = _Paths.DASHBOARD;
   static const CHATBOT = _Paths.CHATBOT;
   static const HOME_CHATBOT = _Paths.HOME_CHATBOT;
+  static const HOME_HADITS = _Paths.HOME_HADITS;
 }
 
 abstract class _Paths {
@@ -27,4 +28,5 @@ abstract class _Paths {
   static const DASHBOARD = '/dashboard';
   static const CHATBOT = '/chatbot';
   static const HOME_CHATBOT = '/home-chatbot';
+  static const HOME_HADITS = '/home-hadits';
 }

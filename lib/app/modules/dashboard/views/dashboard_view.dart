@@ -314,12 +314,12 @@ class DashboardView extends GetView<DashboardController> {
                             ),
                           ),
                         ),
-                      )
+                      ),
                     ],
                   ),
                   const SizedBox(height: 20),
                   const Text(
-                    "Ingin membantu pengembangan aplikasi?",
+                    "Yuk baca Hadits terlengkap!",
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
@@ -332,7 +332,7 @@ class DashboardView extends GetView<DashboardController> {
                     color: Colors.transparent,
                     child: InkWell(
                       onTap: () {
-                        controller.launchDonationURL();
+                        Get.toNamed(Routes.HOME_HADITS);
                       },
                       borderRadius: BorderRadius.circular(20),
                       child: Container(
@@ -347,16 +347,16 @@ class DashboardView extends GetView<DashboardController> {
                         ),
                         width: Get.width,
                         child: Padding(
-                          padding: const EdgeInsets.all(16.0),
+                          padding: const EdgeInsets.all(13.0),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               Container(
-                                height: 50,
-                                width: 50,
+                                height: 60,
+                                width: 60,
                                 margin: const EdgeInsets.only(right: 10),
                                 child: Lottie.asset(
-                                  'assets/lotties/donation.json',
+                                  'assets/lotties/hadits.json',
                                   fit: BoxFit.cover,
                                 ),
                               ),
@@ -364,14 +364,14 @@ class DashboardView extends GetView<DashboardController> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    "Salurkan",
+                                    "Tersedia",
                                     style: TextStyle(
                                         color: appWhite.withOpacity(0.8),
                                         fontSize: 14),
                                   ),
                                   const SizedBox(height: 2),
                                   const Text(
-                                    "Donasimu disini!",
+                                    "lebih dari 10 Kitab!",
                                     style: TextStyle(
                                         color: appWhite,
                                         fontSize: 16,
@@ -380,9 +380,9 @@ class DashboardView extends GetView<DashboardController> {
                                 ],
                               ),
                               const Spacer(),
-                              const Icon(
+                              Icon(
                                 Icons.open_in_new_rounded,
-                                color: Colors.white,
+                                color: Colors.white.withOpacity(0.7),
                               )
                             ],
                           ),
@@ -390,6 +390,70 @@ class DashboardView extends GetView<DashboardController> {
                       ),
                     ),
                   ),
+                  // Backup Salurkan donasimu disini!
+                  // Material(
+                  //   borderRadius: BorderRadius.circular(20),
+                  //   color: Colors.transparent,
+                  //   child: InkWell(
+                  //     onTap: () {
+                  //       controller.launchDonationURL();
+                  //     },
+                  //     borderRadius: BorderRadius.circular(20),
+                  //     child: Container(
+                  //       decoration: BoxDecoration(
+                  //         borderRadius: BorderRadius.circular(20),
+                  //         gradient: LinearGradient(
+                  //           colors: [
+                  //             appGreen.withOpacity(0.8),
+                  //             appGreenDark,
+                  //           ],
+                  //         ),
+                  //       ),
+                  //       width: Get.width,
+                  //       child: Padding(
+                  //         padding: const EdgeInsets.all(16.0),
+                  //         child: Row(
+                  //           mainAxisAlignment: MainAxisAlignment.start,
+                  //           children: [
+                  //             Container(
+                  //               height: 50,
+                  //               width: 50,
+                  //               margin: const EdgeInsets.only(right: 10),
+                  //               child: Lottie.asset(
+                  //                 'assets/lotties/donation.json',
+                  //                 fit: BoxFit.cover,
+                  //               ),
+                  //             ),
+                  //             Column(
+                  //               crossAxisAlignment: CrossAxisAlignment.start,
+                  //               children: [
+                  //                 Text(
+                  //                   "Salurkan",
+                  //                   style: TextStyle(
+                  //                       color: appWhite.withOpacity(0.8),
+                  //                       fontSize: 14),
+                  //                 ),
+                  //                 const SizedBox(height: 2),
+                  //                 const Text(
+                  //                   "Donasimu disini!",
+                  //                   style: TextStyle(
+                  //                       color: appWhite,
+                  //                       fontSize: 16,
+                  //                       fontWeight: FontWeight.w600),
+                  //                 ),
+                  //               ],
+                  //             ),
+                  //             const Spacer(),
+                  //             const Icon(
+                  //               Icons.open_in_new_rounded,
+                  //               color: Colors.white,
+                  //             )
+                  //           ],
+                  //         ),
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
                 ],
               );
             },

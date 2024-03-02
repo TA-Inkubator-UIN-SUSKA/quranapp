@@ -2,6 +2,8 @@
 
 import 'package:get/get.dart';
 import 'package:quran_emufassir/app/modules/chatbot/views/home_chatbot_view.dart';
+import 'package:quran_emufassir/app/modules/hadits/bindings/hadits_binding.dart';
+import 'package:quran_emufassir/app/modules/hadits/views/home_hadits_view.dart';
 import 'package:quran_emufassir/app/modules/screen/views/onboard_screen_view.dart';
 import 'package:quran_emufassir/app/modules/screen/views/splash_screen_view.dart';
 
@@ -67,6 +69,10 @@ class AppPages {
     GetPage(
         name: _Paths.HOME_CHATBOT,
         page: () => const HomeChatbotView(),
-        binding: ChatbotBinding())
+        binding: ChatbotBinding()),
+    GetPage(
+        name: _Paths.HOME_HADITS,
+        page: () => const HomeHaditsView(),
+        binding: HaditsBinding())
   ];
 }
