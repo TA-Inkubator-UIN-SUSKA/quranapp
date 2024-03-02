@@ -174,7 +174,7 @@ class DetailJuzController extends GetxController {
         if (!stopRequestedAudio &&
             !isPauseAudio &&
             index < listVerses.length - 1) {
-          scrollC.scrollToIndex(index + 2,
+          scrollC.scrollToIndex(index,
               preferPosition: AutoScrollPosition.begin);
           playAudio(listVerses[index + 1], index + 1);
         }

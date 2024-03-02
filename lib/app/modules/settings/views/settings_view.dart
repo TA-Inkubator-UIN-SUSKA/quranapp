@@ -55,10 +55,6 @@ class SettingsView extends GetView<SettingsController> {
                       return Switch(
                         value: controller.isWBW,
                         onChanged: (value) {
-                          detailSurahC.isWBW = value;
-                          detailSurahC.update();
-                          detailJuzc.isWBW = value;
-                          detailJuzc.update();
                           controller.changeSwitchWBW(value);
                         },
                       );

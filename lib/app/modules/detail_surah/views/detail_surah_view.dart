@@ -37,7 +37,7 @@ class DetailSurahView extends GetView<DetailSurahController> {
           centerTitle: true,
         ),
         body: Builder(
-            builder: (c) => controller.isWBW ? futureWBW() : futureSurah()));
+            builder: (c) => settingC.isWBW ? futureWBW() : futureSurah()));
   }
 
   FutureBuilder<List<verse.Verse>> futureSurah() {

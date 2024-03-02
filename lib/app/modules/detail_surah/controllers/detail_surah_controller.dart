@@ -20,7 +20,6 @@ class DetailSurahController extends GetxController {
   AutoScrollController scrollC = AutoScrollController();
   final getStorageController = GetStorage();
   final player = AudioPlayer();
-  var isWBW = false;
   Verse? lastVerse;
   DatabaseManager database = DatabaseManager.instance;
   String? sourceTafsir;
@@ -28,12 +27,6 @@ class DetailSurahController extends GetxController {
   bool stopRequestedAudio = false;
   bool isPauseAudio = false;
 
-  DetailSurahController() {
-    if (getStorageController.read("switchWBW") != null) {
-      isWBW = getStorageController.read("switchWBW");
-      update();
-    }
-  }
 
   Future addBookmark(
     bool lastRead,

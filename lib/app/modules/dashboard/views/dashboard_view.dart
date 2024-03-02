@@ -7,10 +7,14 @@ import 'package:quran_emufassir/app/data/models/hijriah_date.dart';
 import 'package:quran_emufassir/app/helper/custom_loading.dart';
 import '../../../constant/theme.dart';
 import '../../../routes/app_pages.dart';
+import '../../settings/controllers/settings_controller.dart';
 import '../controllers/dashboard_controller.dart';
 
 class DashboardView extends GetView<DashboardController> {
-  const DashboardView({Key? key}) : super(key: key);
+  final settingC = Get.put(SettingsController(fromDashboard: true));
+
+  DashboardView({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     mq = MediaQuery.sizeOf(context);
@@ -126,6 +130,7 @@ class DashboardView extends GetView<DashboardController> {
                     color: Colors.transparent,
                     child: InkWell(
                       onTap: () {
+                        settingC.isWBW = false;
                         switch (lastRead?.via) {
                           // case "juz":
                           //   Map<String, dynamic> dataMapPerJuz =
@@ -186,9 +191,7 @@ class DashboardView extends GetView<DashboardController> {
                                   Text(
                                     lastRead?.surah?.name == null
                                         ? ""
-                                        : "${lastRead!.surah!.name
-                                            .toString()
-                                            .replaceAll("+", "'")} : ${lastRead.ayat}",
+                                        : "${lastRead!.surah!.name.toString().replaceAll("+", "'")} : ${lastRead.ayat}",
                                     style: const TextStyle(
                                         color: appWhite,
                                         fontSize: 16,

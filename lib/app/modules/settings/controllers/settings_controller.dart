@@ -26,11 +26,14 @@ class SettingsController extends GetxController {
     "Indopak"
   ];
 
-  SettingsController() {
-    if (switchWBWController.read("switchWBW") != null) {
-      isWBW = switchWBWController.read("switchWBW");
+  SettingsController({bool fromDashboard = false}) {
+    if (!fromDashboard && switchWBWController.read("switchWBW") != null) {
+      if (fromDashboard) {
+        switchWBWController.write("switchWBW", false);
+      } else {
+        isWBW = switchWBWController.read("switchWBW");
+      }
       update();
-      // print("isWBW : ${isWBW}");
     }
     if (selectedIDController.read("idReciter") != null) {
       idSelectedReciter = selectedIDController.read("idReciter");
