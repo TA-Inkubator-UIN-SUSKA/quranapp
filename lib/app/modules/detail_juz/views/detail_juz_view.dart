@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:get/get.dart';
+import 'package:share_plus/share_plus.dart';
 import '../../../constant/theme.dart';
 import '../../../data/models/surah.dart';
 import '../../../data/models/verse.dart' as verse;
@@ -8,9 +9,11 @@ import '../../../data/models/word_verse.dart' as wordverse;
 import '../../../helper/custom_loading.dart';
 import '../../../modules/settings/controllers/settings_controller.dart';
 import '../../../routes/app_pages.dart';
+import '../../dashboard/controllers/dashboard_controller.dart';
 import '../controllers/detail_juz_controller.dart';
 
 class DetailJuzView extends GetView<DetailJuzController> {
+  final dashboardC = Get.find<DashboardController>();
   final settingC = Get.put(SettingsController());
   final int idJuz = Get.arguments;
   static List<Surah> listSurah = [];
@@ -52,15 +55,8 @@ class DetailJuzView extends GetView<DetailJuzController> {
                 child: CustomLoading(),
               );
             }
-            return GetBuilder<DetailJuzController>(
-              builder: (c) {
-                if (c.isWBW) {
-                  return futureWBW();
-                } else {
-                  return futureSurah();
-                }
-              },
-            );
+            return Builder(
+                builder: (c) => controller.isWBW ? futureWBW() : futureSurah());
           },
         ));
   }
@@ -168,43 +164,91 @@ class DetailJuzView extends GetView<DetailJuzController> {
                             children: [
                               IconButton(
                                 onPressed: () {
-                                  Get.dialog(Dialog(
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                    child: Container(
-                                      padding: const EdgeInsets.all(20),
-                                      child: ListView(
-                                        children: [
-                                          Text(
-                                            "Tafsir Ayat ${index + 1}",
-                                            style: const TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 20,
-                                            ),
-                                            textAlign: TextAlign.center,
+                                  Get.dialog(
+                                    Dialog(
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      child: Container(
+                                        height: mq.height * 0.7,
+                                        padding: const EdgeInsets.all(7),
+                                        child: Scrollbar(
+                                          thumbVisibility: true,
+                                          child: ListView(
+                                            padding: const EdgeInsets.all(16),
+                                            physics:
+                                                const BouncingScrollPhysics(),
+                                            children: [
+                                              Text(
+                                                "Tafsir Ayat ${index + 1}",
+                                                style: const TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 20,
+                                                ),
+                                                textAlign: TextAlign.center,
+                                              ),
+                                              const SizedBox(height: 20),
+                                              SelectableText(
+                                                  ayat?.tafsir?.text ??
+                                                      'Tidak ada tafsir'),
+                                              const SizedBox(height: 10),
+                                              Text(
+                                                "Sumber : ${controller.sourceTafsir}",
+                                                style: const TextStyle(
+                                                  color: Colors.black54,
+                                                  fontSize: 12,
+                                                ),
+                                              )
+                                            ],
                                           ),
-                                          const SizedBox(height: 20),
-                                          Html(
-                                              data: ayat?.tafsir?.text ??
-                                                  'Tidak ada tafsir'),
-                                        ],
+                                        ),
                                       ),
                                     ),
-                                  ));
+                                  );
                                 },
-                                icon: const Icon(Icons.info_outline),
+                                icon: const Icon(Icons.menu_book_rounded),
                               ),
                               IconButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  Get.defaultDialog(
+                                    title: "Bookmark",
+                                    middleText:
+                                        "Apakah anda yakin ingin menambahkan penanda?",
+                                    actions: [
+                                      ElevatedButton(
+                                        onPressed: () async {
+                                          // await c.addBookmark(
+                                          //   true,
+                                          //   surahArgument,
+                                          //   ayat!,
+                                          //   index,
+                                          // );
+                                          dashboardC.update();
+                                        },
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: appGreen,
+                                        ),
+                                        child: const Text("Last Read"),
+                                      ),
+                                    ],
+                                  );
+                                },
                                 icon: const Icon(
                                   Icons.bookmark_add_outlined,
                                 ),
                               ),
+                              IconButton(
+                                onPressed: () {
+                                  Share.share(
+                                      "${ayat?.text?.textUthmani ?? "null"}\n ${ayat?.translation?.text ?? "null"}",
+                                      subject: 'sharing');
+                                },
+                                icon: const Icon(Icons.share),
+                              ),
                               (ayat?.kondisiAudio == "stop")
                                   ? IconButton(
                                       onPressed: () {
-                                        c.playAudio(ayat!);
+                                        c.playAudio(ayat, index);
                                       },
                                       icon: const Icon(
                                         Icons.play_arrow,
@@ -224,7 +268,7 @@ class DetailJuzView extends GetView<DetailJuzController> {
                                               )
                                             : IconButton(
                                                 onPressed: () {
-                                                  c.resumeAudio(ayat!);
+                                                  c.resumeAudio(ayat!, index);
                                                 },
                                                 icon: const Icon(
                                                   Icons.play_arrow,
@@ -288,7 +332,7 @@ class DetailJuzView extends GetView<DetailJuzController> {
     );
   }
 
-//
+// Word By Word
   FutureBuilder<List<wordverse.WordVerse>> futureWBW() {
     return FutureBuilder<List<wordverse.WordVerse>>(
       future: controller.getWordVerses(idJuz),
@@ -422,10 +466,7 @@ class DetailJuzView extends GetView<DetailJuzController> {
                         var word = (verse!.words!)[indexGrid];
 
                         return GestureDetector(
-                          onTap: () {
-                            controller.playAudioWBW(word.audio!);
-                            // print(word.audio!);
-                          },
+                          onTap: () => controller.playAudioWBW(word.audio!),
                           child: Container(
                             decoration: BoxDecoration(
                                 color: appGreenLight,

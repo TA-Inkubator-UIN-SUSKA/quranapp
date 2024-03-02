@@ -29,23 +29,26 @@ class HomeController extends GetxController {
     try {
       var res = await http.get(Uri.parse("${baseUrl}chapters?language=id"));
       List data = json.decode(res.body);
-      // log(data.toString());
-
       listSurah = data.map((e) => Surah.fromJson(e)).toList();
-
       return listSurah;
     } catch (e) {
       Get.snackbar("Terjadi Kesalahan", "$e");
-      log(e.toString());
       return [];
     }
   }
 
   Future<List<Juz>> getJuzs() async {
-    var res = await http.get(Uri.parse("${baseUrl}juzs"));
-    List data = json.decode(res.body);
-
-    List<Juz> allJuz = data.map((e) => Juz.fromJson(e)).toList();
-    return allJuz;
+    try {
+      var res = await http.get(Uri.parse("${baseUrl}juzs"));
+      List data = json.decode(res.body);
+      List<Juz> allJuz = data.map((e) => Juz.fromJson(e)).toList();
+      return allJuz;
+    } catch (e) {
+      Get.defaultDialog(
+        title: "Terjadi Kesalahan!",
+        middleText: "Error : $e",
+      );
+      return [];
+    }
   }
 }
