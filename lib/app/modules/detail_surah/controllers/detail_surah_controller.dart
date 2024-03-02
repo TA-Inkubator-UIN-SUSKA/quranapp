@@ -24,6 +24,9 @@ class DetailSurahController extends GetxController {
   Verse? lastVerse;
   DatabaseManager database = DatabaseManager.instance;
   String? sourceTafsir;
+  late List<Verse> listVerses;
+  bool stopRequestedAudio = false;
+  bool isPauseAudio = false;
 
   DetailSurahController() {
     if (getStorageController.read("switchWBW") != null) {
@@ -76,8 +79,6 @@ class DetailSurahController extends GetxController {
         colorText: Colors.black,
       );
     }
-
-    // var data = await db.query("bookmark");
   }
 
   Future<List<Verse>> getVerse(
@@ -88,7 +89,7 @@ class DetailSurahController extends GetxController {
         "${baseUrl}verses/by_chapter/$idSurah?translation=33&tafsir=$idTafsir&recitation=$idReciter"));
     List data = json.decode(res.body)["verses"];
     List<Verse> allVerse = data.map((e) => Verse.fromJson(e)).toList();
-
+    listVerses = allVerse;
     return allVerse;
   }
 
@@ -108,10 +109,14 @@ class DetailSurahController extends GetxController {
     return listVerse;
   }
 
-  void playAudio(Verse? ayat) async {
+  void playAudio(Verse? ayat, int index) async {
     if (ayat?.audio?.url != null) {
       try {
+        if (isPauseAudio) {
+          return;
+        }
         MyDialog.showLoadingDialog();
+        stopRequestedAudio = false;
 
         // Fix Kebocoran Audio
         lastVerse ??= ayat;
@@ -140,6 +145,14 @@ class DetailSurahController extends GetxController {
         update();
         log(ayat.kondisiAudio);
         await player.stop();
+
+        if (!stopRequestedAudio &&
+            !isPauseAudio &&
+            index < listVerses.length - 1) {
+          scrollC.scrollToIndex(index + 2,
+              preferPosition: AutoScrollPosition.begin);
+          playAudio(listVerses[index + 1], index + 1);
+        }
       } on PlayerException catch (e) {
         Get.defaultDialog(
           title: "Terjadi Kesalahan!",
@@ -168,6 +181,7 @@ class DetailSurahController extends GetxController {
     try {
       await player.pause();
       ayat.kondisiAudio = "pause";
+      isPauseAudio = true;
       update();
     } on PlayerException catch (e) {
       Get.defaultDialog(
@@ -187,13 +201,21 @@ class DetailSurahController extends GetxController {
     }
   }
 
-  void resumeAudio(Verse ayat) async {
+  void resumeAudio(Verse ayat, int index) async {
     try {
       ayat.kondisiAudio = "playing";
+      isPauseAudio = false;
       update();
       await player.play();
       ayat.kondisiAudio = "stop";
       update();
+      if (!stopRequestedAudio &&
+          !isPauseAudio &&
+          index < listVerses.length - 1) {
+        scrollC.scrollToIndex(index + 2,
+            preferPosition: AutoScrollPosition.begin);
+        playAudio(listVerses[index + 1], index + 1);
+      }
     } on PlayerException catch (e) {
       Get.defaultDialog(
         title: "Terjadi Kesalahan!",
@@ -214,6 +236,7 @@ class DetailSurahController extends GetxController {
 
   void stopAudio(Verse ayat) async {
     try {
+      stopRequestedAudio = true;
       await player.stop();
       ayat.kondisiAudio = "stop";
       update();

@@ -253,7 +253,7 @@ class DetailSurahView extends GetView<DetailSurahController> {
                                     (ayat?.kondisiAudio == "stop")
                                         ? IconButton(
                                             onPressed: () {
-                                              c.playAudio(ayat);
+                                              c.playAudio(ayat, index);
                                             },
                                             icon: const Icon(
                                               Icons.play_arrow,
@@ -273,7 +273,8 @@ class DetailSurahView extends GetView<DetailSurahController> {
                                                     )
                                                   : IconButton(
                                                       onPressed: () {
-                                                        c.resumeAudio(ayat!);
+                                                        c.resumeAudio(
+                                                            ayat!, index);
                                                       },
                                                       icon: const Icon(
                                                         Icons.play_arrow,
