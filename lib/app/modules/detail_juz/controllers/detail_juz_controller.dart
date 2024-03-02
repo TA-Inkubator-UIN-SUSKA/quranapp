@@ -23,20 +23,12 @@ class DetailJuzController extends GetxController {
   final getStorageController = GetStorage();
   DatabaseManager database = DatabaseManager.instance;
   final player = AudioPlayer();
-  var isWBW = false;
   Verse? lastVerse;
   String? sourceTafsir;
   List<Surah> allSurah = [];
   bool stopRequestedAudio = false;
   bool isPauseAudio = false;
   late List<Verse> listVerses;
-
-  DetailJuzController() {
-    if (getStorageController.read("switchWBW") != null) {
-      isWBW = getStorageController.read("switchWBW");
-      update();
-    }
-  }
 
   Future addBookmark(
     bool lastRead,

@@ -45,7 +45,7 @@ class DetailJuzView extends GetView<DetailJuzController> {
               );
             }
             return Builder(
-                builder: (c) => controller.isWBW ? futureWBW() : futureSurah());
+                builder: (c) => settingC.isWBW ? futureWBW() : futureSurah());
           },
         ));
   }

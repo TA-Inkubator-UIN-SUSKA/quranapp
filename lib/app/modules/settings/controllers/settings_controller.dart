@@ -38,20 +38,16 @@ class SettingsController extends GetxController {
     if (selectedIDController.read("idReciter") != null) {
       idSelectedReciter = selectedIDController.read("idReciter");
       update();
-      // print("idSelectedReciter : ${idSelectedReciter}");
     }
     if (selectedIDController.read("idTafsir") != null &&
         selectedIDController.read("indexTafsir") != null) {
       idSelectedTafsir = selectedIDController.read("idTafsir");
       indexSelectedTafsir = selectedIDController.read("indexTafsir");
       update();
-      // print(
-      //     "idSelectedReciter : ${idSelectedTafsir} - index : $indexSelectedTafsir");
     }
     if (selectedIDController.read("indexStyle") != null) {
       indexSelectedStyle = selectedIDController.read("indexStyle");
       update();
-      // print("indexSelectedStyle : ${indexSelectedStyle}");
     }
   }
 
@@ -59,14 +55,12 @@ class SettingsController extends GetxController {
     isWBW = value;
     switchWBWController.write("switchWBW", isWBW);
     update();
-    // print("isWBW : ${isWBW}");
   }
 
   selectIDReciter(int id) {
     idSelectedReciter = id;
     selectedIDController.write("idReciter", id);
     update();
-    // print(id);
   }
 
   Future<List<Reciter>> getReciter() async {
@@ -82,7 +76,6 @@ class SettingsController extends GetxController {
     idSelectedTafsir = id;
     selectedIDController.write("idTafsir", id);
     update();
-    // print(id);
   }
 
   selectStyle(int style) {

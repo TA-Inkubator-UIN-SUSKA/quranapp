@@ -27,7 +27,6 @@ class DetailSurahController extends GetxController {
   bool stopRequestedAudio = false;
   bool isPauseAudio = false;
 
-
   Future addBookmark(
     bool lastRead,
     Surah surah,
