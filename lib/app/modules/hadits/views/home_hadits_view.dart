@@ -29,7 +29,7 @@ class HomeHaditsView extends GetView<HaditsController> {
       ),
       body: SafeArea(
         child: FutureBuilder<List<Map<String, dynamic>>>(
-          future: controller.getKitabs(),
+          future: controller.getListKitabs(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(child: CustomLoading());
@@ -86,7 +86,8 @@ class HomeHaditsView extends GetView<HaditsController> {
                                   .getKitab(listKitabs[index]["id"]);
                               Get.back();
                               controller.isHaveBab
-                                  ? Get.toNamed(Routes.BAB_HADITS)
+                                  ? Get.toNamed(Routes.BAB_HADITS,
+                                      arguments: {"kitab": controller.kitab})
                                   : Get.toNamed(Routes.HADITS, arguments: {
                                       "id": listKitabs[index]["id"],
                                       "nama_kitab": listKitabs[index]

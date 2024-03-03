@@ -7,23 +7,10 @@ import '../../../constant/api.dart';
 import '../../../data/db/bookmark.dart';
 import '../../../data/models/juz.dart';
 import '../../../data/models/surah.dart';
-import 'package:sqflite/sqflite.dart';
 
 class HomeController extends GetxController {
   DatabaseManager database = DatabaseManager.instance;
   List<Surah> listSurah = [];
-
-  Future<Map<String, dynamic>?> getLastRead() async {
-    Database db = await database.db;
-    List<Map<String, dynamic>> dataLastRead = await db.query(
-      "bookmark",
-    );
-    if (dataLastRead.isEmpty) {
-      return null;
-    }
-    log(dataLastRead.toString());
-    return dataLastRead.first;
-  }
 
   Future<List<Surah>> getSurahs() async {
     try {

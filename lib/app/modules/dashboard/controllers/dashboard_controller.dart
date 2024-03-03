@@ -46,7 +46,6 @@ class DashboardController extends GetxController {
   }
 
   Future<Bookmark?> getLastRead() async {
-    log("getLastRead");
     Database db = await database.db;
     List<Map<String, dynamic>> dataLastRead = await db.query(
       "bookmark",
@@ -55,11 +54,7 @@ class DashboardController extends GetxController {
     if (dataLastRead.isEmpty) {
       return null;
     }
-    print("${(dataLastRead)}");
     Bookmark lastRead = Bookmark.fromJson(dataLastRead.first);
-    print("${(lastRead.surah)}");
-    // Surah surah = Surah.fromJson(jsonDecode(lastRead.surah!));
-    // print("test : ${surah.toString()}");
     return lastRead;
   }
 }

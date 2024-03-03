@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:developer';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:quran_emufassir/app/constant/api.dart';
@@ -8,9 +7,12 @@ import 'package:quran_emufassir/app/data/models/kitab.dart';
 
 class HaditsController extends GetxController {
   List<Map<String, dynamic>> listKitabs = [];
+  List<Bab> listBab = [];
   bool isHaveBab = true;
+  int? idBab;
+  late Kitab kitab;
 
-  Future<List<Map<String, dynamic>>> getKitabs() async {
+  Future<List<Map<String, dynamic>>> getListKitabs() async {
     try {
       var res = await http.get(Uri.parse(baseUrlHadits));
       List<dynamic> rawData = json.decode(res.body)["data"];
@@ -30,7 +32,9 @@ class HaditsController extends GetxController {
       var rawData = json.decode(res.body)["data"];
       Kitab data = Kitab.fromJson(rawData);
       data.bab!.isEmpty ? isHaveBab = false : isHaveBab = true;
-      return Kitab();
+      kitab = data;
+      listBab = data.bab!;
+      return kitab;
     } catch (e) {
       Get.defaultDialog(
         title: "Terjadi Kesalahan!",
@@ -38,6 +42,26 @@ class HaditsController extends GetxController {
       );
       return null;
     }
+  }
+
+  Future<Kitab?> getHaditsBabKitab(int idKitab, int idBab) async {
+    try {
+      var res = await http.get(Uri.parse(
+          "$baseUrlHadits$idKitab/bab/$idBab?pagination=true&limit=10&page=1"));
+      var rawData = json.decode(res.body)["data"];
+      Kitab data = Kitab.fromJson(rawData);
+      return data;
+    } catch (e) {
+      Get.defaultDialog(
+        title: "Terjadi Kesalahan!",
+        middleText: "$e",
+      );
+      return null;
+    }
+  }
+
+  String escapeDoubleQuotes(String input) {
+    return input.replaceAll('"', '\\"');
   }
 
   // Future getHaditsKitab(int id) async {
