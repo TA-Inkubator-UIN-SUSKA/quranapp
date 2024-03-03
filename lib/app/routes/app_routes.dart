@@ -18,6 +18,7 @@ abstract class Routes {
   static const HADITS = _Paths.HADITS;
   static const BAB_HADITS = _Paths.BAB_HADITS;
   static const SEARCH_HADITS = _Paths.SEARCH_HADITS;
+  static const SEARCH_NUMBER_HADITS = _Paths.SEARCH_NUMBER_HADITS;
 }
 
 abstract class _Paths {
@@ -35,4 +36,5 @@ abstract class _Paths {
   static const HADITS = '/hadits';
   static const BAB_HADITS = '/bab-hadits';
   static const SEARCH_HADITS = '/search-hadits';
+  static const SEARCH_NUMBER_HADITS = '/search-number-hadits';
 }

@@ -1,11 +1,16 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:quran_emufassir/app/constant/api.dart';
 import 'package:quran_emufassir/app/data/models/kitab.dart';
 
+import '../../../helper/my_dialogs.dart';
+import '../../../helper/status.dart';
+
 class HaditsController extends GetxController {
+  final textC = TextEditingController();
   List<Map<String, dynamic>> listKitabs = [];
   List<Bab> listBab = [];
   bool isHaveBab = true;
@@ -16,6 +21,9 @@ class HaditsController extends GetxController {
   int _page = 1;
   var hasMore = true.obs;
   var listHadits = <Data>[].obs;
+  var idSelectedKitab;
+  Data hadits = Data();
+  final status = Status.none.obs;
 
   Future<List<Map<String, dynamic>>> getListKitabs() async {
     try {
@@ -182,6 +190,32 @@ class HaditsController extends GetxController {
     _page = 1;
     hasMore.value = true;
     listHadits.value = [];
+  }
+
+  Future<void> searchHadits() async {
+    try {
+      if (idSelectedKitab == null) {
+        MyDialog.info("Pilih Kitab!");
+      }
+      if (textC.text.trim().isNotEmpty) {
+        status.value = Status.loading;
+
+        var res = await http.get(Uri.parse(
+            "https://hadits.e-mufassir.com/api/hadits/by_id/$idSelectedKitab/${textC.text}"));
+        var rawData = json.decode(res.body)["data"];
+        print(rawData.toString());
+        hadits = Data.fromJson(rawData);
+
+        status.value = Status.complete;
+      } else {
+        MyDialog.info("Masukkan nomor hadits!");
+      }
+    } catch (e) {
+      Get.defaultDialog(
+        title: "Terjadi Kesalahan!",
+        middleText: "$e",
+      );
+    }
   }
 
   // Future getHaditsKitab(int id) async {

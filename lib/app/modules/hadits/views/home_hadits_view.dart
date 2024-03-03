@@ -27,9 +27,11 @@ class HomeHaditsView extends GetView<HaditsController> {
         elevation: 0,
         centerTitle: true,
         actions: [
-          IconButton(onPressed: () {
-            
-          }, icon: Icon(Icons.find_in_page_rounded))
+          IconButton(
+              onPressed: () {
+                Get.toNamed(Routes.SEARCH_NUMBER_HADITS);
+              },
+              icon: Icon(Icons.find_in_page_rounded))
         ],
       ),
       body: SafeArea(
