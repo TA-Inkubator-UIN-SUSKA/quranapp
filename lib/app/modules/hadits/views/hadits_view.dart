@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import '../../../constant/theme.dart';
 import '../../../data/models/kitab.dart';
 import '../../../helper/custom_loading.dart';
+import '../../../routes/app_pages.dart';
 import '../controllers/hadits_controller.dart';
 
 class HaditsView extends GetView<HaditsController> {
@@ -60,6 +61,16 @@ class HaditsView extends GetView<HaditsController> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         centerTitle: true,
+        actions: [
+          IconButton(
+              onPressed: () {
+                Get.toNamed(Routes.SEARCH_HADITS, arguments: {
+                  "id": idKitab,
+                  "nama_kitab": namaKitab,
+                });
+              },
+              icon: Icon(CupertinoIcons.search))
+        ],
       ),
       body: RefreshIndicator(
         onRefresh: onRefresh,

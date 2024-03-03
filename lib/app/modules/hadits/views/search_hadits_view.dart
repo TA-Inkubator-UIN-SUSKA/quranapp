@@ -18,13 +18,12 @@ class SearchHaditsView extends GetView<HaditsController> {
   SearchHaditsView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    controller.clearData();
     controller.getMoreQueryHadits(idKitab, search.value);
 
     final ScrollController scrollController = ScrollController();
 
     Future onRefresh() async {
-      controller.refreshDataQuery(idKitab, search.value);
+      controller.clearData();
       controller.getMoreQueryHadits(idKitab, search.value);
     }
 
@@ -60,12 +59,27 @@ class SearchHaditsView extends GetView<HaditsController> {
               child: TextFormField(
                 onChanged: (s) {
                   search.value = s.toLowerCase();
-                  // onRefresh();
                 },
                 maxLines: null,
-                onTapOutside: (event) => FocusScope.of(context).unfocus(),
+                onTapOutside: (event) {
+                  FocusScope.of(context).unfocus();
+                },
                 decoration: InputDecoration(
-                  suffixIcon: const Icon(CupertinoIcons.search),
+                  suffixIcon: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: CircleAvatar(
+                      backgroundColor: appGreen,
+                      child: IconButton(
+                        highlightColor: Colors.transparent,
+                        padding: EdgeInsets.zero,
+                        hoverColor: Colors.transparent,
+                        icon: Icon(CupertinoIcons.search),
+                        onPressed: () {
+                          onRefresh();
+                        },
+                      ),
+                    ),
+                  ),
                   hintText: "Cari Nama Kitab...",
                   hintStyle: const TextStyle(
                     fontSize: 12,
@@ -82,172 +96,156 @@ class SearchHaditsView extends GetView<HaditsController> {
                 ),
               ),
             ),
-            Obx(
-              () {
-                return Expanded(
-                  child: ListView(
+            Expanded(
+              child: Obx(
+                () {
+                  return ListView.builder(
                     controller: scrollController,
-                    children: [
-                      controller.jumlahHadits != 0
-                          ? Text(
-                              "${controller.jumlahHadits} hasil pencarian",
-                              textAlign: TextAlign.center,
-                            )
-                          : SizedBox(),
-                      ListView.builder(
-                        shrinkWrap: true,
-                        physics: const ClampingScrollPhysics(),
-                        padding: const EdgeInsets.fromLTRB(16, 10, 16, 20),
-                        itemCount: controller.hasMore.value
-                            ? controller.listHadits.length + 1
-                            : controller.listHadits.length,
-                        itemBuilder: (context, index) {
-                          if (index < controller.listHadits.length) {
-                            Data hadits = controller.listHadits[index];
-                            return Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                    padding: const EdgeInsets.fromLTRB(16, 10, 16, 20),
+                    itemCount: controller.hasMore.value
+                        ? controller.listHadits.length + 1
+                        : controller.listHadits.length,
+                    itemBuilder: (context, index) {
+                      if (index < controller.listHadits.length) {
+                        Data hadits = controller.listHadits[index];
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              width: mq.width,
+                              padding: const EdgeInsets.all(6),
+                              decoration: const BoxDecoration(
+                                color: appGreen,
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(15),
+                                ),
+                              ),
+                              child: Text(
+                                "$namaKitab #${hadits.id}",
+                                textAlign: TextAlign.center,
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ),
+                            Container(
+                              padding: const EdgeInsets.all(10),
+                              margin: const EdgeInsets.symmetric(vertical: 10),
+                              decoration: const BoxDecoration(
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(10),
+                                  ),
+                                  color: appGreenLight),
+                              child: Text(
+                                hadits.arab!,
+                                textAlign: TextAlign.end,
+                                softWrap: true,
+                                style: const TextStyle(
+                                  color: appGreenDark,
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 22,
+                                ),
+                              ),
+                            ),
+                            Text(
+                              hadits.terjemah!,
+                              textAlign: TextAlign.start,
+                              style: const TextStyle(
+                                height: 1.3,
+                                letterSpacing: 0.6,
+                                fontStyle: FontStyle.italic,
+                              ),
+                            ),
+                            if (controller.isHaveBab)
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const SizedBox(height: 12),
+                                  const Text(
+                                    "Bab",
+                                    style: TextStyle(
+                                      color: appGreen,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 4),
+                                  Text(
+                                    "${hadits.bab}",
+                                    style: const TextStyle(
+                                        color: appGreen,
+                                        fontSize: 12,
+                                        fontStyle: FontStyle.italic),
+                                  ),
+                                ],
+                              ),
+                            const SizedBox(height: 12),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                Container(
-                                  width: mq.width,
-                                  padding: const EdgeInsets.all(6),
-                                  decoration: const BoxDecoration(
-                                    color: appGreen,
-                                    borderRadius: BorderRadius.all(
-                                      Radius.circular(15),
-                                    ),
-                                  ),
-                                  child: Text(
-                                    "$namaKitab #${hadits.id}",
-                                    textAlign: TextAlign.center,
-                                    style: const TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                ),
-                                Container(
-                                  padding: const EdgeInsets.all(10),
-                                  margin:
-                                      const EdgeInsets.symmetric(vertical: 10),
-                                  decoration: const BoxDecoration(
-                                      borderRadius: BorderRadius.all(
-                                        Radius.circular(10),
-                                      ),
-                                      color: appGreenLight),
-                                  child: Text(
-                                    hadits.arab!,
-                                    textAlign: TextAlign.end,
-                                    softWrap: true,
-                                    style: const TextStyle(
-                                      color: appGreenDark,
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 22,
-                                    ),
-                                  ),
-                                ),
-                                Text(
-                                  hadits.terjemah!,
-                                  textAlign: TextAlign.start,
-                                  style: const TextStyle(
-                                    height: 1.3,
-                                    letterSpacing: 0.6,
-                                    fontStyle: FontStyle.italic,
-                                  ),
-                                ),
-                                if (controller.isHaveBab)
-                                  Column(
+                                GestureDetector(
+                                  onTap: () {},
+                                  child: const Column(
                                     crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                        CrossAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      const SizedBox(height: 12),
-                                      const Text(
-                                        "Bab",
-                                        style: TextStyle(
-                                          color: appGreen,
-                                          fontWeight: FontWeight.w600,
-                                        ),
+                                      Icon(
+                                        Icons.copy_rounded,
+                                        color: Colors.black54,
                                       ),
-                                      const SizedBox(height: 4),
                                       Text(
-                                        "${hadits.bab}",
-                                        style: const TextStyle(
-                                            color: appGreen,
-                                            fontSize: 12,
-                                            fontStyle: FontStyle.italic),
+                                        "Salin",
+                                        style: TextStyle(
+                                          fontSize: 11,
+                                          color: Colors.black54,
+                                        ),
                                       ),
                                     ],
                                   ),
-                                const SizedBox(height: 12),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    GestureDetector(
-                                      onTap: () {},
-                                      child: const Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Icon(
-                                            Icons.copy_rounded,
-                                            color: Colors.black54,
-                                          ),
-                                          Text(
-                                            "Salin",
-                                            style: TextStyle(
-                                              fontSize: 11,
-                                              color: Colors.black54,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    const SizedBox(width: 10),
-                                    GestureDetector(
-                                      onTap: () {},
-                                      child: const Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Icon(
-                                            Icons.share_rounded,
-                                            color: Colors.black54,
-                                          ),
-                                          Text(
-                                            "Bagikan",
-                                            style: TextStyle(
-                                              fontSize: 11,
-                                              color: Colors.black54,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
                                 ),
-                                const SizedBox(height: 10),
-                                const Divider(
-                                  color: Colors.black54,
+                                const SizedBox(width: 10),
+                                GestureDetector(
+                                  onTap: () {},
+                                  child: const Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(
+                                        Icons.share_rounded,
+                                        color: Colors.black54,
+                                      ),
+                                      Text(
+                                        "Bagikan",
+                                        style: TextStyle(
+                                          fontSize: 11,
+                                          color: Colors.black54,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                                const SizedBox(height: 10),
                               ],
-                            );
-                          } else {
-                            return const Padding(
-                              padding: EdgeInsets.all(15),
-                              child: Center(child: CustomLoading()),
-                            );
-                          }
-                        },
-                      ),
-                    ],
-                  ),
-                );
-              },
+                            ),
+                            const SizedBox(height: 10),
+                            const Divider(
+                              color: Colors.black54,
+                            ),
+                            const SizedBox(height: 10),
+                          ],
+                        );
+                      } else {
+                        return const Padding(
+                          padding: EdgeInsets.all(15),
+                          child: Center(child: CustomLoading()),
+                        );
+                      }
+                    },
+                  );
+                },
+              ),
             ),
           ],
         ),

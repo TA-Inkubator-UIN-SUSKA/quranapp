@@ -26,6 +26,11 @@ class HomeHaditsView extends GetView<HaditsController> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         centerTitle: true,
+        actions: [
+          IconButton(onPressed: () {
+            
+          }, icon: Icon(Icons.find_in_page_rounded))
+        ],
       ),
       body: SafeArea(
         child: FutureBuilder<List<Map<String, dynamic>>>(
