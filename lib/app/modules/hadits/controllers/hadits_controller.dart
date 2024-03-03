@@ -11,6 +11,10 @@ class HaditsController extends GetxController {
   bool isHaveBab = true;
   int? idBab;
   late Kitab kitab;
+  final int _limit = 15;
+  int _page = 1;
+  var hasMore = true.obs;
+  var listHadits = <Data>[].obs;
 
   Future<List<Map<String, dynamic>>> getListKitabs() async {
     try {
@@ -44,13 +48,16 @@ class HaditsController extends GetxController {
     }
   }
 
-  Future<Kitab?> getHaditsBabKitab(int idKitab, int idBab) async {
+  Future<List<Data>?> fetchHaditsBabKitab(int idKitab, int idBab) async {
     try {
-      var res = await http.get(Uri.parse(
-          "$baseUrlHadits$idKitab/bab/$idBab?pagination=true&limit=10&page=1"));
+      var url =
+          "$baseUrlHadits$idKitab/bab/$idBab?pagination=true&limit=$_limit&page=$_page";
+      log(url);
+      var res = await http.get(Uri.parse(url));
       var rawData = json.decode(res.body)["data"];
-      Kitab data = Kitab.fromJson(rawData);
-      return data;
+      Kitab dataKitab = Kitab.fromJson(rawData);
+      List<Data> listHadits = dataKitab.listHadits!.data!;
+      return listHadits;
     } catch (e) {
       Get.defaultDialog(
         title: "Terjadi Kesalahan!",
@@ -60,8 +67,52 @@ class HaditsController extends GetxController {
     }
   }
 
-  String escapeDoubleQuotes(String input) {
-    return input.replaceAll('"', '\\"');
+  Future<List<Data>?> fetchHaditsKitab(int idKitab) async {
+    try {
+      var res = await http.get(Uri.parse(
+          "$baseUrlHadits/byid/$idKitab?pagination=true&limit=$_limit&page=$_page"));
+      var rawData = json.decode(res.body)["data"];
+      Kitab dataKitab = Kitab.fromJson(rawData);
+      List<Data> listHadits = dataKitab.listHadits!.data!;
+      return listHadits;
+    } catch (e) {
+      Get.defaultDialog(
+        title: "Terjadi Kesalahan!",
+        middleText: "$e",
+      );
+      return null;
+    }
+  }
+
+  Future getMoreHaditsBabKitab(int idKitab, int idBab) async {
+    try {
+      List<Data>? response = await fetchHaditsBabKitab(idKitab, idBab);
+      if (response!.length < _limit) {
+        hasMore.value = false;
+      }
+
+      listHadits.addAll(response);
+      _page++;
+    } catch (e) {
+      Get.defaultDialog(
+        title: "Terjadi Kesalahan!",
+        middleText: "$e",
+      );
+    }
+  }
+
+  Future refreshData(int idKitab, int idBab) async {
+    _page = 1;
+    hasMore.value = true;
+    listHadits.value = [];
+
+    await fetchHaditsBabKitab(idKitab, idBab);
+  }
+
+  Future clearData() async {
+    _page = 1;
+    hasMore.value = true;
+    listHadits.value = [];
   }
 
   // Future getHaditsKitab(int id) async {
