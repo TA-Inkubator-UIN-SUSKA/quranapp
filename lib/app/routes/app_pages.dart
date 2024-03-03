@@ -6,6 +6,7 @@ import 'package:quran_emufassir/app/modules/hadits/bindings/hadits_binding.dart'
 import 'package:quran_emufassir/app/modules/hadits/views/bab_hadits_view.dart';
 import 'package:quran_emufassir/app/modules/hadits/views/hadits_view.dart';
 import 'package:quran_emufassir/app/modules/hadits/views/home_hadits_view.dart';
+import 'package:quran_emufassir/app/modules/hadits/views/search_hadits_view.dart';
 import 'package:quran_emufassir/app/modules/screen/views/onboard_screen_view.dart';
 import 'package:quran_emufassir/app/modules/screen/views/splash_screen_view.dart';
 
@@ -83,6 +84,10 @@ class AppPages {
     GetPage(
         name: _Paths.BAB_HADITS,
         page: () => BabHaditsView(),
+        binding: HaditsBinding()),
+    GetPage(
+        name: _Paths.SEARCH_HADITS,
+        page: () => SearchHaditsView(),
         binding: HaditsBinding()),
   ];
 }

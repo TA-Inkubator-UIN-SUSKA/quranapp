@@ -17,6 +17,7 @@ abstract class Routes {
   static const HOME_HADITS = _Paths.HOME_HADITS;
   static const HADITS = _Paths.HADITS;
   static const BAB_HADITS = _Paths.BAB_HADITS;
+  static const SEARCH_HADITS = _Paths.SEARCH_HADITS;
 }
 
 abstract class _Paths {
@@ -33,4 +34,5 @@ abstract class _Paths {
   static const HOME_HADITS = '/home-hadits';
   static const HADITS = '/hadits';
   static const BAB_HADITS = '/bab-hadits';
+  static const SEARCH_HADITS = '/search-hadits';
 }

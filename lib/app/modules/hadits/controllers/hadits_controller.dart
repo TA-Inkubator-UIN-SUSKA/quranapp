@@ -9,6 +9,7 @@ class HaditsController extends GetxController {
   List<Map<String, dynamic>> listKitabs = [];
   List<Bab> listBab = [];
   bool isHaveBab = true;
+  int jumlahHadits = 0;
   int? idBab;
   late Kitab kitab;
   final int _limit = 5;
@@ -84,6 +85,24 @@ class HaditsController extends GetxController {
     }
   }
 
+  Future<List<Data>?> fetchQueryHadits(int idKitab, String query) async {
+    try {
+      var res = await http.get(Uri.parse(
+          "https://hadits.e-mufassir.com/api/hadits/by_id/$idKitab?pagination=true&limit=$_limit&page=$_page&query=$query"));
+      var rawData = json.decode(res.body)["data"];
+      Kitab dataKitab = Kitab.fromJson(rawData);
+      jumlahHadits = dataKitab.rows!;
+      List<Data> listHadits = dataKitab.listHadits!.data!;
+      return listHadits;
+    } catch (e) {
+      Get.defaultDialog(
+        title: "Terjadi Kesalahan!",
+        middleText: "$e",
+      );
+      return null;
+    }
+  }
+
   Future getMoreHaditsBabKitab(int idKitab, int idBab) async {
     try {
       List<Data>? response = await fetchHaditsBabKitab(idKitab, idBab);
@@ -118,12 +137,37 @@ class HaditsController extends GetxController {
     }
   }
 
+  Future getMoreQueryHadits(int idKitab, String query) async {
+    try {
+      List<Data>? response = await fetchQueryHadits(idKitab, query);
+      if (response!.length < _limit) {
+        hasMore.value = false;
+      }
+
+      listHadits.addAll(response);
+      _page++;
+    } catch (e) {
+      Get.defaultDialog(
+        title: "Terjadi Kesalahan!",
+        middleText: "$e",
+      );
+    }
+  }
+
   Future refreshData(int idKitab) async {
     _page = 1;
     hasMore.value = true;
     listHadits.value = [];
 
     await fetchHaditsKitab(idKitab);
+  }
+
+  Future refreshDataQuery(int idKitab, String query) async {
+    _page = 1;
+    hasMore.value = true;
+    listHadits.value = [];
+
+    await fetchQueryHadits(idKitab, query);
   }
 
   Future refreshDataBab(int idKitab, int idBab) async {

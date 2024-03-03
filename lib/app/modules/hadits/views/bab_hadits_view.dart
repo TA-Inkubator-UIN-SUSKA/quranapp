@@ -27,6 +27,16 @@ class BabHaditsView extends GetView<HaditsController> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         centerTitle: true,
+        actions: [
+          IconButton(
+              onPressed: () {
+                Get.toNamed(Routes.SEARCH_HADITS, arguments: {
+                  "id": kitab.id,
+                  "nama_kitab": kitab.namaKitab,
+                });
+              },
+              icon: Icon(CupertinoIcons.search))
+        ],
       ),
       body: Column(
         children: [
