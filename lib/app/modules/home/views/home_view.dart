@@ -104,7 +104,6 @@ class HomeView extends GetView<HomeController> {
                               child: TextFormField(
                                 onChanged: (s) =>
                                     search.value = s.toLowerCase(),
-                                // controller: _c.resultC,
                                 maxLines: null,
                                 onTapOutside: (event) =>
                                     FocusScope.of(context).unfocus(),
