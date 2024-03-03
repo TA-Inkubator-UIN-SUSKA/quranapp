@@ -22,7 +22,7 @@ class HaditsController extends GetxController {
   var hasMore = true.obs;
   var listHadits = <Data>[].obs;
   var idSelectedKitab;
-  Data hadits = Data();
+  Data? hadits = Data();
   final status = Status.none.obs;
 
   Future<List<Map<String, dynamic>>> getListKitabs() async {
@@ -203,7 +203,6 @@ class HaditsController extends GetxController {
         var res = await http.get(Uri.parse(
             "https://hadits.e-mufassir.com/api/hadits/by_id/$idSelectedKitab/${textC.text}"));
         var rawData = json.decode(res.body)["data"];
-        print(rawData.toString());
         hadits = Data.fromJson(rawData);
 
         status.value = Status.complete;
@@ -212,9 +211,10 @@ class HaditsController extends GetxController {
       }
     } catch (e) {
       Get.defaultDialog(
-        title: "Terjadi Kesalahan!",
-        middleText: "$e",
+        title: "Tidak ada data!",
+        middleText: "Hadits tidak ditemukan",
       );
+      status.value = Status.none;
     }
   }
 

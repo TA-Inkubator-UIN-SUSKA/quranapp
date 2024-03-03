@@ -14,21 +14,21 @@ class SearchNumberHaditsView extends GetView<HaditsController> {
     return Scaffold(
       appBar: AppBar(
         iconTheme: const IconThemeData(color: appGreenDark),
-        title: Text(
+        title: const Text(
           "Search Hadits",
-          style: const TextStyle(color: appGreenDark),
+          style: TextStyle(color: appGreenDark),
         ),
         backgroundColor: Colors.transparent,
         elevation: 0,
         centerTitle: true,
       ),
       body: ListView(
-        padding: EdgeInsets.symmetric(horizontal: 16),
+        padding: const EdgeInsets.symmetric(horizontal: 16),
         children: [
           DropdownButtonFormField(
             isExpanded: true,
-            // value: controller.idSelectedKitab,
-            hint: Text("Pilih Kitab"),
+            value: controller.idSelectedKitab,
+            hint: const Text("Pilih Kitab"),
             items: [
               for (int i = 0; i <= controller.listKitabs.length - 1; i++)
                 DropdownMenuItem(
@@ -42,7 +42,7 @@ class SearchNumberHaditsView extends GetView<HaditsController> {
               log(controller.idSelectedKitab.toString());
             },
           ),
-          SizedBox(height: 12),
+          const SizedBox(height: 12),
           TextField(
             controller: controller.textC,
             keyboardType: TextInputType.number,
@@ -54,7 +54,7 @@ class SearchNumberHaditsView extends GetView<HaditsController> {
               hintStyle: const TextStyle(fontSize: 14),
             ),
           ),
-          SizedBox(height: 12),
+          const SizedBox(height: 12),
           ElevatedButton(
             onPressed: () {
               controller.searchHadits();
@@ -62,11 +62,11 @@ class SearchNumberHaditsView extends GetView<HaditsController> {
             style: ElevatedButton.styleFrom(
               backgroundColor: appGreen,
             ),
-            child: Text("Cari"),
+            child: const Text("Cari"),
           ),
           Obx(() {
             if (controller.status.value == Status.loading) {
-              return CustomLoading();
+              return const SizedBox(height: 100, child: CustomLoading());
             } else if (controller.status.value == Status.complete) {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -81,7 +81,7 @@ class SearchNumberHaditsView extends GetView<HaditsController> {
                       ),
                     ),
                     child: Text(
-                      "${controller.hadits.kitab} #${controller.hadits.id}",
+                      "${controller.hadits?.kitab} #${controller.hadits?.id}",
                       textAlign: TextAlign.center,
                       style: const TextStyle(
                         color: Colors.white,
@@ -98,7 +98,7 @@ class SearchNumberHaditsView extends GetView<HaditsController> {
                         ),
                         color: appGreenLight),
                     child: Text(
-                      "${controller.hadits.arab}",
+                      "${controller.hadits?.arab}",
                       textAlign: TextAlign.end,
                       softWrap: true,
                       style: const TextStyle(
@@ -109,7 +109,7 @@ class SearchNumberHaditsView extends GetView<HaditsController> {
                     ),
                   ),
                   Text(
-                    "${controller.hadits.terjemah}",
+                    "${controller.hadits?.terjemah}",
                     textAlign: TextAlign.start,
                     style: const TextStyle(
                       height: 1.3,
@@ -117,7 +117,7 @@ class SearchNumberHaditsView extends GetView<HaditsController> {
                       fontStyle: FontStyle.italic,
                     ),
                   ),
-                  if (controller.hadits.idBab != null)
+                  if (controller.hadits?.idBab != null)
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -131,7 +131,7 @@ class SearchNumberHaditsView extends GetView<HaditsController> {
                         ),
                         const SizedBox(height: 4),
                         Text(
-                          "${controller.hadits.bab}",
+                          "${controller.hadits?.bab}",
                           style: const TextStyle(
                               color: appGreen,
                               fontSize: 12,
@@ -195,7 +195,7 @@ class SearchNumberHaditsView extends GetView<HaditsController> {
                 ],
               );
             } else {
-              return Text("Tidak ada data");
+              return const SizedBox();
             }
           })
         ],
