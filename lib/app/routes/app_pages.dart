@@ -3,6 +3,7 @@
 import 'package:get/get.dart';
 import 'package:quran_emufassir/app/modules/chatbot/views/home_chatbot_view.dart';
 import 'package:quran_emufassir/app/modules/hadits/bindings/hadits_binding.dart';
+import 'package:quran_emufassir/app/modules/hadits/views/bab_hadits_view.dart';
 import 'package:quran_emufassir/app/modules/hadits/views/hadits_view.dart';
 import 'package:quran_emufassir/app/modules/hadits/views/home_hadits_view.dart';
 import 'package:quran_emufassir/app/modules/screen/views/onboard_screen_view.dart';
@@ -73,11 +74,15 @@ class AppPages {
         binding: ChatbotBinding()),
     GetPage(
         name: _Paths.HOME_HADITS,
-        page: () =>HomeHaditsView(),
+        page: () => HomeHaditsView(),
         binding: HaditsBinding()),
     GetPage(
         name: _Paths.HADITS,
-        page: () => const HaditsView(),
+        page: () => HaditsView(),
+        binding: HaditsBinding()),
+    GetPage(
+        name: _Paths.BAB_HADITS,
+        page: () => BabHaditsView(),
         binding: HaditsBinding()),
   ];
 }

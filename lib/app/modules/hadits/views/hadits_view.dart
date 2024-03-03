@@ -1,13 +1,16 @@
-import 'package:flutter/cupertino.dart';
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../constant/theme.dart';
 import '../controllers/hadits_controller.dart';
 
 class HaditsView extends GetView<HaditsController> {
-  const HaditsView({Key? key}) : super(key: key);
+  int idKitab = Get.arguments["id"];
+  String namaKitab = Get.arguments["nama_kitab"];
   @override
   Widget build(BuildContext context) {
+    log("$idKitab. $namaKitab");
     return Scaffold(
       appBar: AppBar(
         iconTheme: const IconThemeData(color: appGreenDark),

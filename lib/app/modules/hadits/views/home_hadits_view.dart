@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:quran_emufassir/app/helper/my_dialogs.dart';
 import 'package:quran_emufassir/app/routes/app_pages.dart';
 
 import '../../../constant/theme.dart';
@@ -79,8 +80,18 @@ class HomeHaditsView extends GetView<HaditsController> {
                         return Container(
                           margin: const EdgeInsets.only(bottom: 10),
                           child: InkWell(
-                            onTap: () {
-                              Get.toNamed(Routes.HADITS);
+                            onTap: () async {
+                              MyDialog.showLoadingDialog();
+                              await controller
+                                  .getKitab(listKitabs[index]["id"]);
+                              Get.back();
+                              controller.isHaveBab
+                                  ? Get.toNamed(Routes.BAB_HADITS)
+                                  : Get.toNamed(Routes.HADITS, arguments: {
+                                      "id": listKitabs[index]["id"],
+                                      "nama_kitab": listKitabs[index]
+                                          ["nama_kitab"],
+                                    });
                             },
                             borderRadius: BorderRadius.circular(20),
                             child: Container(
