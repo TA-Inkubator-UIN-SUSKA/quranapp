@@ -55,87 +55,92 @@ class BabHaditsView extends GetView<HaditsController> {
               ),
             ),
           ),
-          Expanded(child: Obx(() {
-            List<Bab> listBabs = search.isEmpty
-                ? controller.listBab
-                : controller.listBab
-                    .where((element) => element.namaBab
-                        .toString()
-                        .toLowerCase()
-                        .contains(search.value))
-                    .toList();
-            return ListView.builder(
-              physics: const BouncingScrollPhysics(),
-              padding: EdgeInsets.symmetric(horizontal: mq.width * 0.05),
-              itemCount: listBabs.length,
-              itemBuilder: (context, index) {
-                return Container(
-                  margin: const EdgeInsets.only(bottom: 10),
-                  child: InkWell(
-                    onTap: () {
-                      controller.idBab = listBabs[index].id!;
-                      Get.toNamed(Routes.HADITS, arguments: {
-                        "id": kitab.id,
-                        "nama_kitab": kitab.namaKitab,
-                      });
-                    },
-                    borderRadius: BorderRadius.circular(20),
-                    child: Container(
-                      decoration: BoxDecoration(
+          Expanded(
+            child: Obx(
+              () {
+                List<Bab> listBabs = search.isEmpty
+                    ? controller.listBab
+                    : controller.listBab
+                        .where((element) => element.namaBab
+                            .toString()
+                            .toLowerCase()
+                            .contains(search.value))
+                        .toList();
+                return ListView.builder(
+                  physics: const BouncingScrollPhysics(),
+                  padding: EdgeInsets.symmetric(horizontal: mq.width * 0.05),
+                  itemCount: listBabs.length,
+                  itemBuilder: (context, index) {
+                    return Container(
+                      margin: const EdgeInsets.only(bottom: 10),
+                      child: InkWell(
+                        onTap: () {
+                          controller.idBab = listBabs[index].id!;
+                          Get.toNamed(Routes.HADITS, arguments: {
+                            "id": kitab.id,
+                            "nama_kitab": kitab.namaKitab,
+                          });
+                        },
                         borderRadius: BorderRadius.circular(20),
-                        gradient: LinearGradient(
-                          colors: [
-                            appGreen2,
-                            appGreen2.withOpacity(0.1),
-                          ],
-                        ),
-                      ),
-                      width: Get.width,
-                      child: Padding(
-                        padding: const EdgeInsets.all(6.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Expanded(
-                              flex: 1,
-                              child: Image.asset(
-                                "assets/images/hadits1.png",
-                                fit: BoxFit.cover,
-                              ),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            gradient: LinearGradient(
+                              colors: [
+                                appGreen2,
+                                appGreen2.withOpacity(0.1),
+                              ],
                             ),
-                            Expanded(
-                              flex: 4,
-                              child: Container(
-                                margin: const EdgeInsets.only(left: 10),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      listBabs[index].namaBab ?? "null",
-                                      style: const TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w600),
-                                    ),
-                                    const SizedBox(height: 2),
-                                  ],
+                          ),
+                          width: Get.width,
+                          child: Padding(
+                            padding: const EdgeInsets.all(6.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Expanded(
+                                  flex: 1,
+                                  child: Image.asset(
+                                    "assets/images/hadits1.png",
+                                    fit: BoxFit.cover,
+                                  ),
                                 ),
-                              ),
+                                Expanded(
+                                  flex: 4,
+                                  child: Container(
+                                    margin: const EdgeInsets.only(left: 10),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          listBabs[index].namaBab ?? "null",
+                                          style: const TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w600),
+                                        ),
+                                        const SizedBox(height: 2),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                const Spacer(),
+                                const Icon(
+                                  CupertinoIcons.right_chevron,
+                                  color: Colors.black,
+                                )
+                              ],
                             ),
-                            const Spacer(),
-                            const Icon(
-                              CupertinoIcons.right_chevron,
-                              color: Colors.black,
-                            )
-                          ],
+                          ),
                         ),
                       ),
-                    ),
-                  ),
+                    );
+                  },
                 );
               },
-            );
-          })),
+            ),
+          ),
         ],
       ),
     );
