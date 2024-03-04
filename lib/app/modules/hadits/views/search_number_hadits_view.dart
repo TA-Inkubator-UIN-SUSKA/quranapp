@@ -1,11 +1,15 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:quran_emufassir/app/helper/custom_loading.dart';
 import 'package:quran_emufassir/app/helper/status.dart';
 import 'package:quran_emufassir/app/modules/hadits/controllers/hadits_controller.dart';
+import 'package:share_plus/share_plus.dart';
+import '../../../constant/const.dart';
 import '../../../constant/theme.dart';
+import '../../../helper/my_dialogs.dart';
 
 class SearchNumberHaditsView extends GetView<HaditsController> {
   const SearchNumberHaditsView({Key? key}) : super(key: key);
@@ -23,6 +27,7 @@ class SearchNumberHaditsView extends GetView<HaditsController> {
         centerTitle: true,
       ),
       body: ListView(
+        physics: const BouncingScrollPhysics(),
         padding: const EdgeInsets.symmetric(horizontal: 16),
         children: [
           DropdownButtonFormField(
@@ -145,7 +150,25 @@ class SearchNumberHaditsView extends GetView<HaditsController> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       GestureDetector(
-                        onTap: () {},
+                        onTap: () {
+                          controller.hadits?.idBab != null
+                              ? Clipboard.setData(
+                                  ClipboardData(
+                                    text:
+                                        "${controller.hadits!.arab}\n${controller.hadits!.terjemah}\nSumber : (Kitab ${controller.hadits!.kitab} : ${controller.hadits!.id} - Bab ${controller.hadits!.bab})\n\n$copyright",
+                                  ),
+                                )
+                              : Clipboard.setData(
+                                  ClipboardData(
+                                    text:
+                                        "${controller.hadits!.arab}\n${controller.hadits!.terjemah}\nSumber : (${controller.hadits!.kitab} : ${controller.hadits!.id})\n\n$copyright",
+                                  ),
+                                );
+                          MyDialog.basicSnackbar(
+                            title: "Berhasil",
+                            msg: "Teks berhasil di salin!",
+                          );
+                        },
                         child: const Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -166,7 +189,15 @@ class SearchNumberHaditsView extends GetView<HaditsController> {
                       ),
                       const SizedBox(width: 10),
                       GestureDetector(
-                        onTap: () {},
+                        onTap: () {
+                          controller.isHaveBab
+                              ? Share.share(
+                                  "${controller.hadits!.arab}\n${controller.hadits!.terjemah}\nSumber : (Kitab ${controller.hadits!.kitab} : ${controller.hadits!.id} - Bab ${controller.hadits!.bab})\n\n$copyright",
+                                )
+                              : Share.share(
+                                  "${controller.hadits!.arab}\n${controller.hadits!.terjemah}\nSumber : (${controller.hadits!.kitab} : ${controller.hadits!.id})\n\n$copyright",
+                                );
+                        },
                         child: const Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.center,

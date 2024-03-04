@@ -92,7 +92,7 @@ class AppPages {
         binding: HaditsBinding()),
     GetPage(
         name: _Paths.SEARCH_NUMBER_HADITS,
-        page: () => SearchNumberHaditsView(),
+        page: () => const SearchNumberHaditsView(),
         binding: HaditsBinding()),
   ];
 }

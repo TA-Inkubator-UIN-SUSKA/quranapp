@@ -73,7 +73,7 @@ class HaditsView extends GetView<HaditsController> {
                   "nama_kitab": namaKitab,
                 });
               },
-              icon: Icon(CupertinoIcons.search))
+              icon: const Icon(CupertinoIcons.search))
         ],
       ),
       body: RefreshIndicator(

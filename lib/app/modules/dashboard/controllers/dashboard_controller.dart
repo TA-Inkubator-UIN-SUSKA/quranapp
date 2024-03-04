@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 import 'package:get/get.dart';
 import 'package:quran_emufassir/app/data/models/bookmark.dart';
 import 'package:quran_emufassir/app/data/models/hijriah_date.dart';
@@ -7,7 +6,6 @@ import 'package:quran_emufassir/app/helper/my_dialogs.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:http/http.dart' as http;
-
 import '../../../data/db/bookmark.dart';
 
 class DashboardController extends GetxController {
