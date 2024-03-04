@@ -130,26 +130,26 @@ class DashboardView extends GetView<DashboardController> {
                     color: Colors.transparent,
                     child: InkWell(
                       onTap: () {
-                        settingC.isWBW = false;
-                        switch (lastRead?.via) {
-                          // case "juz":
-                          //   Map<String, dynamic> dataMapPerJuz =
-                          //       controller.allJuz[lastRead["juz"] - 1];
-                          //   Get.toNamed(Routes.DETAIL_JUZ, arguments: {
-                          //     "juz": dataMapPerJuz,
-                          //     "bookmark": lastRead,
-                          //   });
+                        if (lastRead != null) {
+                          settingC.isWBW = false;
+                          switch (lastRead.via) {
+                            case "juz":
+                              Get.toNamed(
+                                Routes.DETAIL_JUZ,
+                                arguments: lastRead.juz,
+                              );
 
-                          //   break;
-                          default:
-                            Get.toNamed(Routes.DETAIL_SURAH, arguments: {
-                              "name": lastRead?.surah
-                                  .toString()
-                                  .replaceAll("+", "'"),
-                              "number": lastRead?.numberSurah,
-                              "bookmark": lastRead,
-                              "surah": lastRead?.surah
-                            });
+                              break;
+                            default:
+                              Get.toNamed(Routes.DETAIL_SURAH, arguments: {
+                                "name": lastRead.surah
+                                    .toString()
+                                    .replaceAll("+", "'"),
+                                "number": lastRead.numberSurah,
+                                "bookmark": lastRead,
+                                "surah": lastRead.surah
+                              });
+                          }
                         }
                       },
                       borderRadius: BorderRadius.circular(20),
@@ -189,9 +189,10 @@ class DashboardView extends GetView<DashboardController> {
                                   ),
                                   const SizedBox(height: 2),
                                   Text(
+                                     
                                     lastRead?.surah?.name == null
-                                        ? ""
-                                        : "${lastRead!.surah!.name.toString().replaceAll("+", "'")} : ${lastRead.ayat}",
+                                        ? "Belum ada data!"
+                                        : lastRead?.via == "juz" ?"Juz : ${lastRead!.juz}"  :  "${lastRead!.surah!.name.toString().replaceAll("+", "'")} : ${lastRead.ayat}",
                                     style: const TextStyle(
                                         color: appWhite,
                                         fontSize: 16,

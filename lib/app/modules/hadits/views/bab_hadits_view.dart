@@ -35,7 +35,7 @@ class BabHaditsView extends GetView<HaditsController> {
                   "nama_kitab": kitab.namaKitab,
                 });
               },
-              icon: Icon(CupertinoIcons.search))
+              icon: const Icon(CupertinoIcons.search))
         ],
       ),
       body: Column(

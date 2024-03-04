@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:quran_emufassir/app/constant/const.dart';
+import 'package:quran_emufassir/app/helper/my_dialogs.dart';
 import 'package:share_plus/share_plus.dart';
 import '../constant/theme.dart';
 import 'package:flutter/services.dart';
@@ -8,7 +10,8 @@ import '../data/models/message.dart';
 
 class MessageCard extends StatelessWidget {
   final Message message;
-  const MessageCard({super.key, required this.message});
+  final String chatbot;
+  const MessageCard({super.key, required this.message, required this.chatbot});
 
   @override
   Widget build(BuildContext context) {
@@ -65,17 +68,30 @@ class MessageCard extends StatelessWidget {
                                 onPressed: () {
                                   Clipboard.setData(
                                     ClipboardData(
-                                        text:
-                                            "Question : ${message.question}\nAnswer : ${message.answer}"),
+                                      text:
+                                          "[Chatbot $chatbot by E-Mufassir]\nPertanyaan : ${message.question}\nJawaban : ${message.answer}\n\n$copyright",
+                                    ),
                                   );
-                                  Get.snackbar(
-                                      'Copied!', 'Text copied to clipboard.',
-                                      snackPosition: SnackPosition.BOTTOM,
-                                      backgroundColor: Colors.white);
+                                  MyDialog.basicSnackbar(
+                                      msg: "Berhasil",
+                                      title: "Teks berhasil disalin!");
                                 },
-                                child: const Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [Icon(Icons.copy), Text("Copy")],
+                                child: GestureDetector(
+                                  onTap: () {
+                                    Clipboard.setData(
+                                      ClipboardData(
+                                        text:
+                                            "[Chatbot $chatbot by E-Mufassir]\nPertanyaan : ${message.question}\nJawaban : ${message.answer}\n\n$copyright",
+                                      ),
+                                    );
+                                    MyDialog.basicSnackbar(
+                                        msg: "Berhasil",
+                                        title: "Teks berhasil disalin!");
+                                  },
+                                  child: const Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [Icon(Icons.copy), Text("Copy")],
+                                  ),
                                 ),
                               ),
                               const SimpleDialogOption(
@@ -121,7 +137,7 @@ class MessageCard extends StatelessWidget {
                       Clipboard.setData(
                         ClipboardData(
                             text:
-                                "Question : ${message.question}\nAnswer : ${message.answer}"),
+                                "\nPertanyaan : ${message.question}\nJawaban : ${message.answer}"),
                       );
                       Get.snackbar('Copied!', 'Text copied to clipboard.',
                           snackPosition: SnackPosition.BOTTOM);
@@ -217,23 +233,33 @@ class MessageCard extends StatelessWidget {
                                 onPressed: () {
                                   Clipboard.setData(
                                     ClipboardData(
-                                        text:
-                                            "Question : ${message.question}\nAnswer : ${message.answer}"),
+                                      text:
+                                          "[Chatbot $chatbot by E-Mufassir]\nPertanyaan : ${message.question}\nJawaban : ${message.answer}\n\n$copyright",
+                                    ),
                                   );
-                                  Get.snackbar(
-                                      'Copied!', 'Text copied to clipboard.',
-                                      snackPosition: SnackPosition.BOTTOM,
-                                      backgroundColor: Colors.white);
+                                  MyDialog.basicSnackbar(
+                                      msg: "Berhasil",
+                                      title: "Teks berhasil disalin!");
                                 },
                                 child: const Row(
                                   mainAxisSize: MainAxisSize.min,
                                   children: [Icon(Icons.copy), Text("Copy")],
                                 ),
                               ),
-                              const SimpleDialogOption(
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [Icon(Icons.share), Text("Share")],
+                              SimpleDialogOption(
+                                child: GestureDetector(
+                                  onTap: () {
+                                    Share.share(
+                                      "[Chatbot $chatbot by E-Mufassir]\nPertanyaan : ${message.question}\nJawaban : ${message.answer}\n\n$copyright",
+                                    );
+                                  },
+                                  child: const Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Icon(Icons.share),
+                                      Text("Share")
+                                    ],
+                                  ),
                                 ),
                               ),
                             ],
@@ -272,11 +298,12 @@ class MessageCard extends StatelessWidget {
                       onTap: () {
                         Clipboard.setData(
                           ClipboardData(
-                              text:
-                                  "Question : ${message.question}\nAnswer : ${message.answer}"),
+                            text:
+                                "[Chatbot $chatbot by E-Mufassir]\nPertanyaan : ${message.question}\nJawaban : ${message.answer}\n\n$copyright",
+                          ),
                         );
-                        Get.snackbar('Copied!', 'Text copied to clipboard.',
-                            snackPosition: SnackPosition.BOTTOM);
+                        MyDialog.basicSnackbar(
+                            msg: "Berhasil", title: "Teks berhasil disalin!");
                       },
                       child: const Icon(
                         Icons.copy,
@@ -286,7 +313,8 @@ class MessageCard extends StatelessWidget {
                     GestureDetector(
                       onTap: () {
                         Share.share(
-                            "Question : ${message.question}\nAnswer : ${message.answer}");
+                          "[Chatbot $chatbot by E-Mufassir]\nPertanyaan : ${message.question}\nJawaban : ${message.answer}\n\n$copyright",
+                        );
                       },
                       child: const Icon(
                         Icons.share,

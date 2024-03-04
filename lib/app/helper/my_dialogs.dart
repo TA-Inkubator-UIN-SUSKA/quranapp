@@ -26,4 +26,11 @@ class MyDialog {
       child: CustomLoading(),
     ));
   }
+
+  static void basicSnackbar(
+      {String title = "Berhasil", String msg = "Teks berhasil disalin!"}) {
+    Get.snackbar(title, msg,
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.white.withOpacity(0.8));
+  }
 }

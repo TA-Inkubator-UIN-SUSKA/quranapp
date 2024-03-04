@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:get/get.dart';
+import 'package:quran_emufassir/app/constant/const.dart';
 import 'package:quran_emufassir/app/data/models/bookmark.dart';
 import 'package:quran_emufassir/app/helper/custom_loading.dart';
 import 'package:quran_emufassir/app/modules/dashboard/controllers/dashboard_controller.dart';
@@ -9,6 +11,7 @@ import '../../../constant/theme.dart';
 import '../../../data/models/surah.dart';
 import '../../../data/models/verse.dart' as verse;
 import '../../../data/models/word_verse.dart' as wordverse;
+import '../../../helper/my_dialogs.dart';
 import '../../../modules/detail_surah/controllers/detail_surah_controller.dart';
 import '../../../modules/settings/controllers/settings_controller.dart';
 import 'package:share_plus/share_plus.dart';
@@ -203,7 +206,93 @@ class DetailSurahView extends GetView<DetailSurahController> {
                                                         color: Colors.black54,
                                                         fontSize: 12,
                                                       ),
-                                                    )
+                                                    ),
+                                                    const SizedBox(height: 10),
+                                                    Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment.end,
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        GestureDetector(
+                                                          onTap: () {
+                                                            Clipboard.setData(
+                                                              ClipboardData(
+                                                                text:
+                                                                    "[Tafsir ${surahArgument.name} : ${index + 1}]\n${ayat?.tafsir?.text}\nSumber : (${controller.sourceTafsir})\n\n$copyright",
+                                                              ),
+                                                            );
+
+                                                            MyDialog
+                                                                .basicSnackbar(
+                                                              title: "Berhasil",
+                                                              msg:
+                                                                  "Teks berhasil di salin!",
+                                                            );
+                                                          },
+                                                          child: const Column(
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .center,
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .center,
+                                                            children: [
+                                                              Icon(
+                                                                Icons
+                                                                    .copy_rounded,
+                                                                color: Colors
+                                                                    .black54,
+                                                              ),
+                                                              Text(
+                                                                "Salin",
+                                                                style:
+                                                                    TextStyle(
+                                                                  fontSize: 11,
+                                                                  color: Colors
+                                                                      .black54,
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                        const SizedBox(
+                                                            width: 10),
+                                                        GestureDetector(
+                                                          onTap: () {
+                                                            Share.share(
+                                                              "[Tafsir ${surahArgument.name} : ${index + 1}]\n${ayat?.tafsir?.text}\nSumber : (${controller.sourceTafsir})\n\n$copyright",
+                                                            );
+                                                          },
+                                                          child: const Column(
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .center,
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .center,
+                                                            children: [
+                                                              Icon(
+                                                                Icons
+                                                                    .share_rounded,
+                                                                color: Colors
+                                                                    .black54,
+                                                              ),
+                                                              Text(
+                                                                "Bagikan",
+                                                                style:
+                                                                    TextStyle(
+                                                                  fontSize: 11,
+                                                                  color: Colors
+                                                                      .black54,
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
                                                   ],
                                                 ),
                                               ),
@@ -245,8 +334,8 @@ class DetailSurahView extends GetView<DetailSurahController> {
                                     IconButton(
                                       onPressed: () {
                                         Share.share(
-                                            "${ayat?.text?.textUthmani ?? "null"}\n ${ayat?.translation?.text ?? "null"}",
-                                            subject: 'sharing');
+                                          "${ayat?.text?.textUthmani}\n${ayat?.translation?.text}\n(${surahArgument.name} : ${index + 1})\n\n$copyright",
+                                        );
                                       },
                                       icon: const Icon(Icons.share),
                                     ),

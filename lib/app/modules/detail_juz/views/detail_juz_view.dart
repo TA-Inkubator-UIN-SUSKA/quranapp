@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:get/get.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:share_plus/share_plus.dart';
+import '../../../constant/const.dart';
 import '../../../constant/theme.dart';
 import '../../../data/models/surah.dart';
 import '../../../data/models/verse.dart' as verse;
 import '../../../data/models/word_verse.dart' as wordverse;
 import '../../../helper/custom_loading.dart';
+import '../../../helper/my_dialogs.dart';
 import '../../../modules/settings/controllers/settings_controller.dart';
 import '../../dashboard/controllers/dashboard_controller.dart';
 import '../controllers/detail_juz_controller.dart';
@@ -193,7 +196,86 @@ class DetailJuzView extends GetView<DetailJuzController> {
                                                     color: Colors.black54,
                                                     fontSize: 12,
                                                   ),
-                                                )
+                                                ),
+                                                const SizedBox(height: 10),
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.end,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.center,
+                                                  children: [
+                                                    GestureDetector(
+                                                      onTap: () {
+                                                        Clipboard.setData(
+                                                          ClipboardData(
+                                                            text:
+                                                                "[Tafsir ${listSurah[ayat!.idChapter! - 1].name} : ${index + 1}]\n${ayat.tafsir?.text}\nSumber : (${controller.sourceTafsir})\n\n$copyright",
+                                                          ),
+                                                        );
+
+                                                        MyDialog.basicSnackbar(
+                                                          title: "Berhasil",
+                                                          msg:
+                                                              "Teks berhasil di salin!",
+                                                        );
+                                                      },
+                                                      child: const Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .center,
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                        children: [
+                                                          Icon(
+                                                            Icons.copy_rounded,
+                                                            color:
+                                                                Colors.black54,
+                                                          ),
+                                                          Text(
+                                                            "Salin",
+                                                            style: TextStyle(
+                                                              fontSize: 11,
+                                                              color: Colors
+                                                                  .black54,
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                    const SizedBox(width: 10),
+                                                    GestureDetector(
+                                                      onTap: () {
+                                                        Share.share(
+                                                          "[Tafsir ${listSurah[ayat!.idChapter! - 1].name} : ${index + 1}]\n${ayat.tafsir?.text}\nSumber : (${controller.sourceTafsir})\n\n$copyright",
+                                                        );
+                                                      },
+                                                      child: const Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .center,
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                        children: [
+                                                          Icon(
+                                                            Icons.share_rounded,
+                                                            color:
+                                                                Colors.black54,
+                                                          ),
+                                                          Text(
+                                                            "Bagikan",
+                                                            style: TextStyle(
+                                                              fontSize: 11,
+                                                              color: Colors
+                                                                  .black54,
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
                                               ],
                                             ),
                                           ),
@@ -212,12 +294,12 @@ class DetailJuzView extends GetView<DetailJuzController> {
                                       actions: [
                                         ElevatedButton(
                                           onPressed: () async {
-                                            // await c.addBookmark(
-                                            //   true,
-                                            //   surahArgument,
-                                            //   ayat!,
-                                            //   index,
-                                            // );
+                                            await c.addBookmark(
+                                              true,
+                                              listSurah[ayat!.idChapter! - 1],
+                                              ayat,
+                                              index,
+                                            );
                                             dashboardC.update();
                                           },
                                           style: ElevatedButton.styleFrom(
@@ -235,8 +317,8 @@ class DetailJuzView extends GetView<DetailJuzController> {
                                 IconButton(
                                   onPressed: () {
                                     Share.share(
-                                        "${ayat?.text?.textUthmani ?? "null"}\n ${ayat?.translation?.text ?? "null"}",
-                                        subject: 'sharing');
+                                      "${ayat?.text?.textUthmani}\n${ayat?.translation?.text}\n(${listSurah[ayat!.idChapter! - 1].name} : ${index + 1})\n\n$copyright",
+                                    );
                                   },
                                   icon: const Icon(Icons.share),
                                 ),

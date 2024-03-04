@@ -2,7 +2,11 @@ import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:quran_emufassir/app/constant/const.dart';
+import 'package:quran_emufassir/app/helper/my_dialogs.dart';
+import 'package:share_plus/share_plus.dart';
 import '../../../constant/theme.dart';
 import '../../../data/models/kitab.dart';
 import '../../../helper/custom_loading.dart';
@@ -162,7 +166,25 @@ class HaditsView extends GetView<HaditsController> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         GestureDetector(
-                          onTap: () {},
+                          onTap: () {
+                            controller.isHaveBab
+                                ? Clipboard.setData(
+                                    ClipboardData(
+                                      text:
+                                          "${hadits.arab}\n${hadits.terjemah}\nSumber : (Kitab ${hadits.kitab} : ${hadits.id} - Bab ${hadits.bab})\n\n$copyright",
+                                    ),
+                                  )
+                                : Clipboard.setData(
+                                    ClipboardData(
+                                      text:
+                                          "${hadits.arab}\n${hadits.terjemah}\nSumber : (${hadits.kitab} : ${hadits.id})\n\n$copyright",
+                                    ),
+                                  );
+                            MyDialog.basicSnackbar(
+                              title: "Berhasil",
+                              msg: "Teks berhasil di salin!",
+                            );
+                          },
                           child: const Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -183,7 +205,15 @@ class HaditsView extends GetView<HaditsController> {
                         ),
                         const SizedBox(width: 10),
                         GestureDetector(
-                          onTap: () {},
+                          onTap: () {
+                            controller.isHaveBab
+                                ? Share.share(
+                                    "${hadits.arab}\n${hadits.terjemah}\nSumber : (Kitab ${hadits.kitab} : ${hadits.id} - Bab ${hadits.bab})\n\n$copyright",
+                                  )
+                                : Share.share(
+                                    "${hadits.arab}\n${hadits.terjemah}\nSumber : (${hadits.kitab} : ${hadits.id})\n\n$copyright",
+                                  );
+                          },
                           child: const Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisAlignment: MainAxisAlignment.center,

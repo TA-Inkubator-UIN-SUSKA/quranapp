@@ -79,6 +79,6 @@ class ChatbotView extends GetView<ChatbotController> {
               bottom: mq.height * 0.12,
             ),
             children:
-                controller.list.map((e) => MessageCard(message: e)).toList())));
+                controller.list.map((e) => MessageCard(message: e, chatbot: title)).toList())));
   }
 }
