@@ -257,8 +257,6 @@ class DetailSurahController extends GetxController {
         MyDialog.showLoadingDialog();
         await player.stop();
         await player.setUrl(url);
-
-        Get.back();
         await player.play();
 
         await player.stop();
@@ -277,6 +275,8 @@ class DetailSurahController extends GetxController {
           title: "Terjadi Kesalahan!",
           middleText: "An error occured: $e",
         );
+      } finally {
+        Get.back();
       }
     } else {
       Get.defaultDialog(

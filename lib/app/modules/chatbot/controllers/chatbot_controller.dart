@@ -23,7 +23,6 @@ class ChatbotController extends GetxController {
   ].obs;
 
   Future<void> askQuestion(String endpoint) async {
-    log(textC.text);
     try {
       if (textC.text.trim().isNotEmpty) {
         list.add(Message(
@@ -35,7 +34,9 @@ class ChatbotController extends GetxController {
         MyDialog.showLoadingDialog();
 
         final res = await http.post(Uri.parse(endpoint), body: {
-          "question": textC.text
+          "question": textC.text,
+          // for new endpoint
+          // "user_id": "flutter"
         }, headers: {
           HttpHeaders.contentTypeHeader: 'application/x-www-form-urlencoded',
         });
@@ -54,7 +55,11 @@ class ChatbotController extends GetxController {
         MyDialog.info("Tanyakan sesuatu!");
       }
     } catch (e) {
-      log("$e");
+      Get.back();
+      Get.defaultDialog(
+        title: "Terjadi Kesalahan!",
+        middleText: "Bot tidak dapat merespon",
+      );
     }
   }
 }

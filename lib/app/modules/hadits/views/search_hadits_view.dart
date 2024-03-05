@@ -84,7 +84,7 @@ class SearchHaditsView extends GetView<HaditsController> {
                       ),
                     ),
                   ),
-                  hintText: "Cari Nama Kitab...",
+                  hintText: "Cari kata kunci...",
                   hintStyle: const TextStyle(
                     fontSize: 12,
                   ),

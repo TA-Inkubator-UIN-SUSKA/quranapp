@@ -25,9 +25,9 @@ class ChatbotView extends GetView<ChatbotController> {
           backgroundColor: Colors.transparent,
           elevation: 0,
           centerTitle: true,
-          actions: [
-            IconButton(onPressed: () {}, icon: const Icon(Icons.history))
-          ],
+          // actions: [
+          //   IconButton(onPressed: () {}, icon: const Icon(Icons.history))
+          // ],
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         floatingActionButton: Padding(
@@ -78,7 +78,8 @@ class ChatbotView extends GetView<ChatbotController> {
               top: mq.height * 0.02,
               bottom: mq.height * 0.12,
             ),
-            children:
-                controller.list.map((e) => MessageCard(message: e, chatbot: title)).toList())));
+            children: controller.list
+                .map((e) => MessageCard(message: e, chatbot: title))
+                .toList())));
   }
 }
